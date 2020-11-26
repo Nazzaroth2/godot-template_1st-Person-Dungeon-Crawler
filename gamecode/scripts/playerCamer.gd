@@ -150,10 +150,10 @@ func _actionCheck():
 		else:
 			rightPoint.flag = true
 			movingFlag = true
-	elif Input.is_action_just_pressed("leftTurn"):
+	elif Input.is_action_just_pressed("rotateLeft"):
 		leftTurnPoint.flag = true
 		movingFlag = true
-	elif Input.is_action_just_pressed("rightTurn"):
+	elif Input.is_action_just_pressed("rotateRight"):
 		rightTurnPoint.flag = true
 		movingFlag = true
 	else:
