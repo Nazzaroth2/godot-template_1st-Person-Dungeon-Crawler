@@ -40,3 +40,4 @@ __meta__ = {
 }
 
 [node name="playerCamera" parent="." instance=ExtResource( 3 )]
+movementSpeed = 5
