@@ -6,7 +6,7 @@ var is_moving: String = "stop"
 var movementStep: float = 0
 var gridSize: int = 2
 var movementSpeed: int = 2
-export var rotationSpeed: float = 5
+export var rotationSpeed: float = 10
 var rotationLimit: float = 100/rotationSpeed
 var rotationStep: float = 1.570796 / rotationLimit
 var rotationState: float = 0
@@ -89,8 +89,11 @@ func rotate(delta, rotDir):
 
 		print(rotation_degrees)
 		print(target_rotation)
+#		print("-----")
+#		print(rotation_degrees.round())
+#		print(target_rotation.round())
 #
-		if rotation_degrees.round() == target_rotation:
+		if rotation_degrees.round() == target_rotation.round():
 			movement_flag = "stop"
 			rotationState = 0
 			print("finished")
@@ -110,8 +113,11 @@ func rotate(delta, rotDir):
 
 		print(rotation_degrees)
 		print(target_rotation)
+#		print("-----")
+#		print(rotation_degrees.round())
+#		print(target_rotation.round())
 #
-		if rotation_degrees.round() == target_rotation:
+		if rotation_degrees.round() == target_rotation.round():
 			movement_flag = "stop"
 			rotationState = 0
 			print("finished")
