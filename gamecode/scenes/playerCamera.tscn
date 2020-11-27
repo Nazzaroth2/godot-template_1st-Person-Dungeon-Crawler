@@ -3,5 +3,24 @@
 [ext_resource path="res://gamecode/scripts/playerCamera.gd" type="Script" id=1]
 
 [node name="playerCamera" type="Camera"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 1, 1 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
 script = ExtResource( 1 )
+
+[node name="NRay" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, 0, -2 )
+
+[node name="ERay" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 2, 0, 0 )
+
+[node name="SRay" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, 0, 2 )
+
+[node name="WRay" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( -2, 0, 0 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+spot_angle = 70.0

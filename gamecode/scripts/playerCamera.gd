@@ -24,18 +24,21 @@ var directionDict: Dictionary = {
 	"E":[Vector3(1,0,0)],
 	"W":[Vector3(-1,0,0)]
 }
+onready var collissionDict: Dictionary = {
+	"N":$NRay,"S":$SRay,"E":$ERay,"W":$WRay
+}
 
 
 func _process(delta):
 	#setting the direction flag if no prior movement is running
 	if movement_flag == "stop":
-		if Input.is_action_pressed("N"):
+		if Input.is_action_pressed("N") and !collissionDict["N"].is_colliding():
 			movement_flag = "N"
-		if Input.is_action_pressed("S"):
+		if Input.is_action_pressed("S") and !collissionDict["S"].is_colliding():
 			movement_flag = "S"
-		if Input.is_action_pressed("E"):
+		if Input.is_action_pressed("E") and !collissionDict["E"].is_colliding():
 			movement_flag = "E"
-		if Input.is_action_pressed("W"):
+		if Input.is_action_pressed("W") and !collissionDict["W"].is_colliding():
 			movement_flag = "W"
 		if Input.is_action_pressed("rotateLeft"):
 			movement_flag = "rotate"
@@ -52,6 +55,7 @@ func _process(delta):
 	elif movement_flag == "rotate":
 		rotate_player(delta)
 		
+
 
 
 func move_player(delta, moveDir):
