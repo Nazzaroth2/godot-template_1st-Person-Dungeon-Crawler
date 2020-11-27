@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://textures/dungeon/Tileable8c.png" type="Texture" id=1]
+[ext_resource path="res://textures/dungeon/Tileable8_nm.png" type="Texture" id=2]
+[ext_resource path="res://textures/dungeon/Tileable2i.png" type="Texture" id=3]
+[ext_resource path="res://textures/dungeon/Tileable2_nm.png" type="Texture" id=4]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 1 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 2 )
+
+[sub_resource type="PlaneMesh" id=2]
+material = SubResource( 1 )
+
+[sub_resource type="ConvexPolygonShape" id=3]
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 3 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 4 )
+
+[sub_resource type="PlaneMesh" id=5]
+material = SubResource( 4 )
+
+[sub_resource type="ConvexPolygonShape" id=6]
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
+
+[node name="Corner" type="CSGCombiner"]
+
+[node name="Floor" type="CSGMesh" parent="."]
+editor/display_folded = true
+mesh = SubResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="Floor"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor/StaticBody"]
+shape = SubResource( 3 )
+
+[node name="wall1" type="CSGMesh" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1, 1 )
+mesh = SubResource( 5 )
+
+[node name="StaticBody" type="StaticBody" parent="wall1"]
+
+[node name="CollisionShape" type="CollisionShape" parent="wall1/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="wall2" type="CSGMesh" parent="."]
+editor/display_folded = true
+transform = Transform( -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 0, 0, 1, -1, 1, 0 )
+mesh = SubResource( 5 )
+
+[node name="StaticBody" type="StaticBody" parent="wall2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="wall2/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="Ceiling" type="CSGMesh" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-008, 0, -8.74228e-008, -1, 0, 2, 0 )
+mesh = SubResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="Ceiling"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Ceiling/StaticBody"]
+shape = SubResource( 3 )

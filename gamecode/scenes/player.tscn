@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gamecode/scripts/playerCamer.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.553634
+height = 0.62168
+
+[node name="player" type="KinematicBody"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.941, 0 )
+shape = SubResource( 1 )
+
+[node name="GroundRay" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.726, 0 )
+
+[node name="ForwardRay" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 1.5, 0 )
+cast_to = Vector3( 0, -1.5, 0 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29932, -0.222 )
+doppler_tracking = 2
+fov = 85.0
+
+[node name="SpotLight" type="SpotLight" parent="Camera"]
+spot_range = 10.0
+spot_angle = 75.0
