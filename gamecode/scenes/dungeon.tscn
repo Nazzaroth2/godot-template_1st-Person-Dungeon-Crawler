@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://gamecode/scripts/dungeon.gd" type="Script" id=1]
 [ext_resource path="res://assets/meshLibraries/cave03.meshlib" type="MeshLibrary" id=2]
 [ext_resource path="res://gamecode/scenes/playerCamera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gamecode/scenes/eventTrigger.gd" type="Script" id=4]
+[ext_resource path="res://gamecode/scenes/dungeonModule/events/shopEvent.tscn" type="PackedScene" id=5]
+[ext_resource path="res://gamecode/scenes/dungeonModule/events/lootEvent.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -46,7 +49,7 @@ __meta__ = {
 mesh_library = ExtResource( 2 )
 cell_center_x = false
 data = {
-"cells": PoolIntArray( 12, 0, 1507329, 65535, 0, 1245185, 2, 1, 1507329, 8, 1, 1245185, 13, 1, 1507329, 65535, 1, 1245185, 0, 2, 1245185, 1, 2, 1507329, 9, 2, 1245185, 10, 2, 1507329, 12, 2, 1245185, 13, 2, 1507329, 0, 3, 1245185, 1, 3, 1507329, 9, 3, 1245185, 10, 3, 1507329, 12, 3, 1245185, 13, 3, 1507329, 0, 4, 1245185, 1, 4, 1507329, 0, 5, 1245185, 1, 5, 1507329, 4, 5, 1245185, 7, 5, 1507329, 0, 6, 1245185, 7, 6, 1507329, 4, 7, 1245185, 7, 7, 1507329, 0, 65531, 1245185, 1, 65531, 1507329, 0, 65532, 1245185, 1, 65532, 1507329, 0, 65533, 1245185, 1, 65533, 538378241, 9, 65533, 1245185, 12, 65533, 1507329, 0, 65534, 538116097, 1, 65534, 1507329, 9, 65534, 1245185, 10, 65534, 1507329, 2, 65535, 1507329, 8, 65535, 1245185, 11, 65535, 1507329, 65535, 65535, 1245185 )
+"cells": PoolIntArray( 12, 0, 1507329, 65535, 0, 1245185, 2, 1, 1507329, 8, 1, 1245185, 13, 1, 1507329, 65535, 1, 1245185, 0, 2, 1245185, 1, 2, 1507329, 9, 2, 1245185, 10, 2, 1507329, 12, 2, 1245185, 13, 2, 1507329, 0, 3, 1245185, 1, 3, 1507329, 9, 3, 1245185, 10, 3, 1507329, 12, 3, 1245185, 13, 3, 1507329, 0, 4, 1245185, 1, 4, 1507329, 0, 5, 1245185, 1, 5, 1507329, 4, 5, 1245185, 7, 5, 1507329, 0, 6, 1245185, 7, 6, 1507329, 4, 7, 1245185, 7, 7, 1507329, 0, 65531, 1245185, 1, 65531, 1507329, 0, 65532, 1245185, 1, 65532, 1507329, 0, 65533, 1245185, 1, 65533, 1507329, 9, 65533, 1245185, 12, 65533, 1507329, 0, 65534, 1245185, 1, 65534, 1507329, 9, 65534, 1245185, 10, 65534, 1507329, 2, 65535, 1507329, 8, 65535, 1245185, 11, 65535, 538378241, 65535, 65535, 1245185 )
 }
 __meta__ = {
 "_editor_clip_": 0
@@ -59,8 +62,19 @@ fov = 90.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
-[node name="Area" type="Area" parent="."]
+[node name="Shop" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 1 )
+script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
+[node name="CollisionShape" type="CollisionShape" parent="Shop"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
 shape = SubResource( 3 )
+
+[node name="shopEvent" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 5 )
+
+[node name="lootEvent" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -3 )
+[connection signal="area_entered" from="playerCamera/playerArea" to="." method="_on_playerArea_area_entered"]
+
+[editable path="playerCamera"]

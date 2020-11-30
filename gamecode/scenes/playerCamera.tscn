@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://gamecode/scripts/playerCamera.gd" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=1]
 
 [node name="playerCamera" type="Camera"]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
@@ -24,3 +26,9 @@ cast_to = Vector3( -2, 0, 0 )
 
 [node name="SpotLight" type="SpotLight" parent="."]
 spot_angle = 70.0
+
+[node name="playerArea" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="playerArea"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+shape = SubResource( 1 )

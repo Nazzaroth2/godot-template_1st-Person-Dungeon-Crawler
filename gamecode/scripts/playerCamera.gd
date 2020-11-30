@@ -73,7 +73,7 @@ func move_player(delta, moveDir):
 				round(global_transform.origin.y),round(global_transform.origin.z))
 		movement_flag = "stop"
 		movementStep = 0
-		print(global_transform.origin)
+
 
 
 func rotate_player(delta):
