@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://shopEvent.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/scripts/shopEvent.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/scenes/dungeonModule/events/eventTrigger.tscn" type="PackedScene" id=2]
+
 
 [node name="shopEvent" type="Spatial"]
 script = ExtResource( 1 )
