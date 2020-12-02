@@ -16,7 +16,11 @@ _global_script_class_icons={
 [application]
 
 config/name="SpielProjekt-Template"
-run/main_scene="res://gamecode/scenes/dungeon.tscn"
+run/main_scene="res://gamecode/scenes/dungeonModule/dungeon.tscn"
+
+[editor_plugins]
+
+enabled=PoolStringArray(  )
 
 [input]
 

@@ -10,6 +10,7 @@ extends Camera
 #has moved. Then let the pc handle all enemy movement and emit a signal again.
 #On this signal we set movement_flag back to "stop" and can move the player again.
 
+signal movement_finished
 
 export var gridSize: int = 2
 export var movementSpeed: int = 2
@@ -73,7 +74,8 @@ func move_player(delta, moveDir):
 				round(global_transform.origin.y),round(global_transform.origin.z))
 		movement_flag = "stop"
 		movementStep = 0
-		print(global_transform.origin)
+		emit_signal("movement_finished")
+
 
 
 func rotate_player(delta):
