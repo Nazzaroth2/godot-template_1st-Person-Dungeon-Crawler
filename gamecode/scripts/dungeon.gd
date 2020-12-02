@@ -1,5 +1,7 @@
 extends Spatial
 
+var in_Event: bool = false
+
 func _ready():
 	pass
 
@@ -10,8 +12,10 @@ func _ready():
 
 
 
-# dungeon events like loot and shop will get triggered here
+# dungeon events like loot and shop will get triggered from this
+# signal
 func _on_playerArea_area_entered(area):
+	in_Event = true
 	# basic setup for a shop event
 	if area.eventType == "shop":
 		# here will go stuff that deals with shop event
@@ -28,12 +32,16 @@ func _on_playerArea_area_entered(area):
 	if area.eventType == "enemy":
 		yield($playerCamera, "movement_finished")
 		pass
+	
+	in_Event = false
 
-
+# if no event gets triggered on next cell we randomly
+# spawn an enemy encounter
 func _on_playerCamera_movement_finished():
-	# here we would randomly choose if a enemy encounter
-	# is started and transition to the fight scene. plus save
-	# position of player in dungeon for later.
-	# but i will also need to check if no other event would
-	# happen, so we dont trigger fights when entering shops
-	pass # Replace with function body.
+	# before transition to the fight scene we need to save
+	# level-scene and player position for later
+	if !in_Event:
+		print("we could go into a fight now")
+	else:
+		print("fighting would be impossible now")
+	
