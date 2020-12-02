@@ -41,7 +41,7 @@ func _on_playerCamera_movement_finished():
 	# before transition to the fight scene we need to save
 	# level-scene and player position for later
 	if !in_Event:
-		print("we could go into a fight now")
+		pass
 	else:
-		print("fighting would be impossible now")
+		pass
 	
