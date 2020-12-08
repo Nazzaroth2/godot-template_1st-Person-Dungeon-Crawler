@@ -8,9 +8,56 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "BaseGameObject",
+"class": "BaseEffect",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/effects/baseEffect.gd"
+}, {
+"base": "Resource",
+"class": "BaseGameObject",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/baseGameObject.gd"
+}, {
+"base": "BaseGameObject",
+"class": "BaseItem",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/items/baseItem.gd"
+}, {
+"base": "BaseGameObject",
+"class": "BasePlayerClass",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/playerClasses/baseClass.gd"
+}, {
+"base": "BaseGameObject",
+"class": "BaseSkill",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/skills/baseSkill.gd"
+}, {
+"base": "BaseItem",
+"class": "Consumable",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/items/consumable.gd"
+}, {
+"base": "BaseItem",
+"class": "Equipment",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/items/equipment.gd"
+}, {
+"base": "BaseEffect",
+"class": "Stun",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/effects/stun.gd"
+} ]
 _global_script_class_icons={
-
+"BaseEffect": "",
+"BaseGameObject": "",
+"BaseItem": "",
+"BasePlayerClass": "",
+"BaseSkill": "",
+"Consumable": "",
+"Equipment": "",
+"Stun": ""
 }
 
 [application]

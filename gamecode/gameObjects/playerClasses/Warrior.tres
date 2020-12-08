@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=2]
+[ext_resource path="res://gamecode/gameObjects/items/small_shield.tres" type="Resource" id=3]
+
+[resource]
+script = ExtResource( 1 )
+name = "placeholder"
+description = "placeholder"
+classSkills = {
+
+}
+equipment = {
+"head": null,
+"left_hand": ExtResource( 3 ),
+"right_hand": ExtResource( 2 )
+}
+hp_max = 100
+hp = 100
+mp_max = 20
+mp = 20
+stamina_max = 70
+stamina = 70
+strength = 15
+dexterity = 10
+intelligence = 5
+luck = 7
