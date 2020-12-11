@@ -2,7 +2,9 @@ extends Control
 
 onready var referencedPlayerGroup = $"../playerGroup"
 onready var playerGroup = referencedPlayerGroup.playerGroup
-var instancedEnemies
+onready var pandemonium = preload("res://gamecode/gameObjects/enemies/pandemoniumDemo.tres")
+var instancedEnemies = []
+var enemyAmount = 1
 
 var playerTurn = true
 var activePlayer
@@ -12,20 +14,30 @@ var usablePlayers = []
 var activeTarget
 var tempTarget = 0
 
+var rng = RandomNumberGenerator.new()
 
 func _init():
 	pass
+
 	
-	# get playerReference
+	
+
+func _ready():
 	# instanciate Enemies
+	rng.randomize()
+#	enemyAmount = rng.randi_range(1,2)
+	# duplicate to keep instanced enemies unique to a fight
+	for i in range(enemyAmount):
+		instancedEnemies.append(pandemonium.enemies[i].duplicate())
 	
 	# initilizeGUI()
+	$demoSkill.text = playerGroup[0].classSkills["Fire Ball"].name
+	$demoSkill.connect("pressed", self, "_on_Button_pressed",[$demoSkill.text])
 	
 	## change this variable if you dont automatically want the player to start
 	# playerRound = true
 	
-
-func _ready():
+	
 	resetUsablePlayers()
 #	for player in referencedPlayerGroup.playerGroup:
 #		print(player.name)
@@ -47,6 +59,7 @@ func _process(delta):
 		if not(usablePlayers.empty()):
 			#get active Player through gui/playeractions
 			if activePlayer == null:
+				print(tempPlayer)
 				#change tempPlayer number which will become
 				#activePlayer when choosen
 				if Input.is_action_just_pressed("ui_focus_next"):
@@ -68,11 +81,11 @@ func _process(delta):
 					# show skillChoice-Menu
 				# if aoe-attack just pass all enemies as targets
 				elif playerGroup[activePlayer].classSkills[activeSkill].is_aoe:
-					pass
-					#activeTarget = instancedEnemies
+					activeTarget = instancedEnemies
 				# for singleTarget we get target
 				else:
 					if activeTarget == null:
+						print(tempTarget)
 						#change tempPlayer number which will become
 						#activePlayer when choosen
 						if Input.is_action_just_pressed("ui_focus_next"):
@@ -85,12 +98,24 @@ func _process(delta):
 							if tempTarget < 0:
 								tempTarget = len(instancedEnemies)-1
 						if Input.is_action_just_pressed("ui_accept"):
-							activeTarget = instancedEnemies[tempTarget]
+							activeTarget = [instancedEnemies[tempTarget]]
 							
 					
 					# after we got all variables we needed we actually invoke the skill
 					else:
 						playerGroup[activePlayer].useSkill(activeSkill,activeTarget)
+						
+						
+						#debug state of the game print
+						print(playerGroup[activePlayer].mp)
+						print(activeTarget[0].hp)
+						print(activeTarget[0].activeEffects)
+						
+						
+						
+						
+						
+						
 						# make player that did action unusable
 						usablePlayers.remove(tempPlayer)
 						# reseting all choice-variables

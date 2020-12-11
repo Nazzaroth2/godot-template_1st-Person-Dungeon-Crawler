@@ -1,12 +1,12 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://gamecode/gameObjects/skills/baseSkill.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/gameObjects/skills/damageSkill.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/gameObjects/effects/Burn.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Slash"
-description = "A ball of fire. Duh!"
+name = "Fire Ball"
+description = "an actually hurtfull fire ball"
 cost = 20
 skillCategory = 1
 targetedStat = 0

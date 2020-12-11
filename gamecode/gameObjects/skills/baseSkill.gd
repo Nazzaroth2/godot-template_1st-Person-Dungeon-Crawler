@@ -23,35 +23,28 @@ func use(user, targets:Array):
 			user.mp -= cost
 	
 	if skillEffects != null:
-		applyEffects(targets)
+		_applyEffects(targets)
 		
-	#skillValue = calculateSkillValue(user)
+	#skillValue = _calculateSkillValue(user)
 
-	if is_aoe:
-		for target in targets:
-			match targetedStat:
-				TARGETEDSTAT.HP:
-					target.hp += skillValue
-				TARGETEDSTAT.MP:
-					target.mp += skillValue
-				TARGETEDSTAT.STAMINA:
-					target.stamina += skillValue
-	else:
-		match targetedStat:
-			TARGETEDSTAT.HP:
-				targets[0].hp += skillValue
-			TARGETEDSTAT.MP:
-				targets[0].mp += skillValue
-			TARGETEDSTAT.STAMINA:
-				targets[0].stamina += skillValue
+	_applySkillValue(targets)
 	
-	
-func applyEffects(targets:Array):
+
+# loops over all effects the skill has and adds them to targets
+# activeEffects-Array for later processing in the fightManager
+func _applyEffects(targets:Array):
 	for effect in skillEffects:
 		for target in targets:
 			target.activeEffects.append(effect)
 
 # change this function to change how the system calculates skillvalues
 # eg. take elemental types into account, add percentages etc.
-func calculateSkillValue(user):
+func _calculateSkillValue(user):
 	skillValue = skillValue
+
+
+# virtual function that decides how to apply the given SkillValue
+# to the targets. best example is subtract or add for damaging or healing
+# targets respectivly
+func _applySkillValue(targets):
+	pass
