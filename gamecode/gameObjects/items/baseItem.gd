@@ -24,7 +24,7 @@ func moveItem(activeInv, passivInv):
 	pass
 
 # overwrite/call this function in inherited classes to implement item logic
-func use(targets: Array):
+func use(user, targets: Array):
 	current_stacks -= 1
 	
 	# TODO: implement itemEffects applying here

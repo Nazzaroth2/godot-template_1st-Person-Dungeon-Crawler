@@ -2,12 +2,14 @@ extends BaseGameObject
 class_name BasePlayerClass
 
 # all skills for a class with named keys
-export (Dictionary) var classSkills
+export (Dictionary) onready var classSkills
 # bool-dictionary to check if classSkill is unlocked through skillPoints and
 # usable in fight etc.
 var unlockedSkills:Dictionary
 
+
 export (Dictionary) var equipment
+
 
 var activeEffects = []
 
@@ -31,6 +33,10 @@ var skillPoints:int
 
 
 # TODO: check how to loop over dictionary in gdscript and get keys
-func _init():
-	for skill in classSkills:
-		unlockedSkills[skill.key] = false
+#func _init():
+#	for skill in classSkills:
+#		unlockedSkills[skill.key] = false
+		
+
+func useSkill(skillname, targets):
+	classSkills[skillname].use(self, targets)

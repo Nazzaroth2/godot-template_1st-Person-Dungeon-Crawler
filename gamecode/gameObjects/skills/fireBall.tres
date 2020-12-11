@@ -1,15 +1,15 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/skills/baseSkill.gd" type="Script" id=1]
-[ext_resource path="res://gamecode/gameObjects/effects/Stun.tres" type="Resource" id=2]
+[ext_resource path="res://gamecode/gameObjects/effects/Burn.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Shield Bash"
-description = "A blunt hit with your Shield. Applies Stun-Effect and deals a small amount of damage."
+name = "Slash"
+description = "A ball of fire. Duh!"
 cost = 20
-skillCategory = 0
+skillCategory = 1
 targetedStat = 0
 skillEffects = [ ExtResource( 2 ) ]
-skillValue = 5
+skillValue = 20
 is_aoe = false

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/gameObjects/skills/fireBall.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Chris"
+description = "A fledgling mage with big ambitions."
+classSkills = {
+"Fire Ball": ExtResource( 2 )
+}
+equipment = {
+
+}
+hp_max = 100
+hp = 100
+mp_max = 100
+mp = 100
+stamina_max = 100
+stamina = 100
+strength = 10
+dexterity = 10
+intelligence = 50
+luck = 10
