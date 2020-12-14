@@ -8,8 +8,8 @@ var enemyAmount = 2
 var enemyType = 0
 
 var playerTurn = true
-onready var players = $characters/players
-onready var enemies = $characters/enemies
+onready var players = $GUI/characters/players
+onready var enemies = $GUI/characters/enemies
 var choosenPlayer
 var activeSkill
 var usablePlayers = []
@@ -28,8 +28,8 @@ func _ready():
 		instancedEnemies.append(pandemonium.enemies[enemyType].duplicate())
 
 	# initilizeGUI()
-	$demoSkill.text = playerGroup[0].classSkills["Fire Ball"].name
-	$demoSkill.connect("pressed", self, "_on_Button_pressed",[$demoSkill.text])
+#	$demoSkill.text = playerGroup[0].classSkills["Fire Ball"].name
+#	$demoSkill.connect("pressed", self, "_on_Button_pressed",[$demoSkill.text])
 
 	## change this variable if you dont automatically want the player to start
 	# playerRound = true
