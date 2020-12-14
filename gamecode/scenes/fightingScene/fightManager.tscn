@@ -123,3 +123,4 @@ margin_right = 1024.0
 margin_bottom = 171.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
+columns = 3

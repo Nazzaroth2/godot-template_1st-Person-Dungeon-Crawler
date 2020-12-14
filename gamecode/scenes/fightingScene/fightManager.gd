@@ -10,6 +10,7 @@ var enemyType = 0
 var playerTurn = true
 onready var players = $GUI/characters/players
 onready var enemies = $GUI/characters/enemies
+onready var playerMenu = $GUI/playerMenu
 var choosenPlayer
 var activeSkill
 var usablePlayers = []
@@ -28,6 +29,11 @@ func _ready():
 		instancedEnemies.append(pandemonium.enemies[enemyType].duplicate())
 
 	# initilizeGUI()
+	#bind menuChoice-Focus-Signals with nameVariable to differentiate
+	playerMenu.get_child(0).get_child(0).connect("focus_entered", self,
+		 "_on_menuChoice_focus_entered",[playerMenu.get_child(0).get_child(0).name])
+	playerMenu.get_child(0).get_child(0).connect("focus_exited", self,
+		"_on_menuChoice_focus_exited",[playerMenu.get_child(0).get_child(0).name])
 #	$demoSkill.text = playerGroup[0].classSkills["Fire Ball"].name
 #	$demoSkill.connect("pressed", self, "_on_Button_pressed",[$demoSkill.text])
 
@@ -39,6 +45,22 @@ func _ready():
 #	for player in referencedPlayerGroup.playerGroup:
 #		print(player.name)
 #		print(player.classSkills["Fire Ball"].skillValue)
+
+func _on_menuChoice_focus_entered(menuChoice):
+	if menuChoice == "attackSkills":
+		for skill in choosenPlayer.classSkills:
+			var newButton = Button.new()
+			newButton.text = skill
+			newButton.size_flags_horizontal = Button.SIZE_EXPAND_FILL
+#			newButton.size_flags_vertical = Button.SIZE_EXPAND_FILL
+			newButton.connect("pressed", self, "_on_Button_pressed",[skill])
+			playerMenu.get_child(1).add_child(newButton)
+			
+func _on_menuChoice_focus_exited(menuChoice):
+	for node in playerMenu.get_child(1).get_children():
+		node.queue_free()
+
+
 
 # for every player in group that is alive we put his index into
 # usable players
@@ -56,8 +78,6 @@ func _process(delta):
 		if not(usablePlayers.empty()):
 			#get active Player through gui/playeractions
 			if choosenPlayer == null:
-				print(players.activePlayer)
-				print("choosingPlayer")
 				# change players.activePlayer number which changes the ui
 				# through setter-function and later is used as index for
 				# the choosenPlayer
@@ -78,6 +98,10 @@ func _process(delta):
 					# this way we cannot choose a player 2 times per turn, if
 					# we remove the playerIndex from usablePlayers after action
 					choosenPlayer = playerGroup[usablePlayers[players.activePlayer]]
+					# show playerMenu and set focus on first menuChoice
+					#playerMenu.visible = true
+					playerMenu.get_child(0).get_child(0).grab_focus()
+					
 
 
 			else:
@@ -90,7 +114,6 @@ func _process(delta):
 				# for singleTarget we get target
 				else:
 					if activeTargets == null:
-						print(enemies.activeEnemy)
 						#change tempPlayer number which will become
 						#activePlayer when choosen
 						if Input.is_action_just_pressed("ui_focus_next"):
