@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/scenes/fightingScene/players.gd" type="Script" id=2]
+[ext_resource path="res://gamecode/scenes/fightingScene/enemies.gd" type="Script" id=3]
 
 [node name="fightManager" type="Control"]
 anchor_right = 1.0
@@ -20,3 +22,70 @@ text = "demoSkill"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="characters" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="enemies" type="VBoxContainer" parent="characters"]
+margin_right = 150.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 150, 500 )
+size_flags_horizontal = 2
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="enemy1" type="Label" parent="characters/enemies"]
+margin_top = 142.0
+margin_right = 150.0
+margin_bottom = 156.0
+size_flags_vertical = 6
+text = "Player01"
+align = 1
+
+[node name="enemy2" type="Label" parent="characters/enemies"]
+margin_top = 444.0
+margin_right = 150.0
+margin_bottom = 458.0
+size_flags_vertical = 6
+text = "Player01"
+align = 1
+
+[node name="players" type="VBoxContainer" parent="characters"]
+margin_left = 874.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 150, 500 )
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player1" type="Label" parent="characters/players"]
+margin_top = 142.0
+margin_right = 150.0
+margin_bottom = 156.0
+size_flags_vertical = 6
+text = "Player01"
+align = 1
+
+[node name="player2" type="Label" parent="characters/players"]
+margin_top = 444.0
+margin_right = 150.0
+margin_bottom = 458.0
+size_flags_vertical = 6
+text = "Player01"
+align = 1
