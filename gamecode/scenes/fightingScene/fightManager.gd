@@ -8,17 +8,21 @@ var enemyAmount = 2
 var enemyType = 0
 
 var playerTurn = true
-onready var players = $GUI/characters/players
-onready var enemies = $GUI/characters/enemies
-onready var playerMenu = $GUI/playerMenu
+
 var choosenPlayer
 var activeSkill
 var usablePlayers = []
 var activeTargets
 
+# GUI-Variables
+onready var players = $GUI/characters/players
+onready var enemies = $GUI/characters/enemies
+onready var playerMenu = $GUI/playerMenu
+
 
 var rng = RandomNumberGenerator.new()
 
+signal actionDone
 
 func _ready():
 	# instanciate Enemies
@@ -28,12 +32,7 @@ func _ready():
 	for i in range(enemyAmount):
 		instancedEnemies.append(pandemonium.enemies[enemyType].duplicate())
 
-	# initilizeGUI()
-	#bind menuChoice-Focus-Signals with nameVariable to differentiate
-	playerMenu.get_child(0).get_child(0).connect("focus_entered", self,
-		 "_on_menuChoice_focus_entered",[playerMenu.get_child(0).get_child(0).name])
-	playerMenu.get_child(0).get_child(0).connect("focus_exited", self,
-		"_on_menuChoice_focus_exited",[playerMenu.get_child(0).get_child(0).name])
+
 #	$demoSkill.text = playerGroup[0].classSkills["Fire Ball"].name
 #	$demoSkill.connect("pressed", self, "_on_Button_pressed",[$demoSkill.text])
 
@@ -46,19 +45,7 @@ func _ready():
 #		print(player.name)
 #		print(player.classSkills["Fire Ball"].skillValue)
 
-func _on_menuChoice_focus_entered(menuChoice):
-	if menuChoice == "attackSkills":
-		for skill in choosenPlayer.classSkills:
-			var newButton = Button.new()
-			newButton.text = skill
-			newButton.size_flags_horizontal = Button.SIZE_EXPAND_FILL
-#			newButton.size_flags_vertical = Button.SIZE_EXPAND_FILL
-			newButton.connect("pressed", self, "_on_Button_pressed",[skill])
-			playerMenu.get_child(1).add_child(newButton)
-			
-func _on_menuChoice_focus_exited(menuChoice):
-	for node in playerMenu.get_child(1).get_children():
-		node.queue_free()
+
 
 
 
@@ -135,13 +122,16 @@ func _process(delta):
 					else:
 						choosenPlayer.useSkill(activeSkill,activeTargets)
 
-
+						emit_signal("actionDone")
+						
+						
 						#debug state of the game print
-						print(choosenPlayer.name)
-						print(choosenPlayer.mp)
-						print(activeTargets[0].name)
-						print(activeTargets[0].hp)
-						print(activeTargets[0].activeEffects)
+						print_debug("choosenPlayer: ",choosenPlayer.name)
+						print_debug("MP : ",choosenPlayer.mp)
+						print_debug("activeTarget: ",activeTargets[0].name)
+						print_debug("activeTarget HP: ",activeTargets[0].hp)
+						print_debug("activeTarget first active Effect: ",activeTargets[0].activeEffects[0].name)
+						
 
 
 
@@ -155,12 +145,14 @@ func _process(delta):
 						choosenPlayer = null
 						activeSkill = null
 						activeTargets = null
+
+						
+						
 		else:
 			playerTurn = false
 
 
-func _on_Button_pressed(skillName):
-	activeSkill = skillName
+
 
 
 

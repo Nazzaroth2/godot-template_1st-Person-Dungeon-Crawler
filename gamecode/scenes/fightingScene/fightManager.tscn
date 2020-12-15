@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/scenes/fightingScene/players.gd" type="Script" id=2]
 [ext_resource path="res://gamecode/scenes/fightingScene/enemies.gd" type="Script" id=3]
+[ext_resource path="res://gamecode/scenes/fightingScene/GUI.gd" type="Script" id=4]
 
 [node name="fightManager" type="Control"]
 anchor_right = 1.0
@@ -15,6 +16,7 @@ __meta__ = {
 [node name="GUI" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -124,3 +126,7 @@ margin_bottom = 171.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 columns = 3
+
+[node name="inputManager" type="Node" parent="."]
+
+[node name="actualFightManager" type="Node" parent="."]
