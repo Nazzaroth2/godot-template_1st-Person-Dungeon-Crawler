@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/scenes/fightingScene/players.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://gamecode/scenes/fightingScene/GUI.gd" type="Script" id=4]
 [ext_resource path="res://gamecode/scenes/fightingScene/player1.gd" type="Script" id=5]
 [ext_resource path="res://gamecode/scenes/fightingScene/inputManager.gd" type="Script" id=6]
+[ext_resource path="res://gamecode/scenes/fightingScene/enemy.gd" type="Script" id=7]
 
 [node name="fightManager" type="Control"]
 anchor_right = 1.0
@@ -53,7 +54,7 @@ size_flags_vertical = 3
 text = "enemy1"
 align = 1
 valign = 1
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 
 [node name="enemy2" type="Label" parent="GUI/characters/enemies"]
 margin_top = 214.0
@@ -64,7 +65,7 @@ size_flags_vertical = 3
 text = "enemy2"
 align = 1
 valign = 1
-script = ExtResource( 5 )
+script = ExtResource( 7 )
 
 [node name="players" type="VBoxContainer" parent="GUI/characters"]
 margin_left = 874.0

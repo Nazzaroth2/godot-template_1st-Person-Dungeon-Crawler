@@ -3,15 +3,17 @@ extends Control
 onready var referencedPlayerGroup = $"../playerGroup"
 var playerGroupDict = {}
 onready var pandemonium = preload("res://gamecode/gameObjects/enemies/pandemoniumDemo.tres")
-var instancedEnemies = []
+var enemiesDict = {}
 var enemyAmount = 2
 var enemyType = 0
 
 var playerTurn = true
 
 var choosenPlayer
+var choosenPlayerName
 var activeSkill
 var usablePlayers = []
+var usableEnemies = []
 var activeTargets
 
 # GUI-Variables
@@ -29,8 +31,12 @@ func _ready():
 #	rng.randomize()
 #	enemyAmount = rng.randi_range(1,2)
 	# duplicate to keep instanced enemies unique to a fight
+	var enemyCounter = 1
 	for i in range(enemyAmount):
-		instancedEnemies.append(pandemonium.enemies[enemyType].duplicate())
+		var enemyName = "enemy" + str(enemyCounter)
+		enemiesDict[enemyName] = pandemonium.enemies[enemyType].duplicate()
+		enemyCounter += 1
+
 	
 	var playerCounter = 1
 	for player in referencedPlayerGroup.playerGroup:
@@ -47,7 +53,7 @@ func _ready():
 	# playerRound = true
 
 
-	resetUsablePlayers()
+	resetUsableCharacters()
 #	for player in referencedPlayerGroup.playerGroup:
 #		print(player.name)
 #		print(player.classSkills["Fire Ball"].skillValue)
@@ -60,11 +66,16 @@ func _ready():
 
 # for every player in group that is alive we put his index into
 # usable players
-func resetUsablePlayers():
+func resetUsableCharacters():
 	usablePlayers = []
 	for playerName in playerGroupDict:
 		if playerGroupDict[playerName].hp > 0:
 			usablePlayers.append(playerName)
+			
+	usableEnemies = []
+	for enemyName in enemiesDict:
+		usableEnemies.append(enemyName)
+	
 
 
 # you REAAAALLY need to refactor this monstrosity
@@ -169,56 +180,44 @@ func resetUsablePlayers():
 
 
 func playerTurn():
-#	pass
-
-
-
-
 	if playerTurn:
 		if not(usablePlayers.empty()):
 			#get active Player through gui/playeractions
 			# when choosing a player the first usable player gets focused
 			players.get_node(usablePlayers[0]).grab_focus()
-
-
-			
-
-
-				# after we got all variables we needed we actually invoke the skill
-				else:
-					choosenPlayer.useSkill(activeSkill,activeTargets)
-
-					emit_signal("actionDone")
 					
-					
-					#debug state of the game print
-					print_debug("choosenPlayer: ",choosenPlayer.name)
-					print_debug("MP : ",choosenPlayer.mp)
-					print_debug("activeTarget: ",activeTargets[0].name)
-					print_debug("activeTarget HP: ",activeTargets[0].hp)
-					print_debug("activeTarget first active Effect: ",activeTargets[0].activeEffects[0].name)
-					
-
-
-
-
-
-
-					# make player that did action unusable
-					usablePlayers.remove(players.activePlayer)
-					# reseting all choice-variables
-#						players.activePlayer = 0
-					choosenPlayer = null
-					activeSkill = null
-					activeTargets = null
-					
-					# call playerTurn so often till all players have taken a turn
-					playerTurn()
-
-						
-						
 		else:
 			playerTurn = false
+			print_debug("playerTurn is over")
+
+			
+func finishCharacterAction():
+	# after we got all variables we needed we actually invoke the skill
+	choosenPlayer.useSkill(activeSkill,activeTargets)
+
+#	emit_signal("actionDone")
+
+
+	#debug state of the game print
+	print_debug("choosenPlayer: ",choosenPlayer.name)
+	print_debug("MP : ",choosenPlayer.mp)
+	print_debug("activeTarget: ",activeTargets[0].name)
+	print_debug("activeTarget HP: ",activeTargets[0].hp)
+	print_debug("activeTarget first active Effect: ",activeTargets[0].activeEffects[0].name)
+
+	# make player that did action unusable
+	usablePlayers.remove(usablePlayers.find(choosenPlayerName))
+	# reseting all choice-variables
+	choosenPlayer = null
+	choosenPlayerName = null
+	activeSkill = null
+	activeTargets = null
+	get_focus_owner().release_focus()
+
+	# call playerTurn so often till all players have taken a turn
+	playerTurn()
+
+
 
 
 
