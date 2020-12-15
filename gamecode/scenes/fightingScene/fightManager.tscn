@@ -1,0 +1,132 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/scenes/fightingScene/players.gd" type="Script" id=2]
+[ext_resource path="res://gamecode/scenes/fightingScene/enemies.gd" type="Script" id=3]
+[ext_resource path="res://gamecode/scenes/fightingScene/GUI.gd" type="Script" id=4]
+
+[node name="fightManager" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GUI" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="characters" type="HBoxContainer" parent="GUI"]
+margin_right = 1024.0
+margin_bottom = 425.0
+mouse_filter = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.5
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="enemies" type="VBoxContainer" parent="GUI/characters"]
+margin_right = 150.0
+margin_bottom = 425.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 2
+alignment = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="enemy1" type="Label" parent="GUI/characters/enemies"]
+margin_right = 150.0
+margin_bottom = 210.0
+size_flags_vertical = 3
+text = "enemy1"
+align = 1
+valign = 1
+
+[node name="enemy2" type="Label" parent="GUI/characters/enemies"]
+margin_top = 214.0
+margin_right = 150.0
+margin_bottom = 425.0
+size_flags_vertical = 3
+text = "enemy2"
+align = 1
+valign = 1
+
+[node name="players" type="VBoxContainer" parent="GUI/characters"]
+margin_left = 874.0
+margin_right = 1024.0
+margin_bottom = 425.0
+rect_min_size = Vector2( 150, 0 )
+alignment = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="player1" type="Label" parent="GUI/characters/players"]
+margin_right = 150.0
+margin_bottom = 210.0
+size_flags_vertical = 3
+text = "Player01"
+align = 1
+valign = 1
+
+[node name="player2" type="Label" parent="GUI/characters/players"]
+margin_top = 214.0
+margin_right = 150.0
+margin_bottom = 425.0
+size_flags_vertical = 3
+text = "Player01"
+align = 1
+valign = 1
+
+[node name="playerMenu" type="HBoxContainer" parent="GUI"]
+margin_top = 429.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+
+[node name="menuChoices" type="VBoxContainer" parent="GUI/playerMenu"]
+margin_right = 340.0
+margin_bottom = 171.0
+size_flags_horizontal = 3
+
+[node name="attackSkills" type="Button" parent="GUI/playerMenu/menuChoices"]
+margin_right = 340.0
+margin_bottom = 54.0
+size_flags_vertical = 3
+text = "Attack Skills"
+
+[node name="magicSkills" type="Button" parent="GUI/playerMenu/menuChoices"]
+margin_top = 58.0
+margin_right = 340.0
+margin_bottom = 112.0
+size_flags_vertical = 3
+text = "Magic Skills"
+
+[node name="items" type="Button" parent="GUI/playerMenu/menuChoices"]
+margin_top = 116.0
+margin_right = 340.0
+margin_bottom = 171.0
+size_flags_vertical = 3
+text = "Items"
+
+[node name="actions" type="GridContainer" parent="GUI/playerMenu"]
+margin_left = 344.0
+margin_right = 1024.0
+margin_bottom = 171.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+columns = 3
+
+[node name="inputManager" type="Node" parent="."]
+
+[node name="actualFightManager" type="Node" parent="."]
