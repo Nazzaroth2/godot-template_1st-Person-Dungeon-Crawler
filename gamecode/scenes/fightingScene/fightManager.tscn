@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/scenes/fightingScene/players.gd" type="Script" id=2]
 [ext_resource path="res://gamecode/scenes/fightingScene/enemies.gd" type="Script" id=3]
 [ext_resource path="res://gamecode/scenes/fightingScene/GUI.gd" type="Script" id=4]
+[ext_resource path="res://gamecode/scenes/fightingScene/player1.gd" type="Script" id=5]
+[ext_resource path="res://gamecode/scenes/fightingScene/inputManager.gd" type="Script" id=6]
 
 [node name="fightManager" type="Control"]
 anchor_right = 1.0
@@ -46,19 +48,23 @@ __meta__ = {
 [node name="enemy1" type="Label" parent="GUI/characters/enemies"]
 margin_right = 150.0
 margin_bottom = 210.0
+focus_mode = 2
 size_flags_vertical = 3
 text = "enemy1"
 align = 1
 valign = 1
+script = ExtResource( 5 )
 
 [node name="enemy2" type="Label" parent="GUI/characters/enemies"]
 margin_top = 214.0
 margin_right = 150.0
 margin_bottom = 425.0
+focus_mode = 2
 size_flags_vertical = 3
 text = "enemy2"
 align = 1
 valign = 1
+script = ExtResource( 5 )
 
 [node name="players" type="VBoxContainer" parent="GUI/characters"]
 margin_left = 874.0
@@ -74,19 +80,23 @@ __meta__ = {
 [node name="player1" type="Label" parent="GUI/characters/players"]
 margin_right = 150.0
 margin_bottom = 210.0
+focus_mode = 2
 size_flags_vertical = 3
 text = "Player01"
 align = 1
 valign = 1
+script = ExtResource( 5 )
 
 [node name="player2" type="Label" parent="GUI/characters/players"]
 margin_top = 214.0
 margin_right = 150.0
 margin_bottom = 425.0
+focus_mode = 2
 size_flags_vertical = 3
 text = "Player01"
 align = 1
 valign = 1
+script = ExtResource( 5 )
 
 [node name="playerMenu" type="HBoxContainer" parent="GUI"]
 margin_top = 429.0
@@ -127,6 +137,10 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 columns = 3
 
-[node name="inputManager" type="Node" parent="."]
+[node name="inputManager" type="Control" parent="."]
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="actualFightManager" type="Node" parent="."]

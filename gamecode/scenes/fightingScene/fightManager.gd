@@ -1,7 +1,7 @@
 extends Control
 
 onready var referencedPlayerGroup = $"../playerGroup"
-onready var playerGroup = referencedPlayerGroup.playerGroup
+var playerGroupDict = {}
 onready var pandemonium = preload("res://gamecode/gameObjects/enemies/pandemoniumDemo.tres")
 var instancedEnemies = []
 var enemyAmount = 2
@@ -31,6 +31,13 @@ func _ready():
 	# duplicate to keep instanced enemies unique to a fight
 	for i in range(enemyAmount):
 		instancedEnemies.append(pandemonium.enemies[enemyType].duplicate())
+	
+	var playerCounter = 1
+	for player in referencedPlayerGroup.playerGroup:
+		var playerName = "player" + str(playerCounter)
+		playerGroupDict[playerName] = player
+		playerCounter += 1
+		
 
 
 #	$demoSkill.text = playerGroup[0].classSkills["Fire Ball"].name
@@ -45,6 +52,8 @@ func _ready():
 #		print(player.name)
 #		print(player.classSkills["Fire Ball"].skillValue)
 
+	playerTurn()
+
 
 
 
@@ -53,98 +62,158 @@ func _ready():
 # usable players
 func resetUsablePlayers():
 	usablePlayers = []
-	for i in range(len(playerGroup)):
-		if playerGroup[i].hp > 0:
-			usablePlayers.append(i)
+	for playerName in playerGroupDict:
+		if playerGroupDict[playerName].hp > 0:
+			usablePlayers.append(playerName)
 
 
 # you REAAAALLY need to refactor this monstrosity
 # remember to resetUsablePlayers() after enemyTurn
-func _process(delta):
+#func _process(delta):
+#	if playerTurn:
+#		if not(usablePlayers.empty()):
+#			#get active Player through gui/playeractions
+#			if choosenPlayer == null:
+#				# when choosing a player the first usable player gets focused
+#				players.get_node(usablePlayers[0]).grab_focus()
+#				# change players.activePlayer number which changes the ui
+#				# through setter-function and later is used as index for
+#				# the choosenPlayer
+##				if Input.is_action_just_pressed("ui_focus_next"):
+##					# wrap around the usablePlayersArray when outside of lenght
+##					if players.activePlayer + 1 > len(usablePlayers)-1:
+##						players.activePlayer = 0
+##					# or go to next array-element
+##					else:
+##						players.activePlayer += 1	
+##				if Input.is_action_just_pressed("ui_focus_prev"):
+##					if players.activePlayer - 1 < 0:
+##						players.activePlayer = len(usablePlayers)-1
+##					else:
+##						players.activePlayer -= 1
+#				if Input.is_action_just_pressed("ui_accept"):
+#					# the choosen player is indexed throgh the usablePlayers-array
+#					# this way we cannot choose a player 2 times per turn, if
+#					# we remove the playerIndex from usablePlayers after action
+##					choosenPlayer = playerGroup[usablePlayers[players.activePlayer]]
+#					choosenPlayer = playerGroupDict[get_focus_owner().name]
+#					# show playerMenu and set focus on first menuChoice
+#					#playerMenu.visible = true
+#					playerMenu.get_child(0).get_child(0).grab_focus()
+#
+#
+#
+#			else:
+#				if activeSkill == null:
+#					pass
+#					# show skillChoice-Menu
+#				# if aoe-attack just pass all enemies as targets
+#				elif choosenPlayer.classSkills[activeSkill].is_aoe:
+#					activeTargets = instancedEnemies
+#				# for singleTarget we get target
+#				else:
+#					if activeTargets == null:
+#						#change tempPlayer number which will become
+#						#activePlayer when choosen
+#						if Input.is_action_just_pressed("ui_focus_next"):
+#							#wrap around the enemies-array
+#							if enemies.activeEnemy + 1 > len(instancedEnemies)-1:
+#								enemies.activeEnemy = 0
+#							else:
+#								enemies.activeEnemy += 1
+#						if Input.is_action_just_pressed("ui_focus_prev"):
+#							if enemies.activeEnemy - 1 < 0:
+#								enemies.activeEnemy = len(instancedEnemies)-1
+#							else:
+#								enemies.activeEnemy -= 1
+#						if Input.is_action_just_pressed("ui_accept"):
+#							activeTargets = [instancedEnemies[enemies.activeEnemy]]
+#
+#
+#					# after we got all variables we needed we actually invoke the skill
+#					else:
+#						choosenPlayer.useSkill(activeSkill,activeTargets)
+#
+#						emit_signal("actionDone")
+#
+#
+#						#debug state of the game print
+#						print_debug("choosenPlayer: ",choosenPlayer.name)
+#						print_debug("MP : ",choosenPlayer.mp)
+#						print_debug("activeTarget: ",activeTargets[0].name)
+#						print_debug("activeTarget HP: ",activeTargets[0].hp)
+#						print_debug("activeTarget first active Effect: ",activeTargets[0].activeEffects[0].name)
+#
+#
+#
+#
+#
+#
+#
+#						# make player that did action unusable
+#						usablePlayers.remove(players.activePlayer)
+#						# reseting all choice-variables
+##						players.activePlayer = 0
+#						choosenPlayer = null
+#						activeSkill = null
+#						activeTargets = null
+#
+#
+#
+#		else:
+#			playerTurn = false
+
+
+
+
+
+
+func playerTurn():
+#	pass
+
+
+
+
 	if playerTurn:
 		if not(usablePlayers.empty()):
 			#get active Player through gui/playeractions
-			if choosenPlayer == null:
-				# change players.activePlayer number which changes the ui
-				# through setter-function and later is used as index for
-				# the choosenPlayer
-				if Input.is_action_just_pressed("ui_focus_next"):
-					# wrap around the usablePlayersArray when outside of lenght
-					if players.activePlayer + 1 > len(usablePlayers)-1:
-						players.activePlayer = 0
-					# or go to next array-element
-					else:
-						players.activePlayer += 1	
-				if Input.is_action_just_pressed("ui_focus_prev"):
-					if players.activePlayer - 1 < 0:
-						players.activePlayer = len(usablePlayers)-1
-					else:
-						players.activePlayer -= 1
-				if Input.is_action_just_pressed("ui_accept"):
-					# the choosen player is indexed throgh the usablePlayers-array
-					# this way we cannot choose a player 2 times per turn, if
-					# we remove the playerIndex from usablePlayers after action
-					choosenPlayer = playerGroup[usablePlayers[players.activePlayer]]
-					# show playerMenu and set focus on first menuChoice
-					#playerMenu.visible = true
-					playerMenu.get_child(0).get_child(0).grab_focus()
+			# when choosing a player the first usable player gets focused
+			players.get_node(usablePlayers[0]).grab_focus()
+
+
+			
+
+
+				# after we got all variables we needed we actually invoke the skill
+				else:
+					choosenPlayer.useSkill(activeSkill,activeTargets)
+
+					emit_signal("actionDone")
+					
+					
+					#debug state of the game print
+					print_debug("choosenPlayer: ",choosenPlayer.name)
+					print_debug("MP : ",choosenPlayer.mp)
+					print_debug("activeTarget: ",activeTargets[0].name)
+					print_debug("activeTarget HP: ",activeTargets[0].hp)
+					print_debug("activeTarget first active Effect: ",activeTargets[0].activeEffects[0].name)
 					
 
 
-			else:
-				if activeSkill == null:
-					pass
-					# show skillChoice-Menu
-				# if aoe-attack just pass all enemies as targets
-				elif choosenPlayer.classSkills[activeSkill].is_aoe:
-					activeTargets = instancedEnemies
-				# for singleTarget we get target
-				else:
-					if activeTargets == null:
-						#change tempPlayer number which will become
-						#activePlayer when choosen
-						if Input.is_action_just_pressed("ui_focus_next"):
-							#wrap around the enemies-array
-							if enemies.activeEnemy + 1 > len(instancedEnemies)-1:
-								enemies.activeEnemy = 0
-							else:
-								enemies.activeEnemy += 1
-						if Input.is_action_just_pressed("ui_focus_prev"):
-							if enemies.activeEnemy - 1 < 0:
-								enemies.activeEnemy = len(instancedEnemies)-1
-							else:
-								enemies.activeEnemy -= 1
-						if Input.is_action_just_pressed("ui_accept"):
-							activeTargets = [instancedEnemies[enemies.activeEnemy]]
-
-
-					# after we got all variables we needed we actually invoke the skill
-					else:
-						choosenPlayer.useSkill(activeSkill,activeTargets)
-
-						emit_signal("actionDone")
-						
-						
-						#debug state of the game print
-						print_debug("choosenPlayer: ",choosenPlayer.name)
-						print_debug("MP : ",choosenPlayer.mp)
-						print_debug("activeTarget: ",activeTargets[0].name)
-						print_debug("activeTarget HP: ",activeTargets[0].hp)
-						print_debug("activeTarget first active Effect: ",activeTargets[0].activeEffects[0].name)
-						
 
 
 
 
-
-
-						# make player that did action unusable
-						usablePlayers.remove(players.activePlayer)
-						# reseting all choice-variables
+					# make player that did action unusable
+					usablePlayers.remove(players.activePlayer)
+					# reseting all choice-variables
 #						players.activePlayer = 0
-						choosenPlayer = null
-						activeSkill = null
-						activeTargets = null
+					choosenPlayer = null
+					activeSkill = null
+					activeTargets = null
+					
+					# call playerTurn so often till all players have taken a turn
+					playerTurn()
 
 						
 						
@@ -156,12 +225,9 @@ func _process(delta):
 
 
 
-func playerTurn():
-	pass
-
-	var possiblePlayers = []
-	for i in range(referencedPlayerGroup):
-		possiblePlayers.append(i)
+#	var possiblePlayers = []
+#	for i in range(referencedPlayerGroup):
+#		possiblePlayers.append(i)
 
 #	#every player in Group takes a turn with one action
 #	for playerNum in range(possiblePlayers):
@@ -176,8 +242,8 @@ func playerTurn():
 
 
 	# after fight effects like poison take effect
-	for player in referencedPlayerGroup:
-		checkEffects(false, player)
+#	for player in referencedPlayerGroup:
+#		checkEffects(false, player)
 
 	# before enemies are allowed to act we check if playeractions have
 	# killed any enemies and we remove them from the array		

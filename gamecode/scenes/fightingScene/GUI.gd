@@ -35,7 +35,7 @@ func _on_menuChoice_focus_entered(menuChoice):
 func _on_actionButton_pressed(skillName):
 	fightManager.activeSkill = skillName
 	get_focus_owner().release_focus()
-	enemies.get_child(0).text = "active"
+	enemies.get_child(0).grab_focus()
 
 			
 func _clearActionContainer():
