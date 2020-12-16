@@ -12,6 +12,9 @@ export (Dictionary) var equipment
 
 
 var activeEffects = []
+# maybe use these variables to decide if player is usable or targetable
+var is_usable = true
+var is_targetable = true
 
 export (int) var hp_max
 export (int) var hp

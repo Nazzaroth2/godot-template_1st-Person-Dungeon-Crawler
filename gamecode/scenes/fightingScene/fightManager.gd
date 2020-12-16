@@ -54,10 +54,10 @@ func _ready():
 
 
 
-	resetUsableCharacters()
+	resetUsableCharacters("both")
 
 
-	playerTurn()
+	gameRound()
 
 
 
@@ -65,31 +65,44 @@ func _ready():
 
 # for every player in group that is alive we put his index into
 # usable players
-func resetUsableCharacters():
-	usablePlayers = []
-	for playerName in playersDict:
-		if playersDict[playerName].hp > 0:
-			usablePlayers.append(playerName)
+func resetUsableCharacters(characters):
+	
+	if characters == "players":
+		usablePlayers = []
+		for playerName in playersDict:
+			if playersDict[playerName].hp > 0:
+				usablePlayers.append(playerName)
+	elif characters == "enemies":
+		usableEnemies = []
+		for enemyName in enemiesDict:
+			usableEnemies.append(enemyName)
+	elif characters == "both":
+		usablePlayers = []
+		for playerName in playersDict:
+			if playersDict[playerName].hp > 0:
+				usablePlayers.append(playerName)
+				
+		usableEnemies = []
+		for enemyName in enemiesDict:
+			usableEnemies.append(enemyName)
 		
-	usableEnemies = []
-	for enemyName in enemiesDict:
-		usableEnemies.append(enemyName)
 	
 
 # the big turnbased function that checks for win-lose-state and which turn it is.
 func gameRound():
 	# check if any group won the fight and finish the scene
-	checkFightover()
-	
-	if playerTurn:
-		playerTurn()
-	else:
-		enemyTurn()
+	if checkFightover():
+		pass
+	else:		
+		if playerTurn:
+			playerTurn()
+		else:
+			enemyTurn()
 
 
 
 func playerTurn():
-	# add preTurn effects here
+	# add preTurn effects here	
 	
 	if not(usablePlayers.empty()):
 		#get active Player through gui/playeractions
@@ -105,6 +118,35 @@ func playerTurn():
 		playerTurn = false
 		print_debug("playerTurn is over")
 		gameRound()
+
+func finishCharacterAction():
+	# after we got all variables we needed we actually invoke the skill
+	choosenPlayer.useSkill(activeSkill,choosenTargets)
+	
+	# check if any of the choosenTargets got killed and remove them from dictionary
+	for enemyName in enemiesDict:
+		if enemiesDict[enemyName].hp <= 0:
+			enemiesDict.erase(enemyName)
+	resetUsableCharacters("enemies")
+
+
+	#debug state of the game print
+	print_debug("")
+	print_debug("choosenPlayer: ",choosenPlayer.name)
+#	print_debug("MP : ",choosenPlayer.mp)
+	print_debug("activeTarget: ",choosenTargets[0].name)
+	print_debug("activeTarget HP: ",choosenTargets[0].hp)
+#	print_debug("activeTarget first active Effect: ",choosenTargets[0].activeEffects[0].name)
+
+	# make player that did action unusable
+	usablePlayers.remove(usablePlayers.find(choosenPlayerName))
+	# reseting all choice-variables
+
+	get_focus_owner().release_focus()
+
+	# call playerTurn so often till all players have taken a turn
+	playerTurn()
+
 
 func _on_player_choosen(playerName):
 	choosenPlayer = playersDict[playerName]
@@ -124,34 +166,10 @@ func _on_actionButton_pressed(skillName):
 			#maybe deal somehow with showing aoe-targets as active first?
 			choosenTargets = [enemiesDict.values()]
 	else:
-		enemies.get_child(0).grab_focus()
+		enemies.get_node(usableEnemies[0]).grab_focus()
 
 			
-func finishCharacterAction():
-	# after we got all variables we needed we actually invoke the skill
-	choosenPlayer.useSkill(activeSkill,choosenTargets)
-	
-	# check if any of the choosenTargets got killed and remove them from dictionary
-	for enemyName in enemiesDict:
-		if enemiesDict[enemyName].hp <= 0:
-			enemiesDict.erase(enemyName)
 
-
-	#debug state of the game print
-	print_debug("choosenPlayer: ",choosenPlayer.name)
-	print_debug("MP : ",choosenPlayer.mp)
-	print_debug("activeTarget: ",choosenTargets[0].name)
-	print_debug("activeTarget HP: ",choosenTargets[0].hp)
-	print_debug("activeTarget first active Effect: ",choosenTargets[0].activeEffects[0].name)
-
-	# make player that did action unusable
-	usablePlayers.remove(usablePlayers.find(choosenPlayerName))
-	# reseting all choice-variables
-
-	get_focus_owner().release_focus()
-
-	# call playerTurn so often till all players have taken a turn
-	playerTurn()
 
 
 
@@ -170,37 +188,41 @@ func checkEffects(preTurn:bool, target):
 
 
 func enemyTurn():
-	print("its the enemies turn")
-
-#	for enemy in instancedEnemies:
-		# check for preTurnEffects (stun) and apply them
-		# enemy.ki()
+	for enemy in enemiesDict.values():
+		enemy.ki(enemiesDict.values(), playersDict.values())
+		
+		# after enemy has acted we need to check if any players died.
+		for playerName in playersDict:
+			if playersDict[playerName].hp <= 0:
+				playersDict.erase(playerName)
+		resetUsableCharacters("players")
+		
 
 	# after fight effects like poison take effect
 #	for enemie in instancedEnemies:
 		# check for postRoundEffects and apply them
 
-	# before players are allowed to act we check if enemieactions have
-	# killed any players and we remove them from the array		
-#	for player in referencedPlayerGroup:
-#		if player.hp <= 0:
-#			player.destroy() #OR
-#			referencedPlayerGroup.remove(player)
 
-#	playerRound = true
-#	enablePlayerGUI()
-#	gameplay()
+	
+	playerTurn = true
+	gameRound()
 
 
 func checkFightover():
-	pass
+	if enemiesDict.empty():
+		playerWon()
+		return true
+	elif playersDict.empty():
+		playerLost()
+		return true
+	else:
+		return false
 
-#	if enemyGroupDict is empty:
-#		playerWon()
-#	elif playersDict is empty:
-#		playerLost()
-#
-
+func playerWon():
+	print("player has won")
+	
+func playerLost():
+	print("player has lost")
 
 
 

@@ -11,5 +11,5 @@ cost = 20
 skillCategory = 1
 targetedStat = 0
 skillEffects = [ ExtResource( 2 ) ]
-skillValue = 20
+skillValue = 50
 is_aoe = false

@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/enemies/baseEnemy.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/gameObjects/skills/fireBall.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
@@ -8,6 +9,10 @@ name = "leDemo"
 description = "herpDerpyDerp"
 hp_max = 100
 hp = 100
+mp_max = 100
+mp = 100
+stamina_max = 100
+stamina = 100
 classSkills = {
-
+"Fire Ball": ExtResource( 2 )
 }
