@@ -1,6 +1,8 @@
 extends Label
 
-onready var fightManager = $"../../../.."
+onready var fightManager = $"../../../../fightManager"
+
+signal enemy_choosen
 
 func _ready():
 	self.connect("focus_entered",self,"_on_focus_entered")
@@ -42,3 +44,8 @@ func _calculateNeighbours(thisPlayerIdx):
 		leftNeighbour = len(fightManager.usableEnemies) - 1
 		
 	return [rightNeighbour, leftNeighbour]
+	
+func _unhandled_input(event):
+	if get_focus_owner() == self:
+		if event.is_action_pressed("ui_accept"):
+			emit_signal("enemy_choosen",self.name)

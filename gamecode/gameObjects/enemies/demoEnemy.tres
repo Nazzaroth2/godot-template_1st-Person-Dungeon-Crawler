@@ -8,3 +8,6 @@ name = "leDemo"
 description = "herpDerpyDerp"
 hp_max = 100
 hp = 100
+classSkills = {
+
+}

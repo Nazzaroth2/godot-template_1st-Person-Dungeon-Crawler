@@ -1,17 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
-[ext_resource path="res://gamecode/scenes/fightingScene/players.gd" type="Script" id=2]
-[ext_resource path="res://gamecode/scenes/fightingScene/enemies.gd" type="Script" id=3]
 [ext_resource path="res://gamecode/scenes/fightingScene/GUI.gd" type="Script" id=4]
-[ext_resource path="res://gamecode/scenes/fightingScene/player1.gd" type="Script" id=5]
-[ext_resource path="res://gamecode/scenes/fightingScene/inputManager.gd" type="Script" id=6]
-[ext_resource path="res://gamecode/scenes/fightingScene/enemy.gd" type="Script" id=7]
+[ext_resource path="res://gamecode/scenes/fightingScene/playerSprite.gd" type="Script" id=5]
+[ext_resource path="res://gamecode/scenes/fightingScene/enemySprite.gd" type="Script" id=7]
 
-[node name="fightManager" type="Control"]
+[node name="fightScene" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -41,7 +37,6 @@ margin_bottom = 425.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 2
 alignment = 1
-script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -73,7 +68,6 @@ margin_right = 1024.0
 margin_bottom = 425.0
 rect_min_size = Vector2( 150, 0 )
 alignment = 1
-script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -138,10 +132,8 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 columns = 3
 
-[node name="inputManager" type="Control" parent="."]
-script = ExtResource( 6 )
+[node name="fightManager" type="Control" parent="."]
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="actualFightManager" type="Node" parent="."]

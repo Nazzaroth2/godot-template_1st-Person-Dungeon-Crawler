@@ -1,6 +1,8 @@
 extends Label
 
-onready var fightManager = $"../../../.."
+onready var fightManager = $"../../../../fightManager"
+
+signal player_choosen
 
 func _ready():
 	self.connect("focus_entered",self,"_on_focus_entered")
@@ -12,6 +14,7 @@ func _on_focus_entered():
 	
 func _on_focus_exited():
 	self.text = self.name
+	
 
 	
 func _set_focus_neighbours(usablePlayers):
@@ -42,3 +45,9 @@ func _calculateNeighbours(thisPlayerIdx):
 		leftNeighbour = len(fightManager.usablePlayers) - 1
 		
 	return [rightNeighbour, leftNeighbour]
+
+
+func _unhandled_input(event):
+	if get_focus_owner() == self:
+		if event.is_action_pressed("ui_accept"):
+			emit_signal("player_choosen",self.name)

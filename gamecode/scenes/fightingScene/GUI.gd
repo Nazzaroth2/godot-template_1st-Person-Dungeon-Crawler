@@ -3,7 +3,7 @@ extends VBoxContainer
 onready var actionsContainer = $playerMenu/actions
 onready var menuChoices = $playerMenu/menuChoices
 onready var enemies = $characters/enemies
-onready var fightManager = $".."
+onready var fightManager = $"../fightManager"
 
 func _ready():
 	# connect signals from menuChoice-Buttons
@@ -29,13 +29,10 @@ func _on_menuChoice_focus_entered(menuChoice):
 			newButton.text = skill
 			newButton.size_flags_horizontal = Button.SIZE_EXPAND_FILL
 #			newButton.size_flags_vertical = Button.SIZE_EXPAND_FILL
-			newButton.connect("pressed", self, "_on_actionButton_pressed",[skill])
+			newButton.connect("pressed", fightManager, "_on_actionButton_pressed",[skill])
 			actionsContainer.add_child(newButton)
 
-func _on_actionButton_pressed(skillName):
-	fightManager.activeSkill = skillName
-	get_focus_owner().release_focus()
-	enemies.get_child(0).grab_focus()
+
 
 			
 func _clearActionContainer():
