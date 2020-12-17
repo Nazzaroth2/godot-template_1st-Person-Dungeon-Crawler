@@ -12,8 +12,6 @@ var playerTurn = true
 var choosenPlayer
 var choosenPlayerName
 var activeSkillName
-#var usablePlayers = []
-var usableEnemies = []
 var choosenTargets
 
 # GUI-Variables
@@ -45,7 +43,7 @@ func _ready():
 		playerCounter += 1
 	
 	
-	var playerScript = preload("res://gamecode/scenes/fightingScene/playerSprite.gd")
+	var characterScript = preload("res://gamecode/scenes/fightingScene/characterSprite.gd")
 	# create icon-objects for enemies and players here later
 	for player in playersDict:
 		var playerIcon = ColorRect.new()
@@ -56,12 +54,11 @@ func _ready():
 		playerIcon.focus_mode = Control.FOCUS_ALL
 		
 		# set script and give reference to Player Resource
-		playerIcon.set_script(playerScript)
+		playerIcon.set_script(characterScript)
 		playerIcon.characterResource = playersDict[player]
 		
 		players.add_child(playerIcon)
 		
-	var enemyScript = preload("res://gamecode/scenes/fightingScene/enemySprite.gd")
 	for enemy in enemiesDict:
 		var enemiesIcon = ColorRect.new()
 		
@@ -71,7 +68,7 @@ func _ready():
 		enemiesIcon.focus_mode = Control.FOCUS_ALL
 		
 		# set script and give reference to Player Resource
-		enemiesIcon.set_script(enemyScript)
+		enemiesIcon.set_script(characterScript)
 		enemiesIcon.characterResource = enemiesDict[enemy]
 		
 		enemies.add_child(enemiesIcon)
@@ -84,11 +81,7 @@ func _ready():
 	for enemy in enemies.get_children():
 		enemy.connect("enemy_choosen",self,"_on_enemy_choosen")
 
-
-
-#	resetUsableCharacters("both")
-
-
+	# start the fight
 	gameRound()
 
 
