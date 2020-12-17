@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
-[ext_resource path="res://gamecode/scenes/fightingScene/GUI.gd" type="Script" id=4]
-[ext_resource path="res://gamecode/scenes/fightingScene/playerSprite.gd" type="Script" id=5]
-[ext_resource path="res://gamecode/scenes/fightingScene/enemySprite.gd" type="Script" id=7]
+[ext_resource path="res://gamecode/scenes/fightingScene/menuChoices.gd" type="Script" id=4]
 
 [node name="fightScene" type="Control"]
 anchor_right = 1.0
@@ -15,7 +13,6 @@ __meta__ = {
 [node name="GUI" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -41,27 +38,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="enemy1" type="Label" parent="GUI/characters/enemies"]
-margin_right = 150.0
-margin_bottom = 210.0
-focus_mode = 2
-size_flags_vertical = 3
-text = "enemy1"
-align = 1
-valign = 1
-script = ExtResource( 7 )
-
-[node name="enemy2" type="Label" parent="GUI/characters/enemies"]
-margin_top = 214.0
-margin_right = 150.0
-margin_bottom = 425.0
-focus_mode = 2
-size_flags_vertical = 3
-text = "enemy2"
-align = 1
-valign = 1
-script = ExtResource( 7 )
-
 [node name="players" type="VBoxContainer" parent="GUI/characters"]
 margin_left = 874.0
 margin_right = 1024.0
@@ -71,27 +47,6 @@ alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="player1" type="Label" parent="GUI/characters/players"]
-margin_right = 150.0
-margin_bottom = 210.0
-focus_mode = 2
-size_flags_vertical = 3
-text = "Player01"
-align = 1
-valign = 1
-script = ExtResource( 5 )
-
-[node name="player2" type="Label" parent="GUI/characters/players"]
-margin_top = 214.0
-margin_right = 150.0
-margin_bottom = 425.0
-focus_mode = 2
-size_flags_vertical = 3
-text = "Player01"
-align = 1
-valign = 1
-script = ExtResource( 5 )
 
 [node name="playerMenu" type="HBoxContainer" parent="GUI"]
 margin_top = 429.0
@@ -103,10 +58,12 @@ size_flags_vertical = 3
 margin_right = 340.0
 margin_bottom = 171.0
 size_flags_horizontal = 3
+script = ExtResource( 4 )
 
 [node name="attackSkills" type="Button" parent="GUI/playerMenu/menuChoices"]
 margin_right = 340.0
 margin_bottom = 54.0
+focus_neighbour_top = NodePath("../items")
 size_flags_vertical = 3
 text = "Attack Skills"
 
@@ -121,6 +78,7 @@ text = "Magic Skills"
 margin_top = 116.0
 margin_right = 340.0
 margin_bottom = 171.0
+focus_neighbour_bottom = NodePath("../attackSkills")
 size_flags_vertical = 3
 text = "Items"
 

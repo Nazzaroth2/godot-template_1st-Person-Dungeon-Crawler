@@ -1,13 +1,12 @@
 extends VBoxContainer
 
-onready var actionsContainer = $playerMenu/actions
-onready var menuChoices = $playerMenu/menuChoices
-onready var enemies = $characters/enemies
-onready var fightManager = $"../fightManager"
+onready var actionsContainer = $"../actions"
+onready var enemies = $"../../characters/enemies"
+onready var fightManager = $"../../../fightManager"
 
 func _ready():
 	# connect signals from menuChoice-Buttons
-	for choice in menuChoices.get_children():
+	for choice in self.get_children():
 		choice.connect("pressed",self,"_on_choiceButton_pressed")
 		choice.connect("focus_entered", self,
 		 "_on_menuChoice_focus_entered",[choice.name])

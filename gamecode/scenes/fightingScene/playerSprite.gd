@@ -1,19 +1,21 @@
-extends Label
+extends ColorRect
 
 onready var fightManager = $"../../../../fightManager"
+var characterResource
 
 signal player_choosen
 
 func _ready():
 	self.connect("focus_entered",self,"_on_focus_entered")
 	self.connect("focus_exited",self,"_on_focus_exited")
+
 	
 func _on_focus_entered():
-	_set_focus_neighbours(fightManager.usablePlayers)
-	self.text = "active"
+#	_set_focus_neighbours(fightManager.usablePlayers)
+	self.color = Color(Color.blue)
 	
 func _on_focus_exited():
-	self.text = self.name
+	self.color = Color(Color.red)
 	
 
 	
@@ -50,4 +52,4 @@ func _calculateNeighbours(thisPlayerIdx):
 func _unhandled_input(event):
 	if get_focus_owner() == self:
 		if event.is_action_pressed("ui_accept"):
-			emit_signal("player_choosen",self.name)
+			emit_signal("player_choosen",self.characterResource)
