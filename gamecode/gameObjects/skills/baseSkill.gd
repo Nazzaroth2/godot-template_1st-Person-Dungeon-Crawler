@@ -13,6 +13,7 @@ export (int) var skillValue
 
 export (bool) var is_aoe
 
+
 # overwrite this function in inherited objects if you want to have unusual
 # skill behaviour (eg. diffrent amounts of damage per target)
 func use(user, targets:Array):
