@@ -8,9 +8,86 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "BaseGameObject",
+"class": "BaseEffect",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/effects/baseEffect.gd"
+}, {
+"base": "BaseGameObject",
+"class": "BaseEnemy",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/enemies/baseEnemy.gd"
+}, {
+"base": "Resource",
+"class": "BaseGameObject",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/baseGameObject.gd"
+}, {
+"base": "BaseGameObject",
+"class": "BaseItem",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/items/baseItem.gd"
+}, {
+"base": "BaseGameObject",
+"class": "BasePlayerClass",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/playerClasses/baseClass.gd"
+}, {
+"base": "BaseGameObject",
+"class": "BaseSkill",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/skills/baseSkill.gd"
+}, {
+"base": "BaseEffect",
+"class": "Burn",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/effects/burn.gd"
+}, {
+"base": "BaseItem",
+"class": "Consumable",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/items/consumable.gd"
+}, {
+"base": "BaseSkill",
+"class": "DamageSkill",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/skills/damageSkill.gd"
+}, {
+"base": "BaseItem",
+"class": "Equipment",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/items/equipment.gd"
+}, {
+"base": "BaseSkill",
+"class": "HealingSkill",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/skills/healingSkill.gd"
+}, {
+"base": "Resource",
+"class": "Pandemonium",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/enemies/pandemonium.gd"
+}, {
+"base": "BaseEffect",
+"class": "Stun",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/effects/stun.gd"
+} ]
 _global_script_class_icons={
-
+"BaseEffect": "",
+"BaseEnemy": "",
+"BaseGameObject": "",
+"BaseItem": "",
+"BasePlayerClass": "",
+"BaseSkill": "",
+"Burn": "",
+"Consumable": "",
+"DamageSkill": "",
+"Equipment": "",
+"HealingSkill": "",
+"Pandemonium": "",
+"Stun": ""
 }
 
 [application]
@@ -24,6 +101,24 @@ enabled=PoolStringArray(  )
 
 [input]
 
+ui_focus_next={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777218,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_focus_prev={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777218,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
+ ]
+}
 forward={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)

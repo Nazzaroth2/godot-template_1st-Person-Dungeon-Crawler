@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/gameObjects/skills/slash.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = ""
+description = ""
+classSkills = {
+"Slash": ExtResource( 2 )
+}
+equipment = {
+
+}
+hp_max = 0
+hp = 0
+mp_max = 0
+mp = 0
+stamina_max = 0
+stamina = 0
+strength = 0
+dexterity = 0
+intelligence = 0
+luck = 0

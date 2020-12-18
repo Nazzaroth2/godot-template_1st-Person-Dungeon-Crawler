@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://gamecode/scenes/fightingScene/fightManager.tscn" type="PackedScene" id=1]
+[ext_resource path="res://gamecode/scenes/playerGroup.gd" type="Script" id=2]
+[ext_resource path="res://gamecode/gameObjects/playerClasses/Chris_Mage.tres" type="Resource" id=3]
+[ext_resource path="res://gamecode/gameObjects/playerClasses/Copy_Mage.tres" type="Resource" id=4]
+
+[node name="Node" type="Node"]
+
+[node name="fightScene" parent="." instance=ExtResource( 1 )]
+anchor_top = -0.00166667
+anchor_bottom = 0.998333
+
+[node name="playerGroup" type="Node" parent="."]
+script = ExtResource( 2 )
+playerGroup = [ ExtResource( 3 ), ExtResource( 4 ) ]

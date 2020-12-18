@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/items/equipment.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Small Shield"
+description = "A small shield out of leather. It will save your live once in a while."
+price_buy = 25
+price_sell = 15
+max_stacks = 99
+current_stacks = 1
+itemEffects = [  ]
+attack = 0
+defense = 10
+equipmentSlot = "hand"
