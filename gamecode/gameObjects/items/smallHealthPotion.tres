@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/items/healthPotion.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/item-Icons/potion_small.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Small Health Potion"
+description = ""
+icon = ExtResource( 2 )
+price_buy = 5
+price_sell = 3
+max_stacks = 99
+current_stacks = 10
+itemEffects = [  ]
+healingValue = 10

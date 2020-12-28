@@ -65,6 +65,11 @@ _global_script_classes=[ {
 "path": "res://gamecode/gameObjects/skills/healingSkill.gd"
 }, {
 "base": "Resource",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://gamecode/scenes/GUI/inventory/inventoryResource.gd"
+}, {
+"base": "Resource",
 "class": "Pandemonium",
 "language": "GDScript",
 "path": "res://gamecode/gameObjects/enemies/pandemonium.gd"
@@ -73,6 +78,11 @@ _global_script_classes=[ {
 "class": "Stun",
 "language": "GDScript",
 "path": "res://gamecode/gameObjects/effects/stun.gd"
+}, {
+"base": "Consumable",
+"class": "healthPotion",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/items/healthPotion.gd"
 } ]
 _global_script_class_icons={
 "BaseEffect": "",
@@ -86,8 +96,10 @@ _global_script_class_icons={
 "DamageSkill": "",
 "Equipment": "",
 "HealingSkill": "",
+"Inventory": "",
 "Pandemonium": "",
-"Stun": ""
+"Stun": "",
+"healthPotion": ""
 }
 
 [application]
@@ -176,5 +188,10 @@ W={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_left_mouse={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
