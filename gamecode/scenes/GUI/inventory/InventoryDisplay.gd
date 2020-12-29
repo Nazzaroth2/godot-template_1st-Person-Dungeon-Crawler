@@ -1,11 +1,23 @@
 extends GridContainer
 
-export (Resource) var inventory = preload("res://gamecode/scenes/GUI/inventory/playerInventory.tres").duplicate()
+export (Resource) var inventory
+#export (Resource) var inventory = preload("res://gamecode/gameObjects/inventory/playerInventory.tres").duplicate()
 
 func _ready():
 	inventory.connect("items_changed", self, "_on_items_changed")
+
+#	var newInventory = inventory.duplicate()
+#	inventory = newInventory
+
 	inventory.make_items_unique()
 	update_inventory_display()
+	
+
+	
+	print(inventory)
+	print(inventory.items)
+
+
 
 func update_inventory_display():
 	for item_index in len(inventory.items):

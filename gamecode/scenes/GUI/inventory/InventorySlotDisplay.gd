@@ -4,6 +4,8 @@ onready var inventory = get_parent().inventory
 onready var itemTextureRect = $ItemTextureRect
 onready var stacksLabel = $ItemTextureRect/StacksLabel
 
+
+
 func display_item(item):
 	if item is BaseItem:
 		itemTextureRect.texture = item.icon

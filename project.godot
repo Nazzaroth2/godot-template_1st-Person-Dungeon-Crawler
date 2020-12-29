@@ -67,7 +67,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "Inventory",
 "language": "GDScript",
-"path": "res://gamecode/scenes/GUI/inventory/inventoryResource.gd"
+"path": "res://gamecode/gameObjects/inventory/inventoryResource.gd"
 }, {
 "base": "Resource",
 "class": "Pandemonium",

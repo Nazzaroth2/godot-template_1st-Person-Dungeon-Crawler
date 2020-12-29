@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryInteraction.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/inventory.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryShop.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryChest.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=5]
+[ext_resource path="res://gamecode/gameObjects/items/boots.tres" type="Resource" id=6]
+[ext_resource path="res://gamecode/gameObjects/items/smallHealthPotion.tres" type="Resource" id=7]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+items = [ ExtResource( 6 ), null, null, null, null, null, null, ExtResource( 7 ), ExtResource( 7 ) ]
+gold = 2000
+type = "CHEST"
 
 [node name="inventoryInteraction" type="Control"]
 anchor_right = 1.0
@@ -9,3 +22,38 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="inventory" parent="." instance=ExtResource( 2 )]
+margin_right = -741.0
+margin_bottom = -328.0
+
+[node name="inventoryChest01" parent="." instance=ExtResource( 4 )]
+margin_left = 465.859
+margin_top = 9.34387
+margin_right = -296.141
+margin_bottom = -346.656
+
+[node name="InventoryContent" parent="inventoryChest01/CenterContainer" index="0"]
+margin_left = 36.0
+margin_top = 23.0
+margin_right = 225.0
+margin_bottom = 221.0
+
+[node name="InventoryDisplay" parent="inventoryChest01/CenterContainer/InventoryContent" index="0"]
+inventory = SubResource( 1 )
+
+[node name="inventoryShop" parent="." instance=ExtResource( 3 )]
+margin_left = 75.1495
+margin_top = 328.077
+margin_right = -703.851
+margin_bottom = -38.9232
+
+[node name="inventoryChest02" parent="." instance=ExtResource( 4 )]
+margin_left = 527.261
+margin_top = 311.018
+margin_right = -216.739
+margin_bottom = -66.9825
+
+[editable path="inventoryChest01"]
+
+[editable path="inventoryChest01/CenterContainer/InventoryContent"]

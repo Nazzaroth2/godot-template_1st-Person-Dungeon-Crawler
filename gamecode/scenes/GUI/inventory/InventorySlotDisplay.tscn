@@ -6,6 +6,10 @@
 [node name="InventorySlotDisplay" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 7.49158
+margin_top = -47.1967
+margin_right = 7.49158
+margin_bottom = -47.1967
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )

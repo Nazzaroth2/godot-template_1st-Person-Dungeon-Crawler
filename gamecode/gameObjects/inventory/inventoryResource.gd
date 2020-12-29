@@ -4,10 +4,20 @@ class_name Inventory
 var drag_data = null
 
 signal items_changed(indexes)
+signal gold_changed(newGold)
 
 export(Array, Resource) var items = [
 	null, null, null, null, null, null, null, null, null
 ]
+export(int) var gold = 100 setget set_gold, get_gold
+export(String) var type = ""
+
+func set_gold(goldAmount):
+	gold = goldAmount
+	emit_signal("gold_changed", gold)
+	
+func get_gold():
+	return gold
 
 func set_item(item_index, item):
 	var previousItem = items[item_index]
