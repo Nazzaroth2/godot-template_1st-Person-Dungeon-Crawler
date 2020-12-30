@@ -24,9 +24,9 @@ __meta__ = {
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 417.0
-margin_top = 201.0
+margin_top = 198.0
 margin_right = 606.0
-margin_bottom = 399.0
+margin_bottom = 402.0
 mouse_filter = 2
 
 [node name="InventoryDisplay" parent="CenterContainer/InventoryContent" index="0"]
@@ -85,7 +85,7 @@ margin_bottom = 180.0
 [node name="GoldLabel" parent="CenterContainer/InventoryContent" index="1"]
 margin_top = 184.0
 margin_right = 189.0
-margin_bottom = 198.0
+margin_bottom = 204.0
 mouse_filter = 2
 
 [editable path="CenterContainer/InventoryContent"]
