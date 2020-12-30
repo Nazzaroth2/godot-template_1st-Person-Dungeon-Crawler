@@ -1,18 +1,18 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/items/equipment.gd" type="Script" id=1]
-[ext_resource path="res://assets/textures/item-Icons/sword_small.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/item-Icons/boots_small.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Short Sword"
-description = "A basic short sword. Enough to fight off rats, but not much more."
+name = "Leather Boots"
+description = ""
 icon = ExtResource( 2 )
 price_buy = 20
 price_sell = 12
 max_stacks = 1
 current_stacks = 1
 itemEffects = [  ]
-attack = 5
-defense = 1
-equipmentSlot = "hand"
+attack = 0
+defense = 10
+equipmentSlot = ""

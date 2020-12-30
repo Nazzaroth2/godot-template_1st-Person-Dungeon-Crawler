@@ -1,0 +1,108 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://gamecode/scenes/GUI/inventory/InventorySlotDisplay.tscn" type="PackedScene" id=1]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/InventoryDisplay.gd" type="Script" id=2]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/GoldLabel.gd" type="Script" id=3]
+
+[node name="InventoryContent" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryDisplay" type="GridContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 576.0
+size_flags_vertical = 3
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventorySlotDisplay" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 341.0
+margin_bottom = 192.0
+
+[node name="InventorySlotDisplay2" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 341.0
+margin_top = 0.0
+margin_right = 682.0
+margin_bottom = 192.0
+
+[node name="InventorySlotDisplay3" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 682.0
+margin_top = 0.0
+margin_right = 1023.0
+margin_bottom = 192.0
+
+[node name="InventorySlotDisplay4" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 192.0
+margin_right = 341.0
+margin_bottom = 384.0
+
+[node name="InventorySlotDisplay5" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 341.0
+margin_top = 192.0
+margin_right = 682.0
+margin_bottom = 384.0
+
+[node name="InventorySlotDisplay6" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 682.0
+margin_top = 192.0
+margin_right = 1023.0
+margin_bottom = 384.0
+
+[node name="InventorySlotDisplay7" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 384.0
+margin_right = 341.0
+margin_bottom = 576.0
+
+[node name="InventorySlotDisplay8" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 341.0
+margin_top = 384.0
+margin_right = 682.0
+margin_bottom = 576.0
+
+[node name="InventorySlotDisplay9" parent="InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 682.0
+margin_top = 384.0
+margin_right = 1023.0
+margin_bottom = 576.0
+
+[node name="GoldLabel" type="Label" parent="."]
+margin_top = 580.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 0
+text = "Gold: "
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

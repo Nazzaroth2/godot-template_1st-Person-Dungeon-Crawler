@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=1]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+items = [ null, null, null, null, null, null, null, null, null ]
+gold = 1000
+type = "CHEST"

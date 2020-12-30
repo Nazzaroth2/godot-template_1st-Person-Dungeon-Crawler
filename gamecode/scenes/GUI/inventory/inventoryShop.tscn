@@ -1,0 +1,91 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gamecode/scenes/GUI/inventory/InventoryDisplay.tscn" type="PackedScene" id=1]
+[ext_resource path="res://gamecode/gameObjects/inventory/shopInventory.tres" type="Resource" id=2]
+
+[node name="inventoryShop" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryContent" parent="CenterContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 417.0
+margin_top = 201.0
+margin_right = 606.0
+margin_bottom = 399.0
+mouse_filter = 2
+
+[node name="InventoryDisplay" parent="CenterContainer/InventoryContent" index="0"]
+margin_right = 189.0
+margin_bottom = 180.0
+inventory = ExtResource( 2 )
+
+[node name="InventorySlotDisplay" parent="CenterContainer/InventoryContent/InventoryDisplay" index="0"]
+margin_right = 63.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay2" parent="CenterContainer/InventoryContent/InventoryDisplay" index="1"]
+margin_left = 63.0
+margin_right = 126.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay3" parent="CenterContainer/InventoryContent/InventoryDisplay" index="2"]
+margin_left = 126.0
+margin_right = 189.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay4" parent="CenterContainer/InventoryContent/InventoryDisplay" index="3"]
+margin_top = 60.0
+margin_right = 63.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay5" parent="CenterContainer/InventoryContent/InventoryDisplay" index="4"]
+margin_left = 63.0
+margin_top = 60.0
+margin_right = 126.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay6" parent="CenterContainer/InventoryContent/InventoryDisplay" index="5"]
+margin_left = 126.0
+margin_top = 60.0
+margin_right = 189.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay7" parent="CenterContainer/InventoryContent/InventoryDisplay" index="6"]
+margin_top = 120.0
+margin_right = 63.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay8" parent="CenterContainer/InventoryContent/InventoryDisplay" index="7"]
+margin_left = 63.0
+margin_top = 120.0
+margin_right = 126.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay9" parent="CenterContainer/InventoryContent/InventoryDisplay" index="8"]
+margin_left = 126.0
+margin_top = 120.0
+margin_right = 189.0
+margin_bottom = 180.0
+
+[node name="GoldLabel" parent="CenterContainer/InventoryContent" index="1"]
+margin_top = 184.0
+margin_right = 189.0
+margin_bottom = 198.0
+mouse_filter = 2
+
+[editable path="CenterContainer/InventoryContent"]

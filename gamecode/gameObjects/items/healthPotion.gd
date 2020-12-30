@@ -1,4 +1,5 @@
 extends Consumable
+class_name healthPotion
 
 export (int) var healingValue
 
