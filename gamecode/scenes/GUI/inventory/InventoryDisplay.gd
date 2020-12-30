@@ -1,22 +1,12 @@
 extends GridContainer
 
 export (Resource) var inventory
-#export (Resource) var inventory = preload("res://gamecode/gameObjects/inventory/playerInventory.tres").duplicate()
 
 func _ready():
 	inventory.connect("items_changed", self, "_on_items_changed")
 
-#	var newInventory = inventory.duplicate()
-#	inventory = newInventory
-
 	inventory.make_items_unique()
 	update_inventory_display()
-	
-
-	
-	print(inventory)
-	print(inventory.items)
-
 
 
 func update_inventory_display():
@@ -36,6 +26,14 @@ func _on_items_changed(indexes):
 
 func _unhandled_input(event):
 	if event.is_action_released("ui_left_mouse"):
-		if inventory.drag_data is Dictionary:
+		if inventory.drag_data is Dictionary and inventory.drag_data.has("item"):
 			inventory.set_item(inventory.drag_data.item_index,
 								inventory.drag_data.item)
+
+
+
+
+
+
+
+

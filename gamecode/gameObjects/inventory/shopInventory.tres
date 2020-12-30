@@ -7,4 +7,4 @@ resource_local_to_scene = true
 script = ExtResource( 1 )
 items = [ null, null, null, null, null, null, null, null, null ]
 gold = 100
-type = ""
+type = "SHOP"

@@ -53,9 +53,15 @@ func make_items_unique():
 			unique_items.append(null)
 	items = unique_items
 			
+func buy_item(playerInv, shopInv, item):
+	if item is BaseItem:
+		playerInv.gold -= item.price_buy
+		shopInv.gold += item.price_buy
 			
-			
-			
+func sell_item(playerInv, shopInv, item):
+	if item is BaseItem:
+		playerInv.gold += item.price_sell
+		shopInv.gold -= item.price_sell
 			
 			
 			

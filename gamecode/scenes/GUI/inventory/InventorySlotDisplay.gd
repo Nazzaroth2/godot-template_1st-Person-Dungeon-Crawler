@@ -53,7 +53,94 @@ func drop_data(_position, data):
 			inventory.swap_items(my_item_index, data.item_index)
 			inventory.set_item(my_item_index, data.item)
 		inventory.drag_data = null
-	# if we drop on diffrent inventory
+		
+	# if we drop on a shop (selling item)
+	elif inventory.type == "SHOP":
+		# if we drop onto an item
+		if my_item is BaseItem:
+			# if both items are same type and can be stacked
+			if my_item.name == data.item.name:
+				for i in range(data.item.current_stacks):
+					inventory.sell_item(data.parent,inventory,data.item)
+				my_item.current_stacks += data.item.current_stacks
+				inventory.emit_signal("items_changed",[my_item_index])
+				get_tree().set_input_as_handled()
+				data.parent.drag_data = null
+			# if not same type we seach for next free slot and drop item there
+			else:
+				var freeIdx = _find_next_empty_idx()
+				if freeIdx == null:
+					# TODO: print out full inventory here
+					pass
+				else:
+					inventory.sell_item(data.parent,inventory,data.item)
+					inventory.set_item(freeIdx, data.item)
+					get_tree().set_input_as_handled()
+					data.parent.drag_data = null
+		# in case we drop on empty slot we put item into empty slot
+		else:
+			if data.item.current_stacks > 1:
+				for i in range(data.item.current_stacks):
+					inventory.sell_item(data.parent,inventory,data.item)
+				inventory.set_item(my_item_index, data.item)
+				# set the input of dropping item on diffrent inventory
+				# as handled so old inventory doesnt reset it.
+				get_tree().set_input_as_handled()
+				# reset old inventory drag_data so we have clean state again
+				data.parent.drag_data = null
+			else:
+				inventory.sell_item(data.parent,inventory,data.item)
+				inventory.set_item(my_item_index, data.item)
+				# set the input of dropping item on diffrent inventory
+				# as handled so old inventory doesnt reset it.
+				get_tree().set_input_as_handled()
+				# reset old inventory drag_data so we have clean state again
+				data.parent.drag_data = null
+		inventory.drag_data = null
+	# if we drop from a shop (buying item)
+	elif data.parent.type == "SHOP":
+		# if we drop onto an item
+		if my_item is BaseItem:
+			# if both items are same type and can be stacked
+			if my_item.name == data.item.name:
+				for i in range(data.item.current_stacks):
+					inventory.buy_item(inventory,data.parent,data.item)
+				my_item.current_stacks += data.item.current_stacks
+				inventory.emit_signal("items_changed",[my_item_index])
+				get_tree().set_input_as_handled()
+				data.parent.drag_data = null
+			# if not same type we seach for next free slot and drop item there
+			else:
+				var freeIdx = _find_next_empty_idx()
+				if freeIdx == null:
+					# TODO: print out full inventory here
+					pass
+				else:
+					inventory.buy_item(inventory,data.parent,data.item)
+					inventory.set_item(freeIdx, data.item)
+					get_tree().set_input_as_handled()
+					data.parent.drag_data = null
+		# in case we drop on empty slot we put item into empty slot
+		else:
+			if data.item.current_stacks > 1:
+				for i in range(data.item.current_stacks):
+					inventory.buy_item(inventory,data.parent,data.item)
+				inventory.set_item(my_item_index, data.item)
+				# set the input of dropping item on diffrent inventory
+				# as handled so old inventory doesnt reset it.
+				get_tree().set_input_as_handled()
+				# reset old inventory drag_data so we have clean state again
+				data.parent.drag_data = null
+			else:
+				inventory.buy_item(inventory,data.parent,data.item)
+				inventory.set_item(my_item_index, data.item)
+				# set the input of dropping item on diffrent inventory
+				# as handled so old inventory doesnt reset it.
+				get_tree().set_input_as_handled()
+				# reset old inventory drag_data so we have clean state again
+				data.parent.drag_data = null
+		inventory.drag_data = null
+	# if we drop or take from any other inventory (chest, player etc.)
 	else:
 		# if we drop onto an item
 		if my_item is BaseItem:
@@ -63,11 +150,16 @@ func drop_data(_position, data):
 				inventory.emit_signal("items_changed",[my_item_index])
 				get_tree().set_input_as_handled()
 				data.parent.drag_data = null
-			# if not same type we swap items
+			# if not same type we seach for next free slot and drop item there
 			else:
-				inventory.set_item(my_item_index, data.item)
-				get_tree().set_input_as_handled()
-				data.parent.drag_data = null
+				var freeIdx = _find_next_empty_idx()
+				if freeIdx == null:
+					# TODO: print out full inventory here
+					pass
+				else:
+					inventory.set_item(freeIdx, data.item)
+					get_tree().set_input_as_handled()
+					data.parent.drag_data = null
 		# in case we drop on empty slot we put item into empty slot
 		else:
 			inventory.set_item(my_item_index, data.item)
@@ -77,3 +169,22 @@ func drop_data(_position, data):
 			# reset old inventory drag_data so we have clean state again
 			data.parent.drag_data = null
 		inventory.drag_data = null
+
+
+
+func _find_next_empty_idx():
+	for idx in range(len(inventory.items)):
+		if inventory.items[idx] == null:
+			return idx
+			
+
+
+
+
+
+
+
+
+
+
+
