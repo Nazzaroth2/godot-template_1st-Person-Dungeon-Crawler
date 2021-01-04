@@ -25,9 +25,12 @@ func _set_focus_neighbours():
 	var leftNeighbour = _findLeftNeighbour(siblings, ownIdx)
 	var rightNeighbour = _findRightNeighbour(siblings, ownIdx)
 	
+	self.focus_next = rightNeighbour.get_path()
+	self.focus_previous = leftNeighbour.get_path()
+	
 	self.focus_neighbour_bottom = rightNeighbour.get_path()
 	self.focus_neighbour_right = rightNeighbour.get_path()
-	
+
 	self.focus_neighbour_top = leftNeighbour.get_path()
 	self.focus_neighbour_left = leftNeighbour.get_path()
 	
