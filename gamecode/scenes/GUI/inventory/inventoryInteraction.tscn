@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=1]
-[ext_resource path="res://gamecode/scenes/GUI/inventory/inventory.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryPlayer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryShop.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryChest.tscn" type="PackedScene" id=4]
 [ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=5]
@@ -11,9 +11,30 @@
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 script = ExtResource( 5 )
-items = [ ExtResource( 6 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 1 ), null, null, null, ExtResource( 7 ), ExtResource( 7 ) ]
-gold = 2000
+items = [ null, null, null, null, null, null, null, null, null ]
+gold = 1000
 type = "CHEST"
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+items = [ null, null, null, null, null, null, null, null, null ]
+gold = 100
+type = "SHOP"
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+items = [ null, null, null, null, null, null, null, null, null ]
+gold = 1000
+type = "CHEST"
+
+[sub_resource type="Resource" id=4]
+resource_local_to_scene = true
+script = ExtResource( 5 )
+items = [ ExtResource( 6 ), null, ExtResource( 7 ), ExtResource( 1 ), null, ExtResource( 7 ), null, ExtResource( 7 ), null, null, null, null, null, null, null, null, null, null ]
+gold = 100
+type = "PLAYER"
 
 [node name="inventoryInteraction" type="Control"]
 anchor_right = 1.0
@@ -22,15 +43,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="inventory" parent="." instance=ExtResource( 2 )]
-margin_right = -741.0
-margin_bottom = -328.0
-
 [node name="inventoryChest01" parent="." instance=ExtResource( 4 )]
 margin_left = 465.859
 margin_top = 9.34387
 margin_right = -296.141
 margin_bottom = -346.656
+inventory = SubResource( 1 )
 
 [node name="InventoryContent" parent="inventoryChest01/CenterContainer" index="0"]
 margin_left = 36.0
@@ -38,23 +56,24 @@ margin_top = 20.0
 margin_right = 225.0
 margin_bottom = 224.0
 
-[node name="InventoryDisplay" parent="inventoryChest01/CenterContainer/InventoryContent" index="0"]
-inventory = SubResource( 1 )
-
-[node name="GoldLabel" parent="inventoryChest01/CenterContainer/InventoryContent" index="1"]
-margin_bottom = 204.0
-
 [node name="inventoryShop" parent="." instance=ExtResource( 3 )]
 margin_left = 75.1495
 margin_top = 328.077
 margin_right = -703.851
 margin_bottom = -38.9232
+inventory = SubResource( 2 )
 
 [node name="inventoryChest02" parent="." instance=ExtResource( 4 )]
 margin_left = 527.261
 margin_top = 311.018
 margin_right = -216.739
 margin_bottom = -66.9825
+inventory = SubResource( 3 )
+
+[node name="inventory2" parent="." instance=ExtResource( 2 )]
+margin_right = -594.0
+margin_bottom = -356.0
+inventory = SubResource( 4 )
 
 [editable path="inventoryChest01"]
 

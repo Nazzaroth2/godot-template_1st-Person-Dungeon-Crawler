@@ -1,0 +1,205 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://gamecode/scenes/GUI/inventory/InventorySlotDisplay.tscn" type="PackedScene" id=1]
+[ext_resource path="res://gamecode/gameObjects/inventory/playerInventory.tres" type="Resource" id=2]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/inventory.gd" type="Script" id=3]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/GoldLabel.gd" type="Script" id=4]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/InventoryDisplay.gd" type="Script" id=5]
+
+[node name="inventory" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+color = Color( 0, 0, 0, 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+inventory = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryContent" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 323.0
+margin_top = 198.0
+margin_right = 701.0
+margin_bottom = 402.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryDisplay" type="GridContainer" parent="CenterContainer/InventoryContent"]
+margin_right = 378.0
+margin_bottom = 180.0
+size_flags_vertical = 3
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 6
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventorySlotDisplay" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 63.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay2" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 63.0
+margin_top = 0.0
+margin_right = 126.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay3" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 126.0
+margin_top = 0.0
+margin_right = 189.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay4" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 189.0
+margin_top = 0.0
+margin_right = 252.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay5" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 252.0
+margin_top = 0.0
+margin_right = 315.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay6" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 315.0
+margin_top = 0.0
+margin_right = 378.0
+margin_bottom = 60.0
+
+[node name="InventorySlotDisplay7" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 60.0
+margin_right = 63.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay8" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 63.0
+margin_top = 60.0
+margin_right = 126.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay9" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 126.0
+margin_top = 60.0
+margin_right = 189.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay10" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 189.0
+margin_top = 60.0
+margin_right = 252.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay11" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 252.0
+margin_top = 60.0
+margin_right = 315.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay12" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 315.0
+margin_top = 60.0
+margin_right = 378.0
+margin_bottom = 120.0
+
+[node name="InventorySlotDisplay13" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 120.0
+margin_right = 63.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay14" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 63.0
+margin_top = 120.0
+margin_right = 126.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay15" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 126.0
+margin_top = 120.0
+margin_right = 189.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay16" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 189.0
+margin_top = 120.0
+margin_right = 252.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay17" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 252.0
+margin_top = 120.0
+margin_right = 315.0
+margin_bottom = 180.0
+
+[node name="InventorySlotDisplay18" parent="CenterContainer/InventoryContent/InventoryDisplay" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 315.0
+margin_top = 120.0
+margin_right = 378.0
+margin_bottom = 180.0
+
+[node name="GoldLabel" type="Label" parent="CenterContainer/InventoryContent"]
+margin_top = 184.0
+margin_right = 378.0
+margin_bottom = 204.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 0
+text = "Gold: "
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

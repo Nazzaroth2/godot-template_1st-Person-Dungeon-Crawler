@@ -1,6 +1,6 @@
 extends GridContainer
 
-export (Resource) var inventory
+onready var inventory = $"../../..".inventory
 
 func _ready():
 	inventory.connect("items_changed", self, "_on_items_changed")

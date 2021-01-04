@@ -2,15 +2,7 @@ extends Spatial
 
 var in_Event: bool = false
 
-func _ready():
-	pass
-
-
-
-
-
-
-
+signal lootEvent
 
 # dungeon events like loot and shop will get triggered from this
 # signal
@@ -26,6 +18,7 @@ func _on_playerArea_area_entered(area):
 	# basic setup for a loot event	
 	if area.eventType == "loot":
 		yield($playerCamera, "movement_finished")
+		emit_signal("lootEvent",area.get_parent().inventory)
 		print("you found some awesome loot")
 		
 	# basic setup for a custom enemy event	
@@ -35,13 +28,5 @@ func _on_playerArea_area_entered(area):
 	
 	in_Event = false
 
-# if no event gets triggered on next cell we randomly
-# spawn an enemy encounter
-func _on_playerCamera_movement_finished():
-	# before transition to the fight scene we need to save
-	# level-scene and player position for later
-	if !in_Event:
-		pass
-	else:
-		pass
+
 	

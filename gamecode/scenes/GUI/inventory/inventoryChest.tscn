@@ -1,15 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://gamecode/scenes/GUI/inventory/InventoryDisplay.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gamecode/gameObjects/inventory/chestInventory.tres" type="Resource" id=2]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/inventory.gd" type="Script" id=3]
 
 [node name="inventoryChest" type="ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 3
 color = Color( 0, 0, 0, 1 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+inventory = ExtResource( 2 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_right = 1.0
@@ -23,14 +27,13 @@ __meta__ = {
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 417.0
-margin_top = 201.0
+margin_top = 198.0
 margin_right = 606.0
-margin_bottom = 399.0
+margin_bottom = 402.0
 
 [node name="InventoryDisplay" parent="CenterContainer/InventoryContent" index="0"]
 margin_right = 189.0
 margin_bottom = 180.0
-inventory = ExtResource( 2 )
 
 [node name="InventorySlotDisplay" parent="CenterContainer/InventoryContent/InventoryDisplay" index="0"]
 margin_right = 63.0
@@ -83,6 +86,6 @@ margin_bottom = 180.0
 [node name="GoldLabel" parent="CenterContainer/InventoryContent" index="1"]
 margin_top = 184.0
 margin_right = 189.0
-margin_bottom = 198.0
+margin_bottom = 204.0
 
 [editable path="CenterContainer/InventoryContent"]

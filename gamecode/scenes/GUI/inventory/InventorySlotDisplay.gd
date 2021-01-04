@@ -1,9 +1,14 @@
 extends CenterContainer
 
-onready var inventory = get_parent().inventory
+onready var inventory
 onready var itemTextureRect = $ItemTextureRect
 onready var stacksLabel = $ItemTextureRect/StacksLabel
 
+func _ready():
+	# wait till root-node of inventory is ready, then get inventoryResource-
+	# Reference from InventoryDisplay.inventory-Variable.
+	yield($"../../..", "ready")
+	inventory = get_parent().inventory
 
 
 func display_item(item):

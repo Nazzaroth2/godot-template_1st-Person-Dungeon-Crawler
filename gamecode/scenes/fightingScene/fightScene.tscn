@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=2]
+[ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=3]
 [ext_resource path="res://gamecode/scenes/fightingScene/menuChoices.gd" type="Script" id=4]
+[ext_resource path="res://gamecode/gameObjects/items/smallHealthPotion.tres" type="Resource" id=5]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 2 )
+items = [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 5 ), null, null, null, null, null, null ]
+gold = 100
+type = "CHEST"
 
 [node name="fightScene" type="Control"]
 anchor_right = 1.0
@@ -99,3 +109,4 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+rewardInventory = SubResource( 1 )

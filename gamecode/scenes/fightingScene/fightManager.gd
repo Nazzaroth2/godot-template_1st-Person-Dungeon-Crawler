@@ -1,5 +1,6 @@
 extends Control
 
+export (Resource) var rewardInventory
 onready var referencedPlayerGroup = $"../../playerGroup"
 var playersDict = {}
 onready var pandemonium = preload("res://gamecode/gameObjects/enemies/pandemoniumDemo.tres")
@@ -9,6 +10,7 @@ var enemyType = 0
 
 var playerTurn = true
 
+# Player Input Variables
 var choosenPlayer
 var choosenPlayerName
 var activeSkillName
@@ -19,8 +21,9 @@ onready var players = $"../GUI/characters/players"
 onready var enemies = $"../GUI/characters/enemies"
 onready var menuChoices = $"../GUI/playerMenu/menuChoices"
 
+signal player_won
+signal lootEvent
 
-#var rng = RandomNumberGenerator.new()
 
 
 
@@ -280,6 +283,7 @@ func checkFightover():
 
 func playerWon():
 	print("player has won")
+	emit_signal("lootEvent", rewardInventory)
 	
 func playerLost():
 	print("player has lost")

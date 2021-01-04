@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://gamecode/scenes/dungeonModule/events/eventTrigger.tscn" type="PackedScene" id=1]
 [ext_resource path="res://gamecode/scenes/dungeonModule/events/lootEvent.gd" type="Script" id=2]
+[ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=3]
+[ext_resource path="res://gamecode/gameObjects/items/smallHealthPotion.tres" type="Resource" id=4]
+[ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=5]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 3 )
+items = [ ExtResource( 5 ), ExtResource( 4 ), null, null, null, null, null, null, null ]
+gold = 500
+type = "CHEST"
 
 [node name="lootEvent" type="Spatial"]
 script = ExtResource( 2 )
+inventory = SubResource( 1 )
 
 [node name="eventTrigger" parent="." instance=ExtResource( 1 )]
 eventType = "loot"

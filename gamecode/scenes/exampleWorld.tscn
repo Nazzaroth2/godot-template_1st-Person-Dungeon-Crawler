@@ -1,10 +1,36 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://gamecode/scenes/World.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/scenes/playerGroup.gd" type="Script" id=2]
 [ext_resource path="res://gamecode/gameObjects/playerClasses/Chris_Mage.tres" type="Resource" id=3]
 [ext_resource path="res://gamecode/gameObjects/playerClasses/Copy_Mage.tres" type="Resource" id=4]
 [ext_resource path="res://gamecode/scenes/dungeonModule/dungeon.tscn" type="PackedScene" id=5]
+[ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryPlayer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://gamecode/gameObjects/items/boots.tres" type="Resource" id=7]
+[ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=8]
+[ext_resource path="res://gamecode/gameObjects/items/smallHealthPotion.tres" type="Resource" id=9]
+[ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=10]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 10 )
+items = [ null, null, null, null, null, null, null, null, null ]
+gold = 1000
+type = "CHEST"
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 10 )
+items = [ ExtResource( 8 ), ExtResource( 9 ), null, null, null, null, null, null, null ]
+gold = 500
+type = "CHEST"
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+script = ExtResource( 10 )
+items = [ ExtResource( 7 ), null, ExtResource( 9 ), ExtResource( 8 ), null, ExtResource( 9 ), null, ExtResource( 9 ), null, null, null, null, null, null, null, null, null, null ]
+gold = 100
+type = "PLAYER"
 
 [node name="world" type="Node"]
 script = ExtResource( 1 )
@@ -14,3 +40,38 @@ script = ExtResource( 2 )
 playerGroup = [ ExtResource( 3 ), ExtResource( 4 ) ]
 
 [node name="dungeon" parent="." instance=ExtResource( 5 )]
+
+[node name="shopEvent" parent="dungeon" index="2"]
+inventory = SubResource( 1 )
+
+[node name="lootEvent" parent="dungeon" index="3"]
+inventory = SubResource( 3 )
+
+[node name="GridMap" parent="dungeon" index="4"]
+data = {
+"cells": PoolIntArray( 0, 0, 1179649, 1, 0, 1, 2, 0, 1310724, 3, 0, 1310724, 4, 0, 1310724, 5, 0, 1310724, 6, 0, 1310724, 7, 0, 1310724, 8, 0, 1073741825, 9, 0, 1, 10, 0, 655361, 11, 0, 1073872896, 65535, 0, 1074266115, 0, 1, 1073741825, 1, 1, 1179648, 8, 1, 1074266112, 9, 1, 1, 10, 1, 1179651, 11, 1, 1179651, 12, 1, 131072, 65535, 1, 524288, 0, 2, 131076, 9, 2, 524292, 12, 2, 524292, 0, 3, 131076, 9, 3, 1179650, 12, 3, 1179650, 0, 4, 131076, 0, 5, 131076, 4, 5, 1310720, 5, 5, 1310723, 6, 5, 131072, 0, 6, 524288, 1, 6, 1179652, 2, 6, 1179652, 3, 6, 1074921476, 4, 6, 655361, 5, 6, 1179649, 6, 6, 131075, 4, 7, 524288, 5, 7, 1179651, 6, 7, 1074921472, 0, 65531, 1310722, 0, 65532, 131076, 0, 65533, 131076, 9, 65533, 1310720, 10, 65533, 1075052548, 11, 65533, 131074, 0, 65534, 131076, 9, 65534, 524292, 0, 65535, 1, 1, 65535, 131072, 8, 65535, 1310720, 9, 65535, 655361, 10, 65535, 131072, 65535, 65535, 1310720 )
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rewardGUI" type="HBoxContainer" parent="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="inventoryPlayer" parent="Control/rewardGUI" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 510.0
+margin_bottom = 600.0
+inventory = SubResource( 2 )
+
+[editable path="dungeon"]
