@@ -281,10 +281,14 @@ func checkFightover():
 	else:
 		return false
 
+# when player wins a fight we show a reward-window with the items/gold he
+# got for the fight, handled by world-script
 func playerWon():
 	print("player has won")
 	emit_signal("lootEvent", rewardInventory)
-	
+
+# depending on how you want to handle loosing in your game, gameover code
+# can go here.
 func playerLost():
 	print("player has lost")
 

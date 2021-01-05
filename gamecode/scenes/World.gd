@@ -6,23 +6,26 @@ onready var dungeonScene = $dungeon
 var rng = RandomNumberGenerator.new()
 var stepCnt
 var encounterLimit
-var minEncounterSteps = 5
-var maxEncounterSteps = 10
+var minEncounterSteps = 3
+var maxEncounterSteps = 7
+
+signal fight_over
 
 func _ready():
 	dungeonScene.connect("lootEvent",self,"_on_lootEvent")
 	dungeonScene.get_node("playerCamera").connect("movement_finished",
 											 self, "_on_playerCamera_movement_finished")
+	$GUI/rewardWindow.connect("popup_hide", self, "_on_rewardGUI_hide")	
+	self.connect("fight_over",self, "_on_fight_over")
+	
 	_setupEncounterVar()
 
 
 # player gui input
 func _unhandled_input(event):
 	if event.is_action_pressed("inventory"):
-		if $playerGroup/inventory.visible:
-			$playerGroup/inventory.visible = false
-		else:
-			$playerGroup/inventory.visible = true
+		$GUI/rewardWindow.set_as_minsize()
+		$GUI/rewardWindow.popup_centered()
 
 
 
@@ -41,11 +44,25 @@ func _on_playerCamera_movement_finished():
 # and overwrite the gui-inventory with the event-inventory
 func _on_lootEvent(lootInventory):
 	var lootInventoryScene = load("res://gamecode/scenes/GUI/inventory/inventoryChest.tscn").instance()
-	
+#
 	lootInventoryScene.inventory = lootInventory
+	
+	$GUI/rewardWindow/rewardGUI.add_child(lootInventoryScene)
+	$GUI/rewardWindow.set_as_minsize()
+	$GUI/rewardWindow.popup_centered()
 
-	$Control/rewardGUI.add_child(lootInventoryScene)
-	$Control/rewardGUI.visible = true
+# what happens when we close rewardWindow
+func _on_rewardGUI_hide():
+	if len($GUI/rewardWindow/rewardGUI.get_children()) > 1:
+		var chestInv = $GUI/rewardWindow/rewardGUI.get_child(1)
+		# if its a chest we only remove inventory-child from window
+		if chestInv.inventory.type == "CHEST":
+			$GUI/rewardWindow/rewardGUI.remove_child(chestInv)
+		# if its a fight-reward we remove inventory-child and finish fight
+		# which will quit the fight-scene and go back to dungeon
+		elif chestInv.inventory.type == "FIGHT":
+			$GUI/rewardWindow/rewardGUI.remove_child(chestInv)
+			emit_signal("fight_over")
 	
 
 func _setupEncounterVar():
@@ -66,11 +83,11 @@ func _startEncounter():
 	self.remove_child(dungeonScene)
 	var fightScene = fightSceneReference.instance()
 	self.add_child_below_node($playerGroup,fightScene)
-	$"fightScene/fightManager".connect("player_won",self,"_on_player_won")
+#	$"fightScene/fightManager".connect("player_won",self,"_on_player_won")
 	$"fightScene/fightManager".connect("lootEvent",self,"_on_lootEvent")
 	
 	
-func _on_player_won():
+func _on_fight_over():
 	$fightScene.queue_free()
 	self.add_child(dungeonScene)
 

@@ -11,7 +11,7 @@ resource_local_to_scene = true
 script = ExtResource( 2 )
 items = [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 5 ), null, null, null, null, null, null ]
 gold = 100
-type = "CHEST"
+type = "FIGHT"
 
 [node name="fightScene" type="Control"]
 anchor_right = 1.0

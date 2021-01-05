@@ -18,14 +18,14 @@ items = [ null, null, null, null, null, null, null, null, null ]
 gold = 1000
 type = "CHEST"
 
-[sub_resource type="Resource" id=3]
+[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
 script = ExtResource( 10 )
 items = [ ExtResource( 8 ), ExtResource( 9 ), null, null, null, null, null, null, null ]
 gold = 500
 type = "CHEST"
 
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=3]
 resource_local_to_scene = true
 script = ExtResource( 10 )
 items = [ ExtResource( 7 ), null, ExtResource( 9 ), ExtResource( 8 ), null, ExtResource( 9 ), null, ExtResource( 9 ), null, null, null, null, null, null, null, null, null, null ]
@@ -45,33 +45,49 @@ playerGroup = [ ExtResource( 3 ), ExtResource( 4 ) ]
 inventory = SubResource( 1 )
 
 [node name="lootEvent" parent="dungeon" index="3"]
-inventory = SubResource( 3 )
+inventory = SubResource( 2 )
 
 [node name="GridMap" parent="dungeon" index="4"]
 data = {
-"cells": PoolIntArray( 0, 0, 1179649, 1, 0, 1, 2, 0, 1310724, 3, 0, 1310724, 4, 0, 1310724, 5, 0, 1310724, 6, 0, 1310724, 7, 0, 1310724, 8, 0, 1073741825, 9, 0, 1, 10, 0, 655361, 11, 0, 1073872896, 65535, 0, 1074266115, 0, 1, 1073741825, 1, 1, 1179648, 8, 1, 1074266112, 9, 1, 1, 10, 1, 1179651, 11, 1, 1179651, 12, 1, 131072, 65535, 1, 524288, 0, 2, 131076, 9, 2, 524292, 12, 2, 524292, 0, 3, 131076, 9, 3, 1179650, 12, 3, 1179650, 0, 4, 131076, 0, 5, 131076, 4, 5, 1310720, 5, 5, 1310723, 6, 5, 131072, 0, 6, 524288, 1, 6, 1179652, 2, 6, 1179652, 3, 6, 1074921476, 4, 6, 655361, 5, 6, 1179649, 6, 6, 131075, 4, 7, 524288, 5, 7, 1179651, 6, 7, 1074921472, 0, 65531, 1310722, 0, 65532, 131076, 0, 65533, 131076, 9, 65533, 1310720, 10, 65533, 1075052548, 11, 65533, 131074, 0, 65534, 131076, 9, 65534, 524292, 0, 65535, 1, 1, 65535, 131072, 8, 65535, 1310720, 9, 65535, 655361, 10, 65535, 131072, 65535, 65535, 1310720 )
+"cells": PoolIntArray( 0, 0, 1179649, 1, 0, 1073741825, 2, 0, 1310724, 3, 0, 1310724, 4, 0, 1310724, 5, 0, 1075052548, 6, 0, 1075052548, 7, 0, 1310724, 8, 0, 1, 9, 0, 1073741825, 10, 0, 655361, 11, 0, 131072, 65535, 0, 524291, 0, 1, 1073741825, 1, 1, 1179648, 8, 1, 524288, 9, 1, 1, 10, 1, 1179651, 11, 1, 1179651, 12, 1, 131072, 65535, 1, 524288, 0, 2, 131076, 9, 2, 1074266116, 12, 2, 1074266116, 0, 3, 131076, 9, 3, 1074921474, 12, 3, 1179650, 0, 4, 131076, 0, 5, 1073872900, 4, 5, 1310720, 5, 5, 1310723, 6, 5, 131072, 0, 6, 524288, 1, 6, 1179652, 2, 6, 1179652, 3, 6, 1179652, 4, 6, 655361, 5, 6, 1074921473, 6, 6, 131075, 4, 7, 1074266112, 5, 7, 1179651, 6, 7, 1074921472, 0, 65531, 1075052546, 0, 65532, 131076, 0, 65533, 131076, 9, 65533, 1310720, 10, 65533, 1310724, 11, 65533, 1073872898, 0, 65534, 131076, 9, 65534, 524292, 0, 65535, 1073741825, 1, 65535, 131072, 8, 65535, 538181632, 9, 65535, 655361, 10, 65535, 131072, 65535, 65535, 1310720 )
 }
 
-[node name="Control" type="Control" parent="."]
+[node name="GUI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="rewardGUI" type="HBoxContainer" parent="Control"]
+[node name="playerGUI" type="Control" parent="GUI"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="rewardWindow" type="WindowDialog" parent="GUI"]
+margin_right = 329.0
+margin_bottom = 197.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+popup_exclusive = true
+window_title = "Reward Scene"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="inventoryPlayer" parent="Control/rewardGUI" instance=ExtResource( 6 )]
+[node name="rewardGUI" type="HBoxContainer" parent="GUI/rewardWindow"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="inventoryPlayer" parent="GUI/rewardWindow/rewardGUI" instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 510.0
-margin_bottom = 600.0
-inventory = SubResource( 2 )
+margin_right = 329.0
+margin_bottom = 197.0
+size_flags_stretch_ratio = 2.0
+inventory = SubResource( 3 )
 
 [editable path="dungeon"]
