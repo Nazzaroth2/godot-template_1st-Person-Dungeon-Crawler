@@ -1,4 +1,4 @@
-extends ColorRect
+extends TextureRect
 
 var characterResource
 
@@ -12,10 +12,11 @@ func _ready():
 	
 func _on_focus_entered():
 	_set_focus_neighbours()
-	self.color = Color(Color.blue)
+	$name.set("custom_colors/font_color",Color(Color.gold))
 	
 func _on_focus_exited():
-	self.color = Color(Color.red)
+	pass
+	$name.set("custom_colors/font_color",Color(Color.white))
 	
 
 func _set_focus_neighbours():
@@ -90,4 +91,4 @@ func _unhandled_input(event):
 			if get_parent().name == "players":
 				emit_signal("player_choosen",self.characterResource)
 			elif get_parent().name == "enemies":
-				emit_signal("enemy_choosen",self.characterResource)
+				emit_signal("enemy_choosen",[self.characterResource, self])

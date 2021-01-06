@@ -1,31 +1,47 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://gamecode/scenes/World.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/scenes/playerGroup.gd" type="Script" id=2]
 [ext_resource path="res://gamecode/gameObjects/playerClasses/Chris_Mage.tres" type="Resource" id=3]
-[ext_resource path="res://gamecode/gameObjects/playerClasses/Copy_Mage.tres" type="Resource" id=4]
+[ext_resource path="res://gamecode/gameObjects/playerClasses/Tim_Fighter.tres" type="Resource" id=4]
 [ext_resource path="res://gamecode/scenes/dungeonModule/dungeon.tscn" type="PackedScene" id=5]
 [ext_resource path="res://gamecode/scenes/GUI/inventory/inventoryPlayer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://gamecode/gameObjects/items/boots.tres" type="Resource" id=7]
 [ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=8]
 [ext_resource path="res://gamecode/gameObjects/items/smallHealthPotion.tres" type="Resource" id=9]
 [ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=10]
+[ext_resource path="res://gamecode/gameObjects/items/small_shield.tres" type="Resource" id=11]
+[ext_resource path="res://gamecode/gameObjects/playerClasses/Karl_Hunter.tres" type="Resource" id=12]
 
 [sub_resource type="Resource" id=1]
-resource_local_to_scene = true
-script = ExtResource( 10 )
-items = [ null, null, null, null, null, null, null, null, null ]
-gold = 1000
-type = "CHEST"
-
-[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
 script = ExtResource( 10 )
 items = [ ExtResource( 8 ), ExtResource( 9 ), null, null, null, null, null, null, null ]
 gold = 500
 type = "CHEST"
 
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+script = ExtResource( 10 )
+items = [ ExtResource( 8 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 9 ), null, null, null, null, null ]
+gold = 2000
+type = "SHOP"
+
 [sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 10 )
+items = [ ExtResource( 7 ), null, ExtResource( 9 ), ExtResource( 8 ), null, ExtResource( 9 ), null, ExtResource( 9 ), null, null, null, null, null, null, null, null, null, null ]
+gold = 100
+type = "PLAYER"
+
+[sub_resource type="Resource" id=4]
+resource_local_to_scene = true
+script = ExtResource( 10 )
+items = [ ExtResource( 7 ), null, ExtResource( 9 ), ExtResource( 8 ), null, ExtResource( 9 ), null, ExtResource( 9 ), null, null, null, null, null, null, null, null, null, null ]
+gold = 100
+type = "PLAYER"
+
+[sub_resource type="Resource" id=5]
 resource_local_to_scene = true
 script = ExtResource( 10 )
 items = [ ExtResource( 7 ), null, ExtResource( 9 ), ExtResource( 8 ), null, ExtResource( 9 ), null, ExtResource( 9 ), null, null, null, null, null, null, null, null, null, null ]
@@ -37,19 +53,19 @@ script = ExtResource( 1 )
 
 [node name="playerGroup" type="Node" parent="."]
 script = ExtResource( 2 )
-playerGroup = [ ExtResource( 3 ), ExtResource( 4 ) ]
+playerGroup = [ ExtResource( 4 ), ExtResource( 12 ), ExtResource( 3 ) ]
 
 [node name="dungeon" parent="." instance=ExtResource( 5 )]
 
-[node name="shopEvent" parent="dungeon" index="2"]
+[node name="lootEvent" parent="dungeon" index="2"]
 inventory = SubResource( 1 )
 
-[node name="lootEvent" parent="dungeon" index="3"]
+[node name="shopEvent" parent="dungeon" index="3"]
 inventory = SubResource( 2 )
 
 [node name="GridMap" parent="dungeon" index="4"]
 data = {
-"cells": PoolIntArray( 0, 0, 1179649, 1, 0, 1073741825, 2, 0, 1310724, 3, 0, 1310724, 4, 0, 1310724, 5, 0, 1075052548, 6, 0, 1075052548, 7, 0, 1310724, 8, 0, 1, 9, 0, 1073741825, 10, 0, 655361, 11, 0, 131072, 65535, 0, 524291, 0, 1, 1073741825, 1, 1, 1179648, 8, 1, 524288, 9, 1, 1, 10, 1, 1179651, 11, 1, 1179651, 12, 1, 131072, 65535, 1, 524288, 0, 2, 131076, 9, 2, 1074266116, 12, 2, 1074266116, 0, 3, 131076, 9, 3, 1074921474, 12, 3, 1179650, 0, 4, 131076, 0, 5, 1073872900, 4, 5, 1310720, 5, 5, 1310723, 6, 5, 131072, 0, 6, 524288, 1, 6, 1179652, 2, 6, 1179652, 3, 6, 1179652, 4, 6, 655361, 5, 6, 1074921473, 6, 6, 131075, 4, 7, 1074266112, 5, 7, 1179651, 6, 7, 1074921472, 0, 65531, 1075052546, 0, 65532, 131076, 0, 65533, 131076, 9, 65533, 1310720, 10, 65533, 1310724, 11, 65533, 1073872898, 0, 65534, 131076, 9, 65534, 524292, 0, 65535, 1073741825, 1, 65535, 131072, 8, 65535, 538181632, 9, 65535, 655361, 10, 65535, 131072, 65535, 65535, 1310720 )
+"cells": PoolIntArray( 0, 0, 538050561, 1, 0, 1, 2, 0, 538181636, 3, 0, 1310724, 4, 0, 538181636, 5, 0, 1310724, 6, 0, 1310724, 7, 0, 538181636, 8, 0, 1, 9, 0, 1073741825, 10, 0, 655361, 11, 0, 131072, 65535, 0, 1074266115, 0, 1, 536870913, 1, 1, 1179648, 8, 1, 524288, 9, 1, 1, 10, 1, 1179651, 11, 1, 1179651, 12, 1, 131072, 65535, 1, 524288, 0, 2, 537001988, 9, 2, 524292, 12, 2, 524292, 0, 3, 1073872900, 9, 3, 538050562, 12, 3, 1179650, 0, 4, 131076, 0, 5, 131076, 4, 5, 1310720, 5, 5, 538181635, 6, 5, 131072, 0, 6, 524288, 1, 6, 1179652, 2, 6, 1179652, 3, 6, 538050564, 4, 6, 655361, 5, 6, 1179649, 6, 6, 131075, 4, 7, 537395200, 5, 7, 1179651, 6, 7, 1179648, 0, 65531, 1310722, 0, 65532, 537001988, 0, 65533, 131076, 9, 65533, 1310720, 10, 65533, 1310724, 11, 65533, 537001986, 0, 65534, 537001988, 9, 65534, 537395204, 0, 65535, 1, 1, 65535, 131072, 8, 65535, 1310720, 9, 65535, 655361, 10, 65535, 131072, 65535, 65535, 1310720 )
 }
 
 [node name="GUI" type="Control" parent="."]
@@ -59,10 +75,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="playerGUI" type="Control" parent="GUI"]
-visible = false
+[node name="playerGUI" type="WindowDialog" parent="GUI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+window_title = "Inventory"
+
+[node name="inventoryPlayer" parent="GUI/playerGUI" instance=ExtResource( 6 )]
+inventory = SubResource( 3 )
 
 [node name="rewardWindow" type="WindowDialog" parent="GUI"]
 margin_right = 329.0
@@ -88,6 +107,19 @@ anchor_bottom = 0.0
 margin_right = 329.0
 margin_bottom = 197.0
 size_flags_stretch_ratio = 2.0
-inventory = SubResource( 3 )
+inventory = SubResource( 4 )
+
+[node name="shopWindow" type="WindowDialog" parent="GUI"]
+margin_right = 48.0
+margin_bottom = 40.0
+popup_exclusive = true
+window_title = "shopWindow"
+
+[node name="shopGUI" type="HBoxContainer" parent="GUI/shopWindow"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="inventoryPlayer" parent="GUI/shopWindow/shopGUI" instance=ExtResource( 6 )]
+inventory = SubResource( 5 )
 
 [editable path="dungeon"]

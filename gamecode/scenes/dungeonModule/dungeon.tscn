@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://gamecode/scenes/dungeonModule/dungeon.gd" type="Script" id=1]
 [ext_resource path="res://assets/meshLibraries/newMeshLibrary.meshlib" type="MeshLibrary" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://gamecode/scenes/dungeonModule/events/lootEvent.tscn" type="PackedScene" id=6]
 [ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=7]
 [ext_resource path="res://gamecode/gameObjects/items/smallHealthPotion.tres" type="Resource" id=8]
+[ext_resource path="res://gamecode/gameObjects/items/small_shield.tres" type="Resource" id=9]
 
 [sub_resource type="ProceduralSky" id=1]
 
@@ -23,16 +24,16 @@ fog_depth_end = 50.0
 [sub_resource type="Resource" id=3]
 resource_local_to_scene = true
 script = ExtResource( 4 )
-items = [ null, null, null, null, null, null, null, null, null ]
-gold = 1000
+items = [ ExtResource( 7 ), ExtResource( 8 ), null, null, null, null, null, null, null ]
+gold = 500
 type = "CHEST"
 
 [sub_resource type="Resource" id=4]
 resource_local_to_scene = true
 script = ExtResource( 4 )
-items = [ ExtResource( 7 ), ExtResource( 8 ), null, null, null, null, null, null, null ]
-gold = 500
-type = "CHEST"
+items = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 8 ), null, null, null, null, null ]
+gold = 2000
+type = "SHOP"
 
 [node name="dungeon" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.01936, 0, 0 )
@@ -45,12 +46,12 @@ fov = 90.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
-[node name="shopEvent" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 5 )
-inventory = SubResource( 3 )
-
 [node name="lootEvent" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -3 )
+inventory = SubResource( 3 )
+
+[node name="shopEvent" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 5 )
 inventory = SubResource( 4 )
 
 [node name="GridMap" type="GridMap" parent="."]

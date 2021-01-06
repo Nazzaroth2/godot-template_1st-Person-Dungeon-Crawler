@@ -6,16 +6,20 @@ onready var dungeonScene = $dungeon
 var rng = RandomNumberGenerator.new()
 var stepCnt
 var encounterLimit
-var minEncounterSteps = 3
-var maxEncounterSteps = 7
+var minEncounterSteps = 1
+var maxEncounterSteps = 1
 
 signal fight_over
 
 func _ready():
 	dungeonScene.connect("lootEvent",self,"_on_lootEvent")
+	dungeonScene.connect("shopEvent",self,"_on_shopEvent")
+	$GUI/rewardWindow.connect("popup_hide", self, "_on_rewardGUI_hide")
+	$GUI/shopWindow.connect("popup_hide", self, "_on_shopGUI_hide")
+	
 	dungeonScene.get_node("playerCamera").connect("movement_finished",
 											 self, "_on_playerCamera_movement_finished")
-	$GUI/rewardWindow.connect("popup_hide", self, "_on_rewardGUI_hide")	
+	
 	self.connect("fight_over",self, "_on_fight_over")
 	
 	_setupEncounterVar()
@@ -24,8 +28,8 @@ func _ready():
 # player gui input
 func _unhandled_input(event):
 	if event.is_action_pressed("inventory"):
-		$GUI/rewardWindow.set_as_minsize()
-		$GUI/rewardWindow.popup_centered()
+		$GUI/playerGUI.set_as_minsize()
+		$GUI/playerGUI.popup_centered()
 
 
 
@@ -44,7 +48,7 @@ func _on_playerCamera_movement_finished():
 # and overwrite the gui-inventory with the event-inventory
 func _on_lootEvent(lootInventory):
 	var lootInventoryScene = load("res://gamecode/scenes/GUI/inventory/inventoryChest.tscn").instance()
-#
+
 	lootInventoryScene.inventory = lootInventory
 	
 	$GUI/rewardWindow/rewardGUI.add_child(lootInventoryScene)
@@ -63,7 +67,25 @@ func _on_rewardGUI_hide():
 		elif chestInv.inventory.type == "FIGHT":
 			$GUI/rewardWindow/rewardGUI.remove_child(chestInv)
 			emit_signal("fight_over")
+
+# handling shop extra for now in case we want to change the shop-layout
+# later down the line.
+func _on_shopEvent(shopInventory):
+	var shopInventoryScene = load("res://gamecode/scenes/GUI/inventory/inventoryShop.tscn").instance()
+
+	shopInventoryScene.inventory = shopInventory
 	
+	$GUI/shopWindow/shopGUI.add_child(shopInventoryScene)
+	$GUI/shopWindow.set_as_minsize()
+	$GUI/shopWindow.popup_centered()
+
+# what happens when we close shopWindow
+func _on_shopGUI_hide():
+#	if len($GUI/rewardWindow/rewardGUI.get_children()) > 1:
+	var shopInv = $GUI/shopWindow/shopGUI.get_child(1)
+	
+	$GUI/shopWindow/shopGUI.remove_child(shopInv)
+
 
 func _setupEncounterVar():
 	stepCnt = 0

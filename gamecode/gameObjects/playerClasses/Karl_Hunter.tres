@@ -1,0 +1,26 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
+[ext_resource path="res://assets/playerCharacters/Hunter_male_lookingRight.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Karl"
+description = "No prey escapes him."
+icon = ExtResource( 2 )
+classSkills = {
+
+}
+equipment = {
+
+}
+hp_max = 70
+hp = 70
+mp_max = 50
+mp = 50
+stamina_max = 70
+stamina = 70
+strength = 7
+dexterity = 15
+intelligence = 7
+luck = 7

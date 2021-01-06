@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://gamecode/scenes/fightingScene/fightManager.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/gameObjects/inventory/inventoryResource.gd" type="Script" id=2]
 [ext_resource path="res://gamecode/gameObjects/items/short_sword.tres" type="Resource" id=3]
 [ext_resource path="res://gamecode/scenes/fightingScene/menuChoices.gd" type="Script" id=4]
 [ext_resource path="res://gamecode/gameObjects/items/smallHealthPotion.tres" type="Resource" id=5]
+[ext_resource path="res://gamecode/gameObjects/enemies/level01/2Skeletons.tres" type="Resource" id=6]
+[ext_resource path="res://gamecode/gameObjects/enemies/level01/3Skeletons.tres" type="Resource" id=7]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -110,3 +112,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 rewardInventory = SubResource( 1 )
+levelPandemonien = [ ExtResource( 6 ), ExtResource( 7 ) ]

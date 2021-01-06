@@ -3,7 +3,10 @@ extends Control
 export (Resource) var rewardInventory
 onready var referencedPlayerGroup = $"../../playerGroup"
 var playersDict = {}
-onready var pandemonium = preload("res://gamecode/gameObjects/enemies/pandemoniumDemo.tres")
+# TODO: change enemies to multiple pandemoniums = enemy combinations
+# per fightscene we choose a random pandemonium
+# per dungeonLevel we have diffrent combinations of pandemoniums
+export (Array, Resource) var levelPandemonien
 var enemiesDict = {}
 var enemyAmount = 2
 var enemyType = 0
@@ -14,7 +17,10 @@ var playerTurn = true
 var choosenPlayer
 var choosenPlayerName
 var activeSkillName
-var choosenTargets
+var choosenTargetsResources = []
+var choosenTargetsNodes = []
+
+var rng = RandomNumberGenerator.new()
 
 # GUI-Variables
 onready var players = $"../GUI/characters/players"
@@ -29,13 +35,16 @@ signal lootEvent
 
 func _ready():
 	# instanciate Enemies
-#	rng.randomize()
-#	enemyAmount = rng.randi_range(1,2)
+	rng.randomize()
+	# random Pandeomonium out of all levelPandemoni
+	var activePandemonium = levelPandemonien[rng.randi_range(
+								0,len(levelPandemonien)-1)].duplicate()
+	
 	# duplicate to keep instanced enemies unique to a fight
 	var enemyCounter = 1
-	for i in range(enemyAmount):
+	for enemy in activePandemonium.enemies:
 		var enemyName = "enemy" + str(enemyCounter)
-		enemiesDict[enemyName] = pandemonium.enemies[enemyType].duplicate()
+		enemiesDict[enemyName] = enemy
 		enemyCounter += 1
 
 	# important: keep naming-sceme for dictionary and nodes the same!
@@ -46,35 +55,36 @@ func _ready():
 		playerCounter += 1
 	
 	
+	
+	# TODO: possibly move the setup of characters to the characterSprite-Script
 	var characterScript = preload("res://gamecode/scenes/fightingScene/characterSprite.gd")
+	var fightCharacter = preload("res://gamecode/scenes/fightingScene/fightCharacter.tscn")
 	# create icon-objects for enemies and players here later
-	for player in playersDict:
-		var playerIcon = ColorRect.new()
+	for player in referencedPlayerGroup.playerGroup:
+		var playerCharacterScene = fightCharacter.instance()
 		
-		playerIcon.name = player
-		playerIcon.color = Color(Color.red)
-		playerIcon.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		playerIcon.focus_mode = Control.FOCUS_ALL
-		
-		# set script and give reference to Player Resource
-		playerIcon.set_script(characterScript)
-		playerIcon.characterResource = playersDict[player]
-		
-		players.add_child(playerIcon)
-		
-	for enemy in enemiesDict:
-		var enemiesIcon = ColorRect.new()
-		
-		enemiesIcon.name = enemy
-		enemiesIcon.color = Color(Color.red)
-		enemiesIcon.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		enemiesIcon.focus_mode = Control.FOCUS_ALL
+		playerCharacterScene.texture = player.icon
+		playerCharacterScene.get_node("name").text = player.name
+		# players need to look to the left
+		playerCharacterScene.flip_h = true
 		
 		# set script and give reference to Player Resource
-		enemiesIcon.set_script(characterScript)
-		enemiesIcon.characterResource = enemiesDict[enemy]
+#		playerCharacterScene.set_script(characterScript)
+		playerCharacterScene.characterResource = player
 		
-		enemies.add_child(enemiesIcon)
+		players.add_child(playerCharacterScene)
+		
+	for enemy in activePandemonium.enemies:
+		var enemyCharacterScene = fightCharacter.instance()
+		
+		enemyCharacterScene.texture = enemy.icon
+		enemyCharacterScene.get_node("name").text = enemy.name
+
+		# set script and give reference to Player Resource
+#		enemyCharacterScene.set_script(characterScript)
+		enemyCharacterScene.characterResource = enemy
+		
+		enemies.add_child(enemyCharacterScene)
 		
 	
 	# connect to the signal thats emitted when pressing ui_accept
@@ -174,12 +184,14 @@ func _on_actionButton_pressed(skillName):
 	if choosenPlayer.classSkills[activeSkillName].is_aoe:
 			#maybe deal somehow with showing aoe-targets as active first?
 			for enemy in targetableEnemies:
-				choosenTargets.append(enemy.characterResource)
+				choosenTargetsResources.append(enemy.characterResource)
+				choosenTargetsNodes.append(enemy)
 	else:
 		targetableEnemies[0].grab_focus()
 
-func _on_enemy_choosen(enemy):
-	choosenTargets = [enemy]
+func _on_enemy_choosen(enemyArray):
+	choosenTargetsResources = [enemyArray[0]]
+	choosenTargetsNodes = [enemyArray[1]]
 	# set playerMenu visible (should have been invisible at this point)
 	finishCharacterAction()
 
@@ -187,7 +199,18 @@ func _on_enemy_choosen(enemy):
 # actually use the choosen skill on a target and restart playerTurn
 func finishCharacterAction():
 	# after we got all variables we needed we actually invoke the skill
-	choosenPlayer.useSkill(activeSkillName,choosenTargets)
+	choosenPlayer.useSkill(activeSkillName,choosenTargetsResources)
+	
+	# here we show the damageLabel, play the small Labelanimation
+	# and hide it again for every enemy that got hurt
+	for enemyCharacter in choosenTargetsNodes:
+		enemyCharacter.get_node("damage").visible = true
+		# start animation and yield till finish
+		enemyCharacter.get_node("AnimationPlayer").play("damageLabel")
+		yield(enemyCharacter.get_node("AnimationPlayer"), "animation_finished")
+		enemyCharacter.get_node("damage").visible = false
+	
+	
 	
 	# check if any of the choosenTargets got killed and remove them from dictionary
 	# also make them untargetable and unusable and make the invisible (here
@@ -204,12 +227,15 @@ func finishCharacterAction():
 					enemyIcon.visible = false
 
 
+
+
+
 	#debug state of the game print
-	print_debug("")
-	print_debug("choosenPlayer: ",choosenPlayer.name)
-#	print_debug("MP : ",choosenPlayer.mp)
-	print_debug("activeTarget: ",choosenTargets[0].name)
-	print_debug("activeTarget HP: ",choosenTargets[0].hp)
+#	print_debug("")
+#	print_debug("choosenPlayer: ",choosenPlayer.name)
+##	print_debug("MP : ",choosenPlayer.mp)
+#	print_debug("activeTarget: ",choosenTargets[0].name)
+#	print_debug("activeTarget HP: ",choosenTargets[0].hp)
 #	print_debug("activeTarget first active Effect: ",choosenTargets[0].activeEffects[0].name)
 
 	# make player that did action unusable

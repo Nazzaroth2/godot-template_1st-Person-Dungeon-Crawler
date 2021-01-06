@@ -1,8 +1,9 @@
 extends Resource
 class_name Pandemonium
 
-# a class to hold enemy-resources for a level. put all your enemies
-# into this array, then load this resource from fightManager and
-# randomly duplicate enemy resources for the fight
+# a class to hold enemy-resources for a fight setup.
+# setup multiple resources per level and load them into the
+# variable in fightmanager. This way you get randomly diffrent
+# fightscenarios on a per level basis.
 
 export (Array, Resource) var enemies

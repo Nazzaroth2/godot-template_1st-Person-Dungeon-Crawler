@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://gamecode/gameObjects/skills/baseSkill.gd" type="Script" id=1]
+[ext_resource path="res://gamecode/gameObjects/skills/damageSkill.gd" type="Script" id=1]
 
 [resource]
 script = ExtResource( 1 )
-name = "Slash"
-description = "A simple strike with your Weapon, dealing damage to 1 enemy."
+name = ""
+description = ""
 cost = 10
 skillCategory = 0
 targetedStat = 0

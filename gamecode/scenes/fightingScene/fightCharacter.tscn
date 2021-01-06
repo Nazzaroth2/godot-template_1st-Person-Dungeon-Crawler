@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/playerCharacters/Fighter_male_lookingRight.png" type="Texture" id=1]
+[ext_resource path="res://gamecode/scenes/fightingScene/characterSprite.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "damageLabel"
+tracks/0/type = "value"
+tracks/0/path = NodePath("damage:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("damage:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="fightCharacter" type="TextureRect"]
+margin_top = 10.0
+margin_right = 40.0
+margin_bottom = 65.0
+rect_min_size = Vector2( 40, 55 )
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="name" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -32.0
+margin_right = 52.0
+margin_bottom = 28.0
+text = "TestName"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="ColorRect" parent="name"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="damage" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -12.5
+margin_top = -7.0
+margin_right = 12.5
+margin_bottom = 7.0
+text = "10"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="ColorRect" parent="damage"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="activeEffects" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -63.0
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/damageLabel = SubResource( 1 )

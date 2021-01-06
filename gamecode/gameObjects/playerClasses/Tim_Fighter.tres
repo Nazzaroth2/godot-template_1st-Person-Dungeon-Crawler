@@ -1,0 +1,26 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
+[ext_resource path="res://assets/playerCharacters/Fighter_male_lookingRight.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Tim"
+description = "He fights..."
+icon = ExtResource( 2 )
+classSkills = {
+
+}
+equipment = {
+
+}
+hp_max = 120
+hp = 120
+mp_max = 20
+mp = 20
+stamina_max = 100
+stamina = 100
+strength = 15
+dexterity = 10
+intelligence = 2
+luck = 4
