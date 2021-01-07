@@ -10,6 +10,8 @@ export (int) var stamina
 
 export (Dictionary) onready var classSkills
 
+var guiNode
+
 var activeEffects = []
 # maybe use these variables to decide if player is usable or targetable
 var is_usable = true
@@ -25,6 +27,7 @@ func ki(possibleEnemyTargets, possiblePlayerTargets):
 	
 	var choosenSkillName
 	var choosenTargets
+	var choosenTargetsNames
 	# check if skill is damage or healing here
 	
 	choosenSkillName = chooseSkill()
@@ -32,19 +35,23 @@ func ki(possibleEnemyTargets, possiblePlayerTargets):
 	# for aoe skill we use full targets-array or we randomly choose a target
 	if classSkills[choosenSkillName].is_aoe:
 		choosenTargets = possiblePlayerTargets
+		choosenTargetsNames = null
 	else:
 		var randomTargetIdx = rng.randi_range(0,len(possiblePlayerTargets)-1)
-		choosenTargets = [possiblePlayerTargets[randomTargetIdx]]
+		choosenTargets = [possiblePlayerTargets[randomTargetIdx][1]]
+		choosenTargetsNames = possiblePlayerTargets[randomTargetIdx][0]
 		
-	useSkill(choosenSkillName,choosenTargets)
+	var dealtDamage = useSkill(choosenSkillName,choosenTargets)
 	
 	#debug state of the game print
-	print_debug("")
-	print_debug("enemy: ",self.name)
-#	print_debug("MP : ",self.mp)
-	print_debug("activeTarget: ",choosenTargets[0].name)
-	print_debug("activeTarget HP: ",choosenTargets[0].hp)
+#	print_debug("")
+#	print_debug("enemy: ",self.name)
+##	print_debug("MP : ",self.mp)
+#	print_debug("activeTarget: ",choosenTargets[0].name)
+#	print_debug("activeTarget HP: ",choosenTargets[0].hp)
 #	print_debug("activeTarget first active Effect: ",choosenTargets[0].activeEffects[0].name)
+	
+	return [choosenTargetsNames, choosenSkillName, dealtDamage, choosenTargets]
 
 	
 
@@ -55,4 +62,4 @@ func chooseSkill():
 
 
 func useSkill(skillname, targets):
-	classSkills[skillname].use(self, targets)
+	return classSkills[skillname].use(self, targets)

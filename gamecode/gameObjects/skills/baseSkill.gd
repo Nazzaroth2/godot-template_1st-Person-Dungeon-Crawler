@@ -1,6 +1,8 @@
 extends BaseGameObject
 class_name BaseSkill
 
+export(Animation) var skillAnimation
+
 export (int) var cost
 #export (String) var skillCategory
 enum SKILLCATEGORY{PHYSICAL, MAGIC}
@@ -16,7 +18,7 @@ export (bool) var is_aoe
 
 # overwrite this function in inherited objects if you want to have unusual
 # skill behaviour (eg. diffrent amounts of damage per target)
-func use(user, targets:Array):
+func use(user, targets:Array) -> int:
 	match skillCategory:
 		SKILLCATEGORY.PHYSICAL:
 			user.stamina -= cost
@@ -26,9 +28,11 @@ func use(user, targets:Array):
 	if skillEffects != null:
 		_applyEffects(targets)
 		
-	#skillValue = _calculateSkillValue(user)
+	skillValue = _calculateSkillValue(user)
 
 	_applySkillValue(targets)
+	
+	return skillValue
 	
 
 # loops over all effects the skill has and adds them to targets
@@ -41,7 +45,7 @@ func _applyEffects(targets:Array):
 # change this function to change how the system calculates skillvalues
 # eg. take elemental types into account, add percentages etc.
 func _calculateSkillValue(user):
-	skillValue = skillValue
+	return skillValue
 
 
 # virtual function that decides how to apply the given SkillValue

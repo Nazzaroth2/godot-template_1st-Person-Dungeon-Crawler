@@ -1,6 +1,8 @@
 extends BaseGameObject
 class_name BasePlayerClass
 
+var guiNode
+
 # all skills for a class with named keys
 export (Dictionary) onready var classSkills
 # bool-array to check if classSkill is unlocked through skillPoints
@@ -41,7 +43,8 @@ var skillPoints:int
 		
 
 func useSkill(skillname, targets):
-	classSkills[skillname].use(self, targets)
+	# use the given skill on given targets and return the damage dealt
+	return classSkills[skillname].use(self, targets)
 	
 
 # checks what skills the character has unlocked and returns all

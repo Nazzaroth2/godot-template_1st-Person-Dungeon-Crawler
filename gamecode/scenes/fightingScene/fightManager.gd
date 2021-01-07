@@ -14,11 +14,14 @@ var enemyType = 0
 var playerTurn = true
 
 # Player Input Variables
+#var choosenPlayerNode
 var choosenPlayer
 var choosenPlayerName
 var activeSkillName
-var choosenTargetsResources = []
-var choosenTargetsNodes = []
+#var choosenTargetsResources = []
+#var choosenTargetsNodes = []
+var choosenTargets
+var choosenTargetsName
 
 var rng = RandomNumberGenerator.new()
 
@@ -29,7 +32,7 @@ onready var menuChoices = $"../GUI/playerMenu/menuChoices"
 
 signal player_won
 signal lootEvent
-
+signal dealtDamage
 
 
 
@@ -38,17 +41,17 @@ func _ready():
 	rng.randomize()
 	# random Pandeomonium out of all levelPandemoni
 	var activePandemonium = levelPandemonien[rng.randi_range(
-								0,len(levelPandemonien)-1)].duplicate()
+								0,len(levelPandemonien)-1)].duplicate(true)
 	
 	# duplicate to keep instanced enemies unique to a fight
-	var enemyCounter = 1
+	var enemyCounter = 0
 	for enemy in activePandemonium.enemies:
 		var enemyName = "enemy" + str(enemyCounter)
 		enemiesDict[enemyName] = enemy
 		enemyCounter += 1
 
 	# important: keep naming-sceme for dictionary and nodes the same!
-	var playerCounter = 1
+	var playerCounter = 0
 	for player in referencedPlayerGroup.playerGroup:
 		var playerName = "player" + str(playerCounter)
 		playersDict[playerName] = player
@@ -60,8 +63,10 @@ func _ready():
 	var characterScript = preload("res://gamecode/scenes/fightingScene/characterSprite.gd")
 	var fightCharacter = preload("res://gamecode/scenes/fightingScene/fightCharacter.tscn")
 	# create icon-objects for enemies and players here later
+	var charCnt = 0
 	for player in referencedPlayerGroup.playerGroup:
 		var playerCharacterScene = fightCharacter.instance()
+		playerCharacterScene.name = "player" + str(charCnt)
 		
 		playerCharacterScene.texture = player.icon
 		playerCharacterScene.get_node("name").text = player.name
@@ -73,9 +78,15 @@ func _ready():
 		playerCharacterScene.characterResource = player
 		
 		players.add_child(playerCharacterScene)
+		player.guiNode = players.get_child(charCnt)
 		
+		charCnt += 1
+	
+	charCnt = 0
 	for enemy in activePandemonium.enemies:
 		var enemyCharacterScene = fightCharacter.instance()
+		enemyCharacterScene.name = "enemy" + str(charCnt)
+		
 		
 		enemyCharacterScene.texture = enemy.icon
 		enemyCharacterScene.get_node("name").text = enemy.name
@@ -85,6 +96,9 @@ func _ready():
 		enemyCharacterScene.characterResource = enemy
 		
 		enemies.add_child(enemyCharacterScene)
+		enemy.guiNode = enemies.get_child(charCnt)
+		
+		charCnt += 1
 		
 	
 	# connect to the signal thats emitted when pressing ui_accept
@@ -135,16 +149,28 @@ func createCharacterArray(parent, ableType):
 # the big turnbased function that checks for win-lose-state and which turn it is.
 func gameRound():
 	# check if any group won the fight and finish the scene
-	if checkFightover():
-		# here we would call a sceneOverFunction that shows the fight-
-		# reward and switches back to dungeon.
-		pass
+	if checkFightover() == "WON":
+		playerWon()
+	elif checkFightover() == "LOST":
+		playerLost()
 	else:
 		# reseting all usable/targetable variables to true
 		resetCharacterVariables()
 		# here and then check for preEffects and then start either
 		# turn of players or enemies
 		#checkPreTurnEffects #for enemies and players
+		for playerResource in playersDict.values():
+			for effect in playerResource.activeEffects:
+				if effect.preTurn:
+					effect.apply(playerResource)
+					effect.updateLifetime(playerResource)
+					
+			
+		for enemyResource in enemiesDict.values():
+			for effect in enemyResource.activeEffects:
+				if effect.preTurn:
+					effect.apply(enemyResource)
+					effect.updateLifetime(enemyResource)
 		
 		if playerTurn:
 			playerTurn()
@@ -156,21 +182,52 @@ func gameRound():
 func playerTurn():
 	
 	var usablePlayers = createCharacterArray(players, "usable")
+	var targetableEnemies = createCharacterArray(enemies, "targetable")
 	
-	if not(usablePlayers.empty()):
-		#get active Player through gui/playeractions
-		# when choosing a player the first usable player gets focused
-		# choosen by name
-		usablePlayers[0].grab_focus()
-	else:
-		# add postTurn effects here
-		playerTurn = false
-		print_debug("playerTurn is over")
+	# if no enemies are left, but players could still take action
+	# we break out and go immedeatly to next round
+	if targetableEnemies.empty():
 		gameRound()
+	else:
+		# if no more usable Players are left we go to next round
+		# which will be enemie-turn
+		if usablePlayers.empty():
+			# add postTurn effects here
+			for playerResource in playersDict.values():
+				for effect in playerResource.activeEffects:
+					if not(effect.preTurn):
+						var result = effect.apply(playerResource)
+						effect.updateLifetime(playerResource)
+						emit_signal("dealtDamage",playerResource.guiNode.name,null,null,result)
+						yield(playerResource.guiNode,"damageDone")
+			
+			# check if any Player died cause of postTurn effect
+			for playerName in playersDict:
+				if playersDict[playerName].hp <= 0:
+					playersDict[playerName].is_targetable = false
+					playersDict[playerName].is_usable = false
+					
+					playersDict.erase(playerName)
+								
+					for playerIcon in players.get_children():
+						if playerIcon.name == playerName:
+							playerIcon.visible = false
+			
+			
+			playerTurn = false
+	#		print_debug("playerTurn is over")
+			gameRound()
+		else:
+			#get active Player through gui/playeractions
+			# when choosing a player the first usable player gets focused
+			# choosen by name
+			usablePlayers[0].grab_focus()
+
 
 
 # signalFunctions that set all the playerChoices into variables
 func _on_player_choosen(player):
+#	choosenPlayerNode = player
 	choosenPlayer = player
 #	choosenPlayerName = playerName
 	# set playerMenu visible (should have been invisible at this point)
@@ -184,14 +241,17 @@ func _on_actionButton_pressed(skillName):
 	if choosenPlayer.classSkills[activeSkillName].is_aoe:
 			#maybe deal somehow with showing aoe-targets as active first?
 			for enemy in targetableEnemies:
-				choosenTargetsResources.append(enemy.characterResource)
-				choosenTargetsNodes.append(enemy)
+				choosenTargets.append(enemy.characterResource)
+			# if its aoe damage all targets show damage, this
+			# will be shown by having no name for targets
+			choosenTargetsName = null
 	else:
 		targetableEnemies[0].grab_focus()
 
-func _on_enemy_choosen(enemyArray):
-	choosenTargetsResources = [enemyArray[0]]
-	choosenTargetsNodes = [enemyArray[1]]
+func _on_enemy_choosen(enemy, enemyName):
+#	choosenTargetsNodes = enemy
+	choosenTargets = [enemy]
+	choosenTargetsName = enemyName
 	# set playerMenu visible (should have been invisible at this point)
 	finishCharacterAction()
 
@@ -199,17 +259,13 @@ func _on_enemy_choosen(enemyArray):
 # actually use the choosen skill on a target and restart playerTurn
 func finishCharacterAction():
 	# after we got all variables we needed we actually invoke the skill
-	choosenPlayer.useSkill(activeSkillName,choosenTargetsResources)
-	
-	# here we show the damageLabel, play the small Labelanimation
-	# and hide it again for every enemy that got hurt
-	for enemyCharacter in choosenTargetsNodes:
-		enemyCharacter.get_node("damage").visible = true
-		# start animation and yield till finish
-		enemyCharacter.get_node("AnimationPlayer").play("damageLabel")
-		yield(enemyCharacter.get_node("AnimationPlayer"), "animation_finished")
-		enemyCharacter.get_node("damage").visible = false
-	
+	# we also get the dealt damage back, which we use to show in the gui
+#	var skillAnimation = choosenPlayerNode.characterResource.classSkills[activeSkillName].skillAnimation
+#	choosenPlayerNode.get_node("Animation_Player").play(skillAnimation)
+	var dealtDamage = choosenPlayer.useSkill(activeSkillName,choosenTargets)
+	emit_signal("dealtDamage",choosenTargetsName,choosenPlayer,activeSkillName,dealtDamage)
+	for target in choosenTargets:
+		yield(target.guiNode,"damageDone")
 	
 	
 	# check if any of the choosenTargets got killed and remove them from dictionary
@@ -217,16 +273,16 @@ func finishCharacterAction():
 	# you could show blowup-effects etc.)
 	for enemyName in enemiesDict:
 		if enemiesDict[enemyName].hp <= 0:
-			enemiesDict[enemyName].is_targetable = false
-			enemiesDict[enemyName].is_usable = false
-			
 			enemiesDict.erase(enemyName)
 						
-			for enemyIcon in enemies.get_children():
-				if enemyIcon.name == enemyName:
-					enemyIcon.visible = false
-
-
+			for enemyCharacter in enemies.get_children():
+				if enemyCharacter.name == enemyName:
+					enemyCharacter.queue_free()
+					# neccesary to make sure the enemy is freed
+					# before another player can take an action.
+					# results in no damage shown when enemy dies,
+					# if time is left maybe rework this?
+					yield(get_tree(),"idle_frame")
 
 
 
@@ -239,7 +295,6 @@ func finishCharacterAction():
 #	print_debug("activeTarget first active Effect: ",choosenTargets[0].activeEffects[0].name)
 
 	# make player that did action unusable
-#	usablePlayers.remove(useablePlayers.find(choosenPlayerName))
 	choosenPlayer.is_usable = false
 	# reseting all choice-variables
 
@@ -252,18 +307,27 @@ func finishCharacterAction():
 
 
 func enemyTurn():
+	# enemies that can take an action
 	var usableEnemies = [] 
 	for enemy in createCharacterArray(enemies,"usable"):
 		usableEnemies.append(enemy.characterResource)
+	# enemies that can be targeted by enemies (eg.healspells)
 	var targetableEnemies = []
 	for enemy in createCharacterArray(enemies,"targetable"):
 		targetableEnemies.append(enemy.characterResource)
+	# players that can be targeted by enemies (eg.damagespells)
 	var targetablePlayers = []
 	for player in createCharacterArray(players,"targetable"):
-		targetablePlayers.append(player.characterResource)
+		targetablePlayers.append([player.name,player.characterResource])
 	
 	for enemy in usableEnemies:
-		enemy.ki(targetableEnemies, targetablePlayers)
+		# [0] = choosenTargetsNames,[1] = choosenSkillName, [2] = dealtDamage, [3] = choosenTargets
+		var decisions = enemy.ki(targetableEnemies, targetablePlayers)
+		
+		emit_signal("dealtDamage",decisions[0], enemy, decisions[1], decisions[2])
+		
+		for target in decisions[3]:
+			yield(target.guiNode,"damageDone")
 		
 		# after enemy has acted we need to check if any players died.
 		for playerName in playersDict:
@@ -276,12 +340,29 @@ func enemyTurn():
 				for playerIcon in players.get_children():
 					if playerIcon.name == playerName:
 						playerIcon.visible = false
-#		resetUsableCharacters("players")
-		
+	
+	# postEffect check on enemies
+	for enemyResource in enemiesDict.values():
+		for effect in enemyResource.activeEffects:
+			var result = effect.apply(enemyResource)
+			effect.updateLifetime(enemyResource)
+			emit_signal("dealtDamage",enemyResource.guiNode.name,null,null,result)
+			yield(enemyResource.guiNode,"damageDone")
+	
+	# check if any enemie died through postEffect
+	for enemyName in enemiesDict:
+		if enemiesDict[enemyName].hp <= 0:
+			enemiesDict.erase(enemyName)
+						
+			for enemyCharacter in enemies.get_children():
+				if enemyCharacter.name == enemyName:
+					enemyCharacter.queue_free()
+					# neccesary to make sure the enemy is freed
+					# before another player can take an action.
+					# results in no damage shown when enemy dies,
+					# if time is left maybe rework this?
+					yield(get_tree(),"idle_frame")
 
-	# after fight effects like poison take effect
-#	for enemie in instancedEnemies:
-		# check for postRoundEffects and apply them
 	
 	playerTurn = true
 	gameRound()
@@ -299,18 +380,14 @@ func checkEffects(preTurn:bool, target):
 
 func checkFightover():
 	if enemiesDict.empty():
-		playerWon()
-		return true
+		return "WON"
 	elif playersDict.empty():
-		playerLost()
-		return true
-	else:
-		return false
+		return "LOST"
+
 
 # when player wins a fight we show a reward-window with the items/gold he
 # got for the fight, handled by world-script
 func playerWon():
-	print("player has won")
 	emit_signal("lootEvent", rewardInventory)
 
 # depending on how you want to handle loosing in your game, gameover code

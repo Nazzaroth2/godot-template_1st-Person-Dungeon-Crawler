@@ -1,15 +1,17 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/skills/damageSkill.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/gameObjects/effects/Burn.tres" type="Resource" id=2]
+[ext_resource path="res://gamecode/gameObjects/animations/playerAnimations/demoAttack.anim" type="Animation" id=3]
 
 [resource]
 script = ExtResource( 1 )
 name = "Fire Ball"
 description = "an actually hurtfull fire ball"
+skillAnimation = ExtResource( 3 )
 cost = 20
 skillCategory = 1
 targetedStat = 0
 skillEffects = [ ExtResource( 2 ) ]
-skillValue = 50
+skillValue = 45
 is_aoe = false

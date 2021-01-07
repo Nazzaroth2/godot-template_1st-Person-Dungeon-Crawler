@@ -11,11 +11,11 @@ func apply(target):
 # easiest way seems to just give the user and then delete entry in activeEffects
 # array of that user
 func destroy(user):
-	pass
+	var idx = user.activeEffects.find(self)
+	user.activeEffects.remove(idx)
 
-func updateLifetime(lifetime):
+func updateLifetime(user):
 	if lifetime == 0:
-		pass
-#		destroy(user)
+		destroy(user)
 	else:
 		lifetime -= 1

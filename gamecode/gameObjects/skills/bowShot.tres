@@ -4,11 +4,11 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Slash"
+name = "Bow Shot"
 description = ""
-cost = 5
+cost = 10
 skillCategory = 0
 targetedStat = 0
 skillEffects = [  ]
-skillValue = 15
+skillValue = 25
 is_aoe = false

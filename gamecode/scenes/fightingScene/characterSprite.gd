@@ -1,14 +1,44 @@
 extends TextureRect
 
 var characterResource
+onready var fightManagerNode = get_tree().get_root().get_node("world/fightScene/fightManager")
 
 signal player_choosen
 signal enemy_choosen
+signal damageDone
 
 func _ready():
 	self.connect("focus_entered",self,"_on_focus_entered")
 	self.connect("focus_exited",self,"_on_focus_exited")
+	fightManagerNode.connect("dealtDamage",self,"_on_dealtDamage")
 
+func _on_dealtDamage(targetsName, user, activeSkillName, damage):
+	# if this characterSprite is the user it playes the corresponding
+	# attackAnimation
+	if characterResource == user:
+		pass
+		# TODO: deal with attackAnimations, they need to
+		# play inPlace!
+#		$AnimationPlayer.play(activeSkillName)
+		# placeholder demo Animation for testing
+#		$AnimationPlayer.play("demoAttack02")
+	else:
+		# check if you are a target and then play the damaged Animation
+		if targetsName == null:
+			$damage.text = str(damage)
+			$damage.visible = true
+			$AnimationPlayer.play("damageLabel")
+			yield($AnimationPlayer,"animation_finished")
+			$damage.visible = false
+		elif targetsName == self.name:
+			$damage.text = str(damage)
+			$damage.visible = true
+			$AnimationPlayer.play("damageLabel")
+			yield($AnimationPlayer,"animation_finished")
+			$damage.visible = false	
+				
+		emit_signal("damageDone")
+	
 	
 func _on_focus_entered():
 	_set_focus_neighbours()
@@ -91,4 +121,4 @@ func _unhandled_input(event):
 			if get_parent().name == "players":
 				emit_signal("player_choosen",self.characterResource)
 			elif get_parent().name == "enemies":
-				emit_signal("enemy_choosen",[self.characterResource, self])
+				emit_signal("enemy_choosen",self.characterResource, self.name)
