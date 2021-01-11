@@ -40,7 +40,21 @@ func use(user, targets:Array) -> int:
 func _applyEffects(targets:Array):
 	for effect in skillEffects:
 		for target in targets:
-			target.activeEffects.append(effect)
+			var oldEffectNames = []
+			for oldEffect in target.activeEffects:
+				oldEffectNames.append(oldEffect.name)
+			
+			# hinder adding effect to targets that already
+			# have such an active effect
+			if effect.name in oldEffectNames:
+				pass
+			else:
+				# add duplicate of effect to target (so lifetime is unique)
+				target.activeEffects.append(effect.duplicate())
+				# add the effect icon of last array-item
+				target.activeEffects[-1].addIcon(target)
+			
+
 
 # change this function to change how the system calculates skillvalues
 # eg. take elemental types into account, add percentages etc.

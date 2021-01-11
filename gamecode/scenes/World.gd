@@ -6,8 +6,8 @@ onready var dungeonScene = $dungeon
 var rng = RandomNumberGenerator.new()
 var stepCnt
 var encounterLimit
-var minEncounterSteps = 5
-var maxEncounterSteps = 10
+var minEncounterSteps = 1
+var maxEncounterSteps = 1
 
 signal fight_over
 

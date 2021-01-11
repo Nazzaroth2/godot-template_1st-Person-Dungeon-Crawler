@@ -116,9 +116,11 @@ func _setSearchIdxRight(siblings, searchIdx):
 	
 
 func _unhandled_input(event):
-	if get_focus_owner() == self:
-		if event.is_action_pressed("ui_accept"):
-			if get_parent().name == "players":
-				emit_signal("player_choosen",self.characterResource)
-			elif get_parent().name == "enemies":
-				emit_signal("enemy_choosen",self.characterResource, self.name)
+	if not(fightManagerNode.is_player_attacking):
+		if get_focus_owner() == self:
+			if event.is_action_pressed("ui_accept"):
+				if get_parent().name == "players":
+					emit_signal("player_choosen",self.characterResource)
+				elif get_parent().name == "enemies":
+					emit_signal("enemy_choosen",self.characterResource, self.name)
+					fightManagerNode.is_player_attacking = true

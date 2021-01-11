@@ -18,6 +18,7 @@ var playerTurn = true
 var choosenPlayer
 var choosenPlayerName
 var activeSkillName
+var is_player_attacking = false
 #var choosenTargetsResources = []
 #var choosenTargetsNodes = []
 var choosenTargets
@@ -43,7 +44,9 @@ func _ready():
 	var activePandemonium = levelPandemonien[rng.randi_range(
 								0,len(levelPandemonien)-1)].duplicate(true)
 	
-	# duplicate to keep instanced enemies unique to a fight
+	# duplicate every enemy resource to make unique enemies
+	activePandemonium.makeUniqueEnemies()
+	# add all enemie-resources into dictionary
 	var enemyCounter = 0
 	for enemy in activePandemonium.enemies:
 		var enemyName = "enemy" + str(enemyCounter)
@@ -179,6 +182,7 @@ func gameRound():
 
 
 
+
 func playerTurn():
 	
 	var usablePlayers = createCharacterArray(players, "usable")
@@ -218,10 +222,13 @@ func playerTurn():
 	#		print_debug("playerTurn is over")
 			gameRound()
 		else:
-			#get active Player through gui/playeractions
+			# get active Player through gui/playeractions
 			# when choosing a player the first usable player gets focused
 			# choosen by name
+			# is_player_attacking = true hinders player input. we
+			# only allow playerinput when we have choosen a new character
 			usablePlayers[0].grab_focus()
+			is_player_attacking = false
 
 
 
@@ -286,19 +293,8 @@ func finishCharacterAction():
 
 
 
-	#debug state of the game print
-#	print_debug("")
-#	print_debug("choosenPlayer: ",choosenPlayer.name)
-##	print_debug("MP : ",choosenPlayer.mp)
-#	print_debug("activeTarget: ",choosenTargets[0].name)
-#	print_debug("activeTarget HP: ",choosenTargets[0].hp)
-#	print_debug("activeTarget first active Effect: ",choosenTargets[0].activeEffects[0].name)
-
 	# make player that did action unusable
 	choosenPlayer.is_usable = false
-	# reseting all choice-variables
-
-#	get_focus_owner().release_focus()
 
 	# call playerTurn so often till all players have taken a turn
 	playerTurn()

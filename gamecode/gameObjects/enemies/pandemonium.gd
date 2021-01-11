@@ -7,3 +7,11 @@ class_name Pandemonium
 # fightscenarios on a per level basis.
 
 export (Array, Resource) var enemies
+
+
+func makeUniqueEnemies():
+	var uniqueEnemies = []
+	for enemy in enemies:
+		uniqueEnemies.append(enemy.duplicate())
+		
+	enemies = uniqueEnemies
