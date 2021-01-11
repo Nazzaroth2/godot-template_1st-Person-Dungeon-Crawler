@@ -6,8 +6,8 @@ onready var dungeonScene = $dungeon
 var rng = RandomNumberGenerator.new()
 var stepCnt
 var encounterLimit
-var minEncounterSteps = 1
-var maxEncounterSteps = 1
+var minEncounterSteps = 5
+var maxEncounterSteps = 10
 
 signal fight_over
 
@@ -54,6 +54,9 @@ func _on_lootEvent(lootInventory):
 	$GUI/rewardWindow/rewardGUI.add_child(lootInventoryScene)
 	$GUI/rewardWindow.set_as_minsize()
 	$GUI/rewardWindow.popup_centered()
+	
+	# block cameraMovement by setting flag
+	dungeonScene.get_node("playerCamera").movement_flag = "event"
 
 # what happens when we close rewardWindow
 func _on_rewardGUI_hide():
@@ -67,6 +70,9 @@ func _on_rewardGUI_hide():
 		elif chestInv.inventory.type == "FIGHT":
 			$GUI/rewardWindow/rewardGUI.remove_child(chestInv)
 			emit_signal("fight_over")
+		
+	# reseting flag, so playerCamera can move again
+	dungeonScene.get_node("playerCamera").movement_flag = "stop"
 
 # handling shop extra for now in case we want to change the shop-layout
 # later down the line.
@@ -78,6 +84,10 @@ func _on_shopEvent(shopInventory):
 	$GUI/shopWindow/shopGUI.add_child(shopInventoryScene)
 	$GUI/shopWindow.set_as_minsize()
 	$GUI/shopWindow.popup_centered()
+	
+	# block cameraMovement by setting flag
+	dungeonScene.get_node("playerCamera").movement_flag = "event"
+
 
 # what happens when we close shopWindow
 func _on_shopGUI_hide():
@@ -85,6 +95,9 @@ func _on_shopGUI_hide():
 	var shopInv = $GUI/shopWindow/shopGUI.get_child(1)
 	
 	$GUI/shopWindow/shopGUI.remove_child(shopInv)
+
+	# reseting flag, so playerCamera can move again
+	dungeonScene.get_node("playerCamera").movement_flag = "stop"
 
 
 func _setupEncounterVar():

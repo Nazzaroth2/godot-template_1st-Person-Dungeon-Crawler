@@ -15,6 +15,5 @@ func use(user, targets: Array):
 	
 	# TODO: implement itemEffects applying here
 
-# implement logic to destroy/unlink itemResource when stacks are 0
-func destroy():
-	pass
+
+

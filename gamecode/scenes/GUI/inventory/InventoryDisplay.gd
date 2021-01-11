@@ -16,6 +16,14 @@ func update_inventory_display():
 func update_inventory_slot_display(item_index):
 	var inventorySlotDisplay = get_child(item_index)
 	var item = inventory.items[item_index]
+	
+	# if item has 0 or less stacks we remove it from
+	# inventory
+	if item is BaseItem:
+		if item.current_stacks <= 0:
+			inventory.items[item_index] = null
+			item = inventory.items[item_index]
+	
 	inventorySlotDisplay.display_item(item)
 	
 

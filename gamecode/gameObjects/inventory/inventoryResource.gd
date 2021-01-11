@@ -52,7 +52,22 @@ func make_items_unique():
 		else:
 			unique_items.append(null)
 	items = unique_items
-			
+
+# check if player has enough gold to buy an item.
+func check_buy(playerInv, shopInv, item):
+	if playerInv.gold - item.price_buy <= 0:
+		return false
+	else:
+		return true
+
+# check if shop has enough gold to buy an item from player
+# (player sells item to shop)
+func check_sell(playerInv, shopInv, item):
+	if shopInv.gold - item.price_sell <= 0:
+		return false
+	else:
+		return true
+
 func buy_item(playerInv, shopInv, item):
 	if item is BaseItem:
 		playerInv.gold -= item.price_buy
