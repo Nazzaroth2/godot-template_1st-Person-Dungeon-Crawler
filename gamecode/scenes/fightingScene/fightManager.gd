@@ -14,10 +14,8 @@ var enemyType = 0
 var playerTurn = true
 
 # Player Input Variables
-#var choosenPlayerNode
 var choosenPlayer
-var choosenPlayerName
-var activeSkillName
+var playerActionChoice
 var is_player_attacking = false
 #var choosenTargetsResources = []
 #var choosenTargetsNodes = []
@@ -34,6 +32,7 @@ onready var menuChoices = $"../GUI/playerMenu/menuChoices"
 signal player_won
 signal lootEvent
 signal dealtDamage
+signal healed
 
 
 
@@ -159,25 +158,24 @@ func gameRound():
 	else:
 		# reseting all usable/targetable variables to true
 		resetCharacterVariables()
-		# here and then check for preEffects and then start either
-		# turn of players or enemies
-		#checkPreTurnEffects #for enemies and players
-		for playerResource in playersDict.values():
-			for effect in playerResource.activeEffects:
-				if effect.preTurn:
-					effect.apply(playerResource)
-					effect.updateLifetime(playerResource)
-					
-			
-		for enemyResource in enemiesDict.values():
-			for effect in enemyResource.activeEffects:
-				if effect.preTurn:
-					effect.apply(enemyResource)
-					effect.updateLifetime(enemyResource)
-		
+
 		if playerTurn:
+			# checkPreTurnEffects, Stune etc #for enemies and players
+
+			for playerResource in playersDict.values():
+				for effect in playerResource.activeEffects:
+					if effect.preTurn:
+						effect.apply(playerResource)
+						effect.updateLifetime(playerResource)
+					
 			playerTurn()
 		else:
+			for enemyResource in enemiesDict.values():
+				for effect in enemyResource.activeEffects:
+					if effect.preTurn:
+						effect.apply(enemyResource)
+						effect.updateLifetime(enemyResource)
+			
 			enemyTurn()
 
 
@@ -202,8 +200,11 @@ func playerTurn():
 					if not(effect.preTurn):
 						var result = effect.apply(playerResource)
 						effect.updateLifetime(playerResource)
-						emit_signal("dealtDamage",playerResource.guiNode.name,null,null,result)
-						yield(playerResource.guiNode,"damageDone")
+						# if effect deals damage we play animation
+						if result != null:
+							emit_signal("dealtDamage",playerResource.guiNode.name,null,null,result)
+							yield(playerResource.guiNode,"valueAnimationDone")
+							
 			
 			# check if any Player died cause of postTurn effect
 			for playerName in playersDict:
@@ -234,26 +235,34 @@ func playerTurn():
 
 # signalFunctions that set all the playerChoices into variables
 func _on_player_choosen(player):
-#	choosenPlayerNode = player
 	choosenPlayer = player
-#	choosenPlayerName = playerName
+
 	# set playerMenu visible (should have been invisible at this point)
 	menuChoices.get_child(0).grab_focus()
 	
-func _on_actionButton_pressed(skillName):
-	activeSkillName = skillName
+func _on_actionButton_pressed(choice):
+	if choice is BaseSkill:
+		playerActionChoice = choice
+		var targetableEnemies = createCharacterArray(enemies,"targetable")
+		# CHECK FOR AOE-SKILLS HERE!
+		if choosenPlayer.classSkills[playerActionChoice.name].is_aoe:
+				#maybe deal somehow with showing aoe-targets as active first?
+				for enemy in targetableEnemies:
+					choosenTargets.append(enemy.characterResource)
+				# if its aoe damage all targets show damage, this
+				# will be shown by having no name for targets
+				choosenTargetsName = null
+		else:
+			targetableEnemies[0].grab_focus()
+
+	elif choice is Consumable:
+		if not(choice.needs_targets):
+			playerActionChoice = choice
+			finishCharacterAction()
+		#TODO: add target-choice for items (bomb etc.)
+		
 	
-	var targetableEnemies = createCharacterArray(enemies,"targetable")
-	# CHECK FOR AOE-SKILLS HERE!
-	if choosenPlayer.classSkills[activeSkillName].is_aoe:
-			#maybe deal somehow with showing aoe-targets as active first?
-			for enemy in targetableEnemies:
-				choosenTargets.append(enemy.characterResource)
-			# if its aoe damage all targets show damage, this
-			# will be shown by having no name for targets
-			choosenTargetsName = null
-	else:
-		targetableEnemies[0].grab_focus()
+	
 
 func _on_enemy_choosen(enemy, enemyName):
 #	choosenTargetsNodes = enemy
@@ -265,15 +274,20 @@ func _on_enemy_choosen(enemy, enemyName):
 
 # actually use the choosen skill on a target and restart playerTurn
 func finishCharacterAction():
-	# after we got all variables we needed we actually invoke the skill
-	# we also get the dealt damage back, which we use to show in the gui
-#	var skillAnimation = choosenPlayerNode.characterResource.classSkills[activeSkillName].skillAnimation
-#	choosenPlayerNode.get_node("Animation_Player").play(skillAnimation)
-	var dealtDamage = choosenPlayer.useSkill(activeSkillName,choosenTargets)
-	emit_signal("dealtDamage",choosenTargetsName,choosenPlayer,activeSkillName,dealtDamage)
-	for target in choosenTargets:
-		yield(target.guiNode,"damageDone")
-	
+	# depending on what choice the player did we
+	# either use the playerSKill
+	if playerActionChoice is BaseSkill:
+		var dealtDamage = choosenPlayer.useSkill(playerActionChoice.name,choosenTargets)
+		emit_signal("dealtDamage",choosenTargetsName,choosenPlayer,playerActionChoice.name,dealtDamage)
+		for target in choosenTargets:
+			yield(target.guiNode,"valueAnimationDone")
+	# or we use an item
+	if playerActionChoice is Consumable:
+		var itemValue = playerActionChoice.use(choosenPlayer, null)
+		if itemValue != null:
+			emit_signal("healed",choosenPlayer.guiNode.name,itemValue)
+			yield(choosenPlayer.guiNode,"valueAnimationDone")
+		
 	
 	# check if any of the choosenTargets got killed and remove them from dictionary
 	# also make them untargetable and unusable and make the invisible (here
@@ -323,7 +337,7 @@ func enemyTurn():
 		emit_signal("dealtDamage",decisions[0], enemy, decisions[1], decisions[2])
 		
 		for target in decisions[3]:
-			yield(target.guiNode,"damageDone")
+			yield(target.guiNode,"valueAnimationDone")
 		
 		# after enemy has acted we need to check if any players died.
 		for playerName in playersDict:
@@ -340,10 +354,13 @@ func enemyTurn():
 	# postEffect check on enemies
 	for enemyResource in enemiesDict.values():
 		for effect in enemyResource.activeEffects:
-			var result = effect.apply(enemyResource)
-			effect.updateLifetime(enemyResource)
-			emit_signal("dealtDamage",enemyResource.guiNode.name,null,null,result)
-			yield(enemyResource.guiNode,"damageDone")
+			if not(effect.preTurn):
+				var result = effect.apply(enemyResource)
+				effect.updateLifetime(enemyResource)
+				# if effect deals damage we play animation
+				if result != null:
+					emit_signal("dealtDamage",enemyResource.guiNode.name,null,null,result)
+					yield(enemyResource.guiNode,"valueAnimationDone")
 	
 	# check if any enemie died through postEffect
 	for enemyName in enemiesDict:

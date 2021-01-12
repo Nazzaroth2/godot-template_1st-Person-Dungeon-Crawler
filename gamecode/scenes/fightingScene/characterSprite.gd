@@ -5,12 +5,13 @@ onready var fightManagerNode = get_tree().get_root().get_node("world/fightScene/
 
 signal player_choosen
 signal enemy_choosen
-signal damageDone
+signal valueAnimationDone
 
 func _ready():
 	self.connect("focus_entered",self,"_on_focus_entered")
 	self.connect("focus_exited",self,"_on_focus_exited")
 	fightManagerNode.connect("dealtDamage",self,"_on_dealtDamage")
+	fightManagerNode.connect("healed",self,"_on_healed")
 
 func _on_dealtDamage(targetsName, user, activeSkillName, damage):
 	# if this characterSprite is the user it playes the corresponding
@@ -37,7 +38,18 @@ func _on_dealtDamage(targetsName, user, activeSkillName, damage):
 			yield($AnimationPlayer,"animation_finished")
 			$damage.visible = false	
 				
-		emit_signal("damageDone")
+		emit_signal("valueAnimationDone")
+
+func _on_healed(healedCharacterName, healValue):
+	if healedCharacterName == self.name:
+		$damage.text = str(healValue)
+		$damage.set("custom_colors/font_color",Color(Color.green))
+		$damage.visible = true
+		$AnimationPlayer.play("damageLabel")
+		yield($AnimationPlayer,"animation_finished")
+		$damage.visible = false	
+			
+	emit_signal("valueAnimationDone")
 	
 	
 func _on_focus_entered():

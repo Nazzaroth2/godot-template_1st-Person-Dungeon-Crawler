@@ -9,4 +9,4 @@ name = "Stun"
 description = "The target is stunned and can't act for 2 turns."
 icon = ExtResource( 2 )
 lifetime = 2
-preTurn = false
+preTurn = true

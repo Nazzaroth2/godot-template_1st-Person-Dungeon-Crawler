@@ -23,13 +23,21 @@ func _on_menuChoice_focus_entered(menuChoice):
 	
 	# add new action-buttons depending on the menuChoice that is focused
 	if menuChoice == "attackSkills":
-		for skill in fightManager.choosenPlayer.classSkills:
+		for skill in fightManager.choosenPlayer.classSkills.values():
 			var newButton = Button.new()
-			newButton.text = skill
+			newButton.text = skill.name
 			newButton.size_flags_horizontal = Button.SIZE_EXPAND_FILL
-#			newButton.size_flags_vertical = Button.SIZE_EXPAND_FILL
 			newButton.connect("pressed", fightManager, "_on_actionButton_pressed",[skill])
 			actionsContainer.add_child(newButton)
+	if menuChoice == "items":
+		for item in fightManager.referencedPlayerGroup.inventory.items:
+			if item is Consumable:
+				var newButton = Button.new()
+				newButton.text = item.name
+				newButton.size_flags_horizontal = Button.SIZE_EXPAND_FILL
+				newButton.connect("pressed", fightManager, "_on_actionButton_pressed",[item])
+				actionsContainer.add_child(newButton)
+				
 
 
 

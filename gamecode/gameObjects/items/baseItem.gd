@@ -9,11 +9,6 @@ export (Array, Resource) var itemEffects
 
 
 
-# overwrite/call this function in inherited classes to implement item logic
-func use(user, targets: Array):
-	current_stacks -= 1
-	
-	# TODO: implement itemEffects applying here
 
 
 

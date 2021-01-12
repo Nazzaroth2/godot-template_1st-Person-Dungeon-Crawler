@@ -7,6 +7,6 @@
 
 [resource]
 script = ExtResource( 1 )
-items = [ ExtResource( 2 ), null, ExtResource( 4 ), ExtResource( 3 ), null, ExtResource( 4 ), null, ExtResource( 4 ), null, null, null, null, null, null, null, null, null, null ]
+items = [ ExtResource( 2 ), null, ExtResource( 4 ), ExtResource( 3 ), null, null, null, null, null, null, null, null, null, null, null, null, null, null ]
 gold = 100
 type = "PLAYER"

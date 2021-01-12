@@ -3,9 +3,9 @@ class_name healthPotion
 
 export (int) var healingValue
 
-func use(user, targets: Array):
+func use(user, targets):
 	.use(user, targets)
 	
-	if targets != null:
-		targets[0].hp += healingValue
+	user.hp += healingValue
 	
+	return healingValue
