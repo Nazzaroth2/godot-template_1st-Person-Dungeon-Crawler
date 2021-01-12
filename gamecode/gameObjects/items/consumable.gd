@@ -7,6 +7,6 @@ export (bool) var needs_targets = true
 # item-logic is in specific classes
 # overwrite/call this function in inherited classes to implement item logic
 func use(user, targets):
-	current_stacks -= 1
-	
+	self.current_stacks -= 1
+
 	# TODO: implement itemEffects applying here

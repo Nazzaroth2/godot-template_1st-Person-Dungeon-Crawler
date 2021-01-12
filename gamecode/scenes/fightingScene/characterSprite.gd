@@ -27,12 +27,14 @@ func _on_dealtDamage(targetsName, user, activeSkillName, damage):
 		# check if you are a target and then play the damaged Animation
 		if targetsName == null:
 			$damage.text = str(damage)
+			$damage.set("custom_colors/font_color",Color(Color.red))
 			$damage.visible = true
 			$AnimationPlayer.play("damageLabel")
 			yield($AnimationPlayer,"animation_finished")
 			$damage.visible = false
 		elif targetsName == self.name:
 			$damage.text = str(damage)
+			$damage.set("custom_colors/font_color",Color(Color.red))
 			$damage.visible = true
 			$AnimationPlayer.play("damageLabel")
 			yield($AnimationPlayer,"animation_finished")

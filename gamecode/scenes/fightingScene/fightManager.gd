@@ -240,26 +240,25 @@ func _on_player_choosen(player):
 	# set playerMenu visible (should have been invisible at this point)
 	menuChoices.get_child(0).grab_focus()
 	
-func _on_actionButton_pressed(choice):
-	if choice is BaseSkill:
-		playerActionChoice = choice
-		var targetableEnemies = createCharacterArray(enemies,"targetable")
-		# CHECK FOR AOE-SKILLS HERE!
-		if choosenPlayer.classSkills[playerActionChoice.name].is_aoe:
-				#maybe deal somehow with showing aoe-targets as active first?
-				for enemy in targetableEnemies:
-					choosenTargets.append(enemy.characterResource)
-				# if its aoe damage all targets show damage, this
-				# will be shown by having no name for targets
-				choosenTargetsName = null
-		else:
-			targetableEnemies[0].grab_focus()
+func _on_skillButton_pressed(choice):
+	playerActionChoice = choice
+	var targetableEnemies = createCharacterArray(enemies,"targetable")
+	# CHECK FOR AOE-SKILLS HERE!
+	if choosenPlayer.classSkills[playerActionChoice.name].is_aoe:
+			#maybe deal somehow with showing aoe-targets as active first?
+			for enemy in targetableEnemies:
+				choosenTargets.append(enemy.characterResource)
+			# if its aoe damage all targets show damage, this
+			# will be shown by having no name for targets
+			choosenTargetsName = null
+	else:
+		targetableEnemies[0].grab_focus()
 
-	elif choice is Consumable:
-		if not(choice.needs_targets):
-			playerActionChoice = choice
-			finishCharacterAction()
-		#TODO: add target-choice for items (bomb etc.)
+func _on_itemButton_pressed(item, itemIdx):
+	if not(item.needs_targets):
+		playerActionChoice = [item, itemIdx]
+		finishCharacterAction()
+	#TODO: add target-choice for items (bomb etc.)
 		
 	
 	
@@ -282,8 +281,17 @@ func finishCharacterAction():
 		for target in choosenTargets:
 			yield(target.guiNode,"valueAnimationDone")
 	# or we use an item
-	if playerActionChoice is Consumable:
-		var itemValue = playerActionChoice.use(choosenPlayer, null)
+	elif playerActionChoice[0] is Consumable:
+		var itemValue = playerActionChoice[0].use(choosenPlayer, null)
+		# need to emit signal so inventory gets updated with new current stack
+		referencedPlayerGroup.inventory.emit_signal("items_changed",[playerActionChoice[1]])
+		# if all stacks get used we remove item from inventory by setting array index = null
+		if playerActionChoice[0].current_stacks <= 0:
+			referencedPlayerGroup.inventory.items[playerActionChoice[1]] = null
+		
+#		print_debug(referencedPlayerGroup.inventory.items)
+#		print_debug(playerActionChoice)
+#		print_debug(playerActionChoice.current_stacks)
 		if itemValue != null:
 			emit_signal("healed",choosenPlayer.guiNode.name,itemValue)
 			yield(choosenPlayer.guiNode,"valueAnimationDone")

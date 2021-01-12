@@ -27,17 +27,18 @@ func _on_menuChoice_focus_entered(menuChoice):
 			var newButton = Button.new()
 			newButton.text = skill.name
 			newButton.size_flags_horizontal = Button.SIZE_EXPAND_FILL
-			newButton.connect("pressed", fightManager, "_on_actionButton_pressed",[skill])
+			newButton.connect("pressed", fightManager, "_on_skillButton_pressed",[skill])
 			actionsContainer.add_child(newButton)
 	if menuChoice == "items":
+		var itemIdx = 0
 		for item in fightManager.referencedPlayerGroup.inventory.items:
 			if item is Consumable:
 				var newButton = Button.new()
 				newButton.text = item.name
 				newButton.size_flags_horizontal = Button.SIZE_EXPAND_FILL
-				newButton.connect("pressed", fightManager, "_on_actionButton_pressed",[item])
+				newButton.connect("pressed", fightManager, "_on_itemButton_pressed",[item, itemIdx])
 				actionsContainer.add_child(newButton)
-				
+			itemIdx += 1	
 
 
 

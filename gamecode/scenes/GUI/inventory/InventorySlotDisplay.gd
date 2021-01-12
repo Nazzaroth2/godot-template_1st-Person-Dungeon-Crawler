@@ -196,6 +196,9 @@ func _find_next_empty_idx():
 func _gui_input(event):
 	if event.is_action_pressed("ui_right_mouse"):
 		_createNewSingleStack()
+	if event.is_action_pressed("ui_left_mouse"):
+		if event.doubleclick:
+			_showUseGui(get_viewport().get_mouse_position())
 
 # removes 1 stack from clicked on item and creates
 # a new item in a diffrent slot with 1 stack
@@ -216,6 +219,14 @@ func _createNewSingleStack():
 			inventory.emit_signal("items_changed",[item_index, emptyIdx])
 
 
-
-
+func _showUseGui(mousePosition):
+	var item_index = get_index()
+	var item = inventory.items[item_index]
+	var useGui = load("res://gamecode/scenes/GUI/inventory/useGui.tscn").instance()
+	useGui.choosen_item = item
+	useGui.choosen_item_index = item_index
+	
+	self.add_child(useGui)
+	useGui.rect_position = mousePosition
+	useGui.popup()
 
