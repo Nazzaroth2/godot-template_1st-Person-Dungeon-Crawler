@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
 [ext_resource path="res://assets/playerCharacters/Hunter_male_lookingRight.png" type="Texture" id=2]
 [ext_resource path="res://gamecode/gameObjects/skills/bowShot.tres" type="Resource" id=3]
+[ext_resource path="res://gamecode/gameObjects/skills/basicAttack.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -10,6 +11,7 @@ name = "Karl"
 description = "No prey escapes him."
 icon = ExtResource( 2 )
 classSkills = {
+"Basic Attack": ExtResource( 4 ),
 "Bow Shot": ExtResource( 3 )
 }
 equipment = {

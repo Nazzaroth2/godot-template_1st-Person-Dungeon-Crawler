@@ -239,7 +239,14 @@ func _on_player_choosen(player):
 
 	# set playerMenu visible (should have been invisible at this point)
 	menuChoices.get_child(0).grab_focus()
+
+# choose basic attack as used skill and focus on target
+func _on_attackButton_pressed():
+	playerActionChoice = choosenPlayer.classSkills["Basic Attack"]
 	
+	var targetableEnemies = createCharacterArray(enemies,"targetable")
+	targetableEnemies[0].grab_focus()
+
 func _on_skillButton_pressed(choice):
 	playerActionChoice = choice
 	var targetableEnemies = createCharacterArray(enemies,"targetable")

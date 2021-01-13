@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://gamecode/gameObjects/skills/basicAttack.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Basic Attack"
+description = ""
+cost = 0
+skillCategory = 0
+targetedStat = 0
+skillEffects = [  ]
+skillValue = 0
+is_aoe = false

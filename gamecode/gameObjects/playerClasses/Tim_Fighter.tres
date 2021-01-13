@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
 [ext_resource path="res://assets/playerCharacters/Fighter_male_lookingRight.png" type="Texture" id=2]
 [ext_resource path="res://gamecode/gameObjects/skills/slash.tres" type="Resource" id=3]
 [ext_resource path="res://gamecode/gameObjects/skills/shieldBash.tres" type="Resource" id=4]
+[ext_resource path="res://gamecode/gameObjects/skills/basicAttack.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -11,6 +12,7 @@ name = "Tim"
 description = "He fights..."
 icon = ExtResource( 2 )
 classSkills = {
+"Basic Attack": ExtResource( 5 ),
 "Shield Bash": ExtResource( 4 ),
 "Slash": ExtResource( 3 )
 }

@@ -76,19 +76,19 @@ margin_bottom = 171.0
 size_flags_horizontal = 3
 script = ExtResource( 4 )
 
-[node name="attackSkills" type="Button" parent="GUI/playerMenu/menuChoices"]
+[node name="attack" type="Button" parent="GUI/playerMenu/menuChoices"]
 margin_right = 340.0
 margin_bottom = 54.0
 focus_neighbour_top = NodePath("../items")
 size_flags_vertical = 3
-text = "Attack Skills"
+text = "Attack"
 
-[node name="magicSkills" type="Button" parent="GUI/playerMenu/menuChoices"]
+[node name="skills" type="Button" parent="GUI/playerMenu/menuChoices"]
 margin_top = 58.0
 margin_right = 340.0
 margin_bottom = 112.0
 size_flags_vertical = 3
-text = "Magic Skills"
+text = "Skills"
 
 [node name="items" type="Button" parent="GUI/playerMenu/menuChoices"]
 margin_top = 116.0

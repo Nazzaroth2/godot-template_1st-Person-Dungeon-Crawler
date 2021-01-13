@@ -28,7 +28,7 @@ func _ready():
 # player gui input
 func _unhandled_input(event):
 	if event.is_action_pressed("inventory"):
-		$GUI/playerGUI.set_as_minsize()
+#		$GUI/playerGUI.set_as_minsize()
 		$GUI/playerGUI.popup_centered()
 
 

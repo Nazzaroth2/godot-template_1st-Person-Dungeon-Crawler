@@ -79,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://gamecode/gameObjects/effects/stun.gd"
 }, {
+"base": "DamageSkill",
+"class": "basicAttack",
+"language": "GDScript",
+"path": "res://gamecode/gameObjects/skills/basicAttack.gd"
+}, {
 "base": "Consumable",
 "class": "healthPotion",
 "language": "GDScript",
@@ -99,6 +104,7 @@ _global_script_class_icons={
 "Inventory": "",
 "Pandemonium": "",
 "Stun": "",
+"basicAttack": "",
 "healthPotion": ""
 }
 

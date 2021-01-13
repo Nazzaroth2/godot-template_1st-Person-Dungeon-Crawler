@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/playerClasses/baseClass.gd" type="Script" id=1]
 [ext_resource path="res://gamecode/gameObjects/skills/fireBall.tres" type="Resource" id=2]
 [ext_resource path="res://assets/playerCharacters/Mage_male_lookingRight.png" type="Texture" id=3]
+[ext_resource path="res://gamecode/gameObjects/skills/basicAttack.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -10,6 +11,7 @@ name = "Chris"
 description = "A fledgling mage with big ambitions."
 icon = ExtResource( 3 )
 classSkills = {
+"Basic Attack": ExtResource( 4 ),
 "Fire Ball": ExtResource( 2 )
 }
 equipment = {
