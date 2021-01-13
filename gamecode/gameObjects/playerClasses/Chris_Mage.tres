@@ -15,7 +15,11 @@ classSkills = {
 "Fire Ball": ExtResource( 2 )
 }
 equipment = {
-
+"chest": null,
+"feet": null,
+"head": null,
+"l_arm": null,
+"r_arm": null
 }
 hp_max = 50
 hp = 50

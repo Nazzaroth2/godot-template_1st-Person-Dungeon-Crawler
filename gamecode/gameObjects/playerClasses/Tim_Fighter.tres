@@ -17,7 +17,11 @@ classSkills = {
 "Slash": ExtResource( 3 )
 }
 equipment = {
-
+"chest": null,
+"feet": null,
+"head": null,
+"l_arm": null,
+"r_arm": null
 }
 hp_max = 120
 hp = 120
