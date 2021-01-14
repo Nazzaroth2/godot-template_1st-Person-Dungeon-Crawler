@@ -3,6 +3,7 @@ class_name Equipment
 
 export (int) var attack
 export (int) var defense
-# TODO: change to enum
-export (String) var equipmentSlot
+
+enum EQUIPMENTSLOT{HEAD,CHEST,FEET,L_ARM,R_ARM}
+export (EQUIPMENTSLOT) var equipSlot
 

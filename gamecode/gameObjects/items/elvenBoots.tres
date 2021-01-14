@@ -1,18 +1,18 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://gamecode/gameObjects/items/equipment.gd" type="Script" id=1]
-[ext_resource path="res://assets/textures/item-Icons/boots_small.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/item-Icons/elvenBoots.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
-name = "Leather Boots"
-description = ""
+name = "Elven Boots"
+description = "Boots that are made by elves"
 icon = ExtResource( 2 )
-price_buy = 20
-price_sell = 12
-max_stacks = 2
+price_buy = 50
+price_sell = 25
+max_stacks = 99
 current_stacks = 2
 itemEffects = [  ]
-attack = 0
-defense = 10
+attack = 5
+defense = 20
 equipSlot = 2

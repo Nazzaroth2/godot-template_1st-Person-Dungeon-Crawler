@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/textures/item-Icons/border_small.png" type="Texture" id=1]
+[ext_resource path="res://gamecode/scenes/GUI/playerGUI/EquipmentSlotDisplay.gd" type="Script" id=2]
+
+[node name="InventorySlotDisplay" type="CenterContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemTextureRect" type="TextureRect" parent="."]
+margin_left = 480.0
+margin_top = 270.0
+margin_right = 543.0
+margin_bottom = 330.0
+rect_min_size = Vector2( 63, 60 )
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="StacksLabel" type="Label" parent="ItemTextureRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0
+margin_top = -14.0
+text = "100"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -4,7 +4,7 @@ onready var inventory
 onready var itemTextureRect = $ItemTextureRect
 onready var stacksLabel = $ItemTextureRect/StacksLabel
 
-var inputFlag = ""
+
 
 func _ready():
 	# wait till root-node of inventory is ready, then get inventoryResource-
@@ -39,7 +39,7 @@ func get_drag_data(_position):
 		inventory.drag_data = data
 		
 		return data
-
+	
 		
 	
 func can_drop_data(_position, data):

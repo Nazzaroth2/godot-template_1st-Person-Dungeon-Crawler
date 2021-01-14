@@ -15,4 +15,4 @@ current_stacks = 1
 itemEffects = [  ]
 attack = 5
 defense = 1
-equipmentSlot = "hand"
+equipSlot = 4
