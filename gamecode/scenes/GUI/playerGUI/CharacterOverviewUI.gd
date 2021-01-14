@@ -20,7 +20,10 @@ func _on_stat_changed(stat, player):
 			attributesNode.get_node("intelligence").text = "INT: " + str(player.intelligence)
 		"luck":
 			attributesNode.get_node("luck").text = "LUCK: " + str(player.luck)
-			
+		"attack":
+			attributesNode.get_node("attack").text = "ATTACK: " + str(player.attack)
+		"defense":
+			attributesNode.get_node("defense").text = "DEFENSE: " + str(player.defense)
 
 
 func _setupCharacterUI(player):
@@ -34,4 +37,8 @@ func _setupCharacterUI(player):
 	attributesNode.get_node("dexterity").text = "DEX: " + str(player.dexterity)
 	attributesNode.get_node("intelligence").text = "INT: " + str(player.intelligence)
 	attributesNode.get_node("luck").text = "LUCK: " + str(player.luck)
+	attributesNode.get_node("attack").text = "ATTACK: " + str(player.attack)
+	attributesNode.get_node("defense").text = "DEFENSE: " + str(player.defense)
+	
+	
 	

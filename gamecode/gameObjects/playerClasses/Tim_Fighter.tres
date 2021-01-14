@@ -20,8 +20,8 @@ equipment = {
 "chest": null,
 "feet": null,
 "head": null,
-"l_arm": null,
-"r_arm": null
+"lArm": null,
+"rArm": null
 }
 hp_max = 120
 hp = 120

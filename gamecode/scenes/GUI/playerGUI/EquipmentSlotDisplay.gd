@@ -9,6 +9,9 @@ onready var my_item_backup
 onready var itemTextureRect = $ItemTextureRect
 onready var stacksLabel = $ItemTextureRect/StacksLabel
 
+signal equipment_dropped
+signal equipment_dragged
+
 
 
 # this enum has to be the same as
@@ -17,16 +20,7 @@ enum EQUIPMENTSLOT{HEAD,CHEST,FEET,L_ARM,R_ARM}
 export (EQUIPMENTSLOT) var equipSlot
 
 func _ready():
-	pass
-
-
-func display_item(item):
-	if item is BaseItem:
-		itemTextureRect.texture = item.icon
-		stacksLabel.text = str(item.current_stacks)
-	else:
-		itemTextureRect.texture = load("res://assets/textures/item-Icons/border_small.png")
-		stacksLabel.text = ""
+	display_update()
 
 func display_update():
 	if my_item != null:
@@ -41,6 +35,7 @@ func get_drag_data(_position):
 	if my_item is Equipment:
 		var data = {}
 		data.item = my_item
+		data.parent = self
 		var dragPreview = TextureRect.new()
 		dragPreview.texture = my_item.icon
 		set_drag_preview(dragPreview)
@@ -48,6 +43,7 @@ func get_drag_data(_position):
 		my_item_backup = my_item
 		my_item = null
 		display_update()
+		emit_signal("equipment_dragged",self.name)
 
 		return data
 
@@ -130,6 +126,9 @@ func drop_data(_position, data):
 				get_tree().set_input_as_handled()
 		playerInv.drag_data = null
 		my_item_backup = null
+	
+	# no matter how we drop item into slot we emit changed signal
+	emit_signal("equipment_dropped",self.name,my_item)
 
 
 func _find_next_empty_idx(inventory):
@@ -141,5 +140,6 @@ func _unhandled_input(event):
 	if event.is_action_released("ui_left_mouse"):
 		if my_item_backup != null:
 			my_item = my_item_backup
+			emit_signal("equipment_dropped",self.name,my_item)
 			display_update()
 			my_item_backup = null

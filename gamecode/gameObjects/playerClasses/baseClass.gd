@@ -13,9 +13,9 @@ export (Dictionary) var equipment = {
 	"head": null,
 	"chest": null,
 	"feet": null,
-	"r_arm": null,
-	"l_arm": null
-}
+	"rArm": null,
+	"lArm": null
+} setget set_equipment
 
 
 var activeEffects = []
@@ -34,6 +34,9 @@ export (int) var strength setget set_str
 export (int) var dexterity setget set_dex
 export (int) var intelligence setget set_int
 export (int) var luck setget set_luck
+
+var attack setget set_attack
+var defense setget set_defense
 
 var level:int
 var experiencePoints:int
@@ -82,7 +85,19 @@ func set_int(value):
 func set_luck(value):
 	luck = value
 	emit_signal("stat_changed", "luck", self)
-		
+
+func set_attack(value):
+	attack = value
+	emit_signal("stat_changed", "attack", self)
+
+func set_defense(value):
+	defense = value
+	emit_signal("stat_changed", "defense", self)
+
+func set_equipment(value):
+	equipment = value
+	
+	_updateAttackDefense(equipment)
 
 func useSkill(skillname, targets):
 	# use the given skill on given targets and return the damage dealt
@@ -100,7 +115,22 @@ func _getUnlockedSkills():
 		idx += 1
 		
 	return actualUnlockedSkills
+
+func _updateAttackDefense(equipment):
+	var tempAttack = 0
+	var tempDefense = 0
 	
+	# simply count together all attack and defense values
+	# of equited items
+	for item in equipment.values():
+		if item != null:
+			tempAttack += item.attack
+			tempDefense += item.defense
+		
+	self.attack = tempAttack
+	self.defense = tempDefense
+		
+
 # TODO: check how to loop over dictionary in gdscript and get keys
 #func _init():
 #	for skill in classSkills:

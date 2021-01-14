@@ -71,7 +71,7 @@ valign = 1
 [node name="attributes" type="GridContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 461.0
-margin_bottom = 32.0
+margin_bottom = 50.0
 size_flags_horizontal = 3
 columns = 4
 
@@ -108,6 +108,27 @@ valign = 1
 margin_left = 348.0
 margin_right = 460.0
 margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "HP: 100/120"
+align = 1
+valign = 1
+
+[node name="attack" type="Label" parent="HBoxContainer/VBoxContainer/attributes"]
+margin_top = 18.0
+margin_right = 112.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "HP: 100/120"
+align = 1
+valign = 1
+
+[node name="defense" type="Label" parent="HBoxContainer/VBoxContainer/attributes"]
+margin_left = 116.0
+margin_top = 18.0
+margin_right = 228.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "HP: 100/120"
